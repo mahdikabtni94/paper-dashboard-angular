@@ -1,0 +1,72 @@
+<mat-spinner *ngIf="isloading"></mat-spinner>
+<div class="search-div">
+  <button mat-raised-button color="primary" (click)="onCreate()">
+    <mat-icon>add</mat-icon>Create User
+  </button>
+  <mat-form-field class="search-form-field" floatLabel="never">
+    <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()" >
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey"   (click)="onSearchClear()" >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+<div class="mat-elevation-z8">
+  <mat-table [dataSource]="users" matSort *ngIf=" users!=null && !isloading">
+    <ng-container matColumnDef="Name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.Name}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="UserName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> UserName</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.Username}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="Email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Email</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.email}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="Address">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Address</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.Address}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="Phone">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Phone</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.Phone}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="City">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> City</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.City}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="Profile">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Profile</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.Profile}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="Activate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Activate</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.Activated}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-icon-button (click)="onEdit(row)">
+          <mat-icon>launch</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="onDelete(row.user_id)">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="noData">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        No Users Added
+      </mat-footer-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-footer-row *matFooterRowDef="['noData']"
+                    [ngClass]="{'hide':!(users!=null && users.data.length===0)}"></mat-footer-row>
+
+  </mat-table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+
+</div>
+

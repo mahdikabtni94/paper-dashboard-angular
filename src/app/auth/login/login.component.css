@@ -1,0 +1,24 @@
+mat-form-field {
+  width: 60%;
+  margin : 25px;
+  padding-left: 450px;
+}
+
+mat-spinner {
+  margin: auto;
+}
+mat-card {
+  width: 100%;
+  margin: auto;
+}
+div {
+  padding-left: 490px;
+
+}
+button {
+  width: 200px;
+  margin: 10px;
+}
+img {
+  padding-left: 450px;
+}
