@@ -24,7 +24,11 @@ import {NgModule} from '@angular/core';
   {
     path : 'signup',
     component: SignupComponent
-  },
+  }, {
+   path : '404',
+     redirectTo : ''
+
+   },
   {
     path: '**',
     redirectTo: ''

@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {AuthData} from './auth-data.model';
 import {Subject} from 'rxjs';
+import {NotificationService} from '../notification.service';
 
 
 @Injectable({providedIn: 'root'})
@@ -13,7 +14,7 @@ export class AuthService {
   private token: string
   private authStatusListener = new Subject<boolean>();
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private notification: NotificationService) {
   }
 
   getToken() {
@@ -40,7 +41,7 @@ export class AuthService {
 
   login(email: string, password: string) {
     const authData: AuthData = {email: email, password: password};
-    this.http
+     this.http
       .post<{ token: string; expiresIn: number }>(
         'http://localhost:3000/login',
         authData
@@ -58,13 +59,15 @@ export class AuthService {
           console.log(expirationDate);
           this.saveAuthData(token, expirationDate);
           this.router.navigate(['/admin']);
-        } else {
-          this.router.navigate(['/']);
+          this.notification.success('Authentication Successful ');
+        }
+      },
+        (err: HttpErrorResponse) => {
+     this.router.navigate(['/']);
+     this.notification.warn('Authentication Failed');
 
         }
-
-
-      })
+      )
   }
 
   logout() {
