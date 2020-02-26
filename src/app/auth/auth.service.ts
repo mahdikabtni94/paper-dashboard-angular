@@ -122,4 +122,5 @@ export class AuthService {
       this.logout();
     }, duration * 1000);
   }
+
 }

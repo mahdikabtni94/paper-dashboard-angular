@@ -5,6 +5,7 @@ import {SignupComponent} from './auth/signup/signup.component';
 import {AdminLayoutComponent} from './layouts/admin-layout/admin-layout.component';
 import {AuthGuard} from './auth/auth.guard';
 import {NgModule} from '@angular/core';
+import {ResetpasswordComponent} from './auth/resetpassword/resetpassword.component';
 
  const AppRoutes: Routes = [
   {
@@ -25,8 +26,8 @@ import {NgModule} from '@angular/core';
     path : 'signup',
     component: SignupComponent
   }, {
-   path : '404',
-     redirectTo : ''
+   path : 'resetPassword/:id',
+     component : ResetpasswordComponent
 
    },
   {

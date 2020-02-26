@@ -33,6 +33,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from './auth/auth-interceptor';
 import {CreateUserComponent} from './pages/users/create-user/create-user.component';
 import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dialog.component';
+import { ResetpasswordComponent } from './auth/resetpassword/resetpassword.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dial
     LoginComponent,
     SignupComponent,
     CreateUserComponent,
-    MatConfirmDialogComponent
+    MatConfirmDialogComponent,
+    ResetpasswordComponent
 
 
   ],
