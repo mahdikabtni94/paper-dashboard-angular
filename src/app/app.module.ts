@@ -22,7 +22,9 @@ import {
   MatIconModule,
   MatInputModule,
   MatPaginatorModule,
-  MatProgressSpinnerModule, MatSelectModule, MatSnackBarModule,
+  MatProgressSpinnerModule,
+  MatSelectModule, MatSlideToggleModule,
+  MatSnackBarModule,
   MatSortModule,
   MatTableModule,
   MatToolbarModule
@@ -34,6 +36,9 @@ import {AuthInterceptor} from './auth/auth-interceptor';
 import {CreateUserComponent} from './pages/users/create-user/create-user.component';
 import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dialog.component';
 import { ResetpasswordComponent } from './auth/resetpassword/resetpassword.component';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { CustomersComponent } from './customers/customers.component';
+
 
 
 @NgModule({
@@ -44,7 +49,9 @@ import { ResetpasswordComponent } from './auth/resetpassword/resetpassword.compo
     SignupComponent,
     CreateUserComponent,
     MatConfirmDialogComponent,
-    ResetpasswordComponent
+    ResetpasswordComponent,
+    ForgotPasswordComponent,
+    CustomersComponent
 
 
   ],
@@ -74,6 +81,8 @@ import { ResetpasswordComponent } from './auth/resetpassword/resetpassword.compo
     MatGridListModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatSlideToggleModule
+
 
 
 
@@ -83,7 +92,9 @@ import { ResetpasswordComponent } from './auth/resetpassword/resetpassword.compo
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
   ],
-
+/*exports:[
+  MatSlideToggleModule
+],*/
   bootstrap: [AppComponent],
   entryComponents: [CreateUserComponent, MatConfirmDialogComponent],
 })

@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatDialogConfig, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatDialogConfig, MatPaginator, MatSlideToggle, MatSort, MatTableDataSource} from '@angular/material';
 import {Users} from '../users.model';
 import {Subscription} from 'rxjs';
 import {UsersService} from '../users.service';
@@ -18,9 +18,10 @@ export class UsersListComponent implements OnInit, OnDestroy {
   private usersSub: Subscription;
   isloading = false;
   // @ts-ignore
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
   // @ts-ignore
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild('slide', {static: false}) MatSlideToggle: MatSlideToggle;
   searchKey: string;
 
   constructor(public userService: UsersService,
@@ -94,6 +95,18 @@ export class UsersListComponent implements OnInit, OnDestroy {
   }
 
 
+  OnChange(user_id: string) {
+    if (this.MatSlideToggle.checked) {
+      this.userService.ActivateUser(user_id);
+      this.notificationService.success('User Account Activated');
+
+    } else {
+      this.userService.DeactivateUser(user_id);
+      this.notificationService.success('User Account Deactivated');
+    }
+
+
+  }
 }
 
 

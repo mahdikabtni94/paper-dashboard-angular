@@ -7,7 +7,7 @@ import {
   MatIconModule,
   MatInputModule,
   MatPaginatorModule,
-  MatProgressSpinnerModule,
+  MatProgressSpinnerModule, MatSlideToggleModule,
   MatSortModule,
   MatTableModule
 } from '@angular/material';
@@ -16,8 +16,10 @@ import {FormsModule} from '@angular/forms';
 
 @NgModule({
   // tslint:disable-next-line:max-line-length
-  imports: [RouterModule, CommonModule, MatProgressSpinnerModule, MatIconModule, MatInputModule, FormsModule, MatTableModule, MatSortModule, MatButtonModule, MatPaginatorModule, MatDialogModule],
+  imports: [RouterModule, CommonModule, MatProgressSpinnerModule, MatIconModule, MatInputModule, FormsModule, MatTableModule, MatSortModule, MatButtonModule, MatPaginatorModule, MatDialogModule, MatSlideToggleModule],
   declarations: [ UsersListComponent ],
+
+
   exports: [ UsersListComponent, MatDialogModule]
 })
 

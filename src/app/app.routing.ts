@@ -6,6 +6,7 @@ import {AdminLayoutComponent} from './layouts/admin-layout/admin-layout.componen
 import {AuthGuard} from './auth/auth.guard';
 import {NgModule} from '@angular/core';
 import {ResetpasswordComponent} from './auth/resetpassword/resetpassword.component';
+import {ForgotPasswordComponent} from './auth/forgot-password/forgot-password.component';
 
  const AppRoutes: Routes = [
   {
@@ -26,8 +27,13 @@ import {ResetpasswordComponent} from './auth/resetpassword/resetpassword.compone
     path : 'signup',
     component: SignupComponent
   }, {
-   path : 'resetPassword/:id',
+   path : 'resetPassword/:token',
      component : ResetpasswordComponent
+
+   },
+   {
+     path : 'forgotPassword',
+     component : ForgotPasswordComponent
 
    },
   {

@@ -1,11 +1,17 @@
 <mat-spinner *ngIf="isloading"></mat-spinner>
 <div class="search-div">
-  <button mat-raised-button color="primary" (click)="onCreate()">
-    <mat-icon>add</mat-icon>Create User
+
+  <button class="AddUser" mat-raised-button color="primary" (click)="onCreate()">
+    <mat-icon>add</mat-icon>
+    Create User
+  </button>
+  <button mat-raised-button color="accent" >
+    <mat-icon>add</mat-icon>
+    Add Customer
   </button>
   <mat-form-field class="search-form-field" floatLabel="never">
-    <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()" >
-    <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey"   (click)="onSearchClear()" >
+    <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
@@ -42,7 +48,9 @@
     </ng-container>
     <ng-container matColumnDef="Activate">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Activate</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.Activated}}</mat-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-slide-toggle #slide [checked]="element.Activated" (change)="OnChange(element.user_id)"></mat-slide-toggle>
+      </mat-cell>
     </ng-container>
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -67,6 +75,7 @@
 
   </mat-table>
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+
 
 </div>
 

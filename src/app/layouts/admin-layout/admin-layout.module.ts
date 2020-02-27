@@ -27,7 +27,7 @@ import {
   MatIconModule,
   MatInputModule,
   MatPaginatorModule,
-  MatProgressSpinnerModule,
+  MatProgressSpinnerModule, MatSlideToggleModule,
   MatSortModule,
   MatTableModule, MatToolbarModule
 } from '@angular/material';
@@ -53,6 +53,7 @@ import {CreateUserComponent} from '../../pages/users/create-user/create-user.com
     MatFormFieldModule,
     MatInputModule,
     MatToolbarModule,
+    MatSlideToggleModule
 
   ],
   declarations: [

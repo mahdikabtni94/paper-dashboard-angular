@@ -122,5 +122,19 @@ export class AuthService {
       this.logout();
     }, duration * 1000);
   }
+  resetPassword(email: string) {
+    const resetEmail = {email: email};
+    this.http.post<{message: string, token: string}>('http://localhost:3000/forgetPassword', resetEmail)
+      .subscribe(response => {
+        this.notification.success(response.message);
+        this.router.navigate(['/']);
+
+      }, (err: HttpErrorResponse) => {
+      this.notification.warn(err.message);
+
+    })
+
+
+  }
 
 }

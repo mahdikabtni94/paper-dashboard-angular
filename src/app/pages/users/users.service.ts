@@ -149,5 +149,20 @@ export class UsersService {
       'Activated': false
     });
   }
+  ActivateUser(id: string) {
+    this.http.get(BACKEND_URL + '/activateUser/' + id)
+      .subscribe(() => {
+        this.usersUpdated.next([...this.users]);
+      })
+
+  }
+  DeactivateUser(id: string) {
+
+    this.http.get(BACKEND_URL + '/deactivateUser/' + id)
+      .subscribe(() => {
+        this.usersUpdated.next([...this.users]);
+      })
+
+  }
 
 }
