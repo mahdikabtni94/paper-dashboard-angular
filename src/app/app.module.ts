@@ -18,12 +18,15 @@ import {
   MatButtonModule,
   MatCardModule,
   MatDialogModule,
-  MatExpansionModule, MatGridListModule,
+  MatExpansionModule,
+  MatFormFieldModule,
+  MatGridListModule,
   MatIconModule,
   MatInputModule,
   MatPaginatorModule,
   MatProgressSpinnerModule,
-  MatSelectModule, MatSlideToggleModule,
+  MatSelectModule,
+  MatSlideToggleModule,
   MatSnackBarModule,
   MatSortModule,
   MatTableModule,
@@ -34,11 +37,12 @@ import {SignupComponent} from './auth/signup/signup.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from './auth/auth-interceptor';
 import {CreateUserComponent} from './pages/users/create-user/create-user.component';
-import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dialog.component';
-import { ResetpasswordComponent } from './auth/resetpassword/resetpassword.component';
-import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
-import { CustomersComponent } from './customers/customers.component';
-
+import {MatConfirmDialogComponent} from './mat-confirm-dialog/mat-confirm-dialog.component';
+import {ResetpasswordComponent} from './auth/resetpassword/resetpassword.component';
+import {ForgotPasswordComponent} from './auth/forgot-password/forgot-password.component';
+import {CustomersComponent} from './customers/customers.component';
+import {CustomerModule} from './customers/customer.module';
+import {CreateUserModule} from './pages/users/create-user/create-user.module';
 
 
 @NgModule({
@@ -47,11 +51,9 @@ import { CustomersComponent } from './customers/customers.component';
     AdminLayoutComponent,
     LoginComponent,
     SignupComponent,
-    CreateUserComponent,
     MatConfirmDialogComponent,
     ResetpasswordComponent,
     ForgotPasswordComponent,
-    CustomersComponent
 
 
   ],
@@ -64,7 +66,6 @@ import { CustomersComponent } from './customers/customers.component';
     FooterModule,
     FixedPluginModule,
     FormsModule,
-    MatInputModule,
     MatCardModule,
     MatButtonModule,
     MatToolbarModule,
@@ -81,10 +82,10 @@ import { CustomersComponent } from './customers/customers.component';
     MatGridListModule,
     MatSelectModule,
     MatSnackBarModule,
-    MatSlideToggleModule
-
-
-
+    MatSlideToggleModule,
+    CreateUserModule,
+    CustomerModule,
+    MatInputModule
 
 
   ],
@@ -92,11 +93,9 @@ import { CustomersComponent } from './customers/customers.component';
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
   ],
-/*exports:[
-  MatSlideToggleModule
-],*/
+
   bootstrap: [AppComponent],
-  entryComponents: [CreateUserComponent, MatConfirmDialogComponent],
+  entryComponents: [CustomersComponent, CreateUserComponent, MatConfirmDialogComponent,]
 })
 
 export class AppModule {

@@ -1,0 +1,85 @@
+<mat-toolbar>
+  <span>{{'new Customer'}}</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="customerService.form" class="normal-form" (submit)="onSaveCustomer()">
+  <mat-grid-list cols="2" rowHeight="450px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        <input type="hidden" formControlName="client_id">
+        <mat-form-field>
+          <input formControlName="client_name" matInput placeholder="client_name*">
+          <mat-error>Pls enter a client name.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="address" matInput placeholder="address">
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="phoneNumber" matInput placeholder="phoneNumber">
+          <mat-error>Minimum 8 characters needed.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="email" matInput placeholder="Email*">
+          <mat-error>Invalid Email Address.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="technical_contact" placeholder="technical_contact">
+        </mat-form-field>
+
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <div class="controles-container">
+
+        <mat-form-field>
+          <input formControlName="sales_contact" matInput placeholder="sales_contact">
+        </mat-form-field>
+        <div>
+          <button mat-stroked-button type="button" (click)="filePicker.click()">Client Image</button>
+          <input type="file" #filePicker (change)="onImagePicked($event)">
+        </div>
+        <div class="image-preview"
+             *ngIf="imagePreview!==''&& imagePreview && customerService.form.get('picpath').valid">
+          <img [src]="imagePreview" [alt]="'photo'">
+
+        </div>
+        <mat-form-field>
+          <mat-select formControlName="CountryId" placeholder="country" (ngModelChange)="onSelectCountry($event)"
+                      #country>
+            <mat-option>None</mat-option>
+            <ng-container *ngFor="let country of countries">
+              <mat-option value="{{country.country_id}}">{{country.country_name}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="StateId" placeholder="state" (ngModelChange)="onSelectState($event)">
+            <mat-option>None</mat-option>
+            <ng-container *ngFor="let state of states">
+              <mat-option value="{{state.state_id}}">{{state.state_name}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="CityId" placeholder="city">
+            <mat-option>None</mat-option>
+            <ng-container *ngFor="let city of cities">
+              <mat-option value="{{city.city_id}}">{{city.city_name}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit" [disabled]="customerService.form.invalid">Submit
+          </button>
+          <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+</form>

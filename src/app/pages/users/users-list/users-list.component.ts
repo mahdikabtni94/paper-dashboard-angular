@@ -6,6 +6,8 @@ import {UsersService} from '../users.service';
 import {CreateUserComponent} from '../create-user/create-user.component';
 import {NotificationService} from '../../../notification.service';
 import {DialogService} from '../../../dialog.service';
+import {CustomerService} from '../../../customers/customer.service';
+import {CustomersComponent} from '../../../customers/customers.component';
 
 @Component({
   selector: 'app-users-list',
@@ -17,9 +19,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['UserName', 'Name', 'Email', 'Address', 'Phone', 'City', 'Profile', 'Activate', 'actions'];
   private usersSub: Subscription;
   isloading = false;
-  // @ts-ignore
   @ViewChild(MatSort, {static: false}) sort: MatSort;
-  // @ts-ignore
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild('slide', {static: false}) MatSlideToggle: MatSlideToggle;
   searchKey: string;
@@ -27,7 +27,8 @@ export class UsersListComponent implements OnInit, OnDestroy {
   constructor(public userService: UsersService,
               private  dialog: MatDialog,
               private notificationService: NotificationService,
-              private  dialogService: DialogService) {
+              private  dialogService: DialogService,
+              private customerService: CustomerService) {
   }
 
   ngOnInit() {
@@ -64,24 +65,34 @@ export class UsersListComponent implements OnInit, OnDestroy {
   }
 
   onDelete(user_id) {
-    this.dialogService.openConfirmDialog('Are you sure to delete this User ?').afterClosed()
+    this.dialogService.openConfirmDialog('Are you sure you want to delete this User ?').afterClosed()
       .subscribe(res => {
         if (res) {
           this.userService.DeleteUser(user_id);
-          this.notificationService.warn('! Deleted successfully');
+          this.notificationService.warn(' Deleted successfully!!');
         }
       });
 
 
   }
 
-  onCreate() {
+  onCreateUser() {
     this.userService.initializeFormGroup();
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '60%';
     this.dialog.open(CreateUserComponent, dialogConfig);
+
+  }
+
+  onCreateCustomer() {
+    this.customerService.initializeFormGroup();
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '60%';
+    this.dialog.open(CustomersComponent, dialogConfig);
 
   }
 
@@ -102,7 +113,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
     } else {
       this.userService.DeactivateUser(user_id);
-      this.notificationService.success('User Account Deactivated');
+      this.notificationService.warn('User Account Deactivated');
     }
 
 

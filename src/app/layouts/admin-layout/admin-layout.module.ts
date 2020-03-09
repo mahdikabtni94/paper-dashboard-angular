@@ -34,7 +34,6 @@ import {
 
 import {UsersComponent} from '../../pages/users/users.component';
 import {UsersListComponent} from '../../pages/users/users-list/users-list.component';
-import {CreateUserComponent} from '../../pages/users/create-user/create-user.component';
 
 
 
