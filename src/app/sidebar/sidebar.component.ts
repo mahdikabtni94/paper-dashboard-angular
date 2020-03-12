@@ -15,7 +15,7 @@ export const ROUTES: RouteInfo[] = [
   {path: '/admin/notifications', title: 'Notifications', icon: 'nc-bell-55', class: ''},
   {path: '/admin/user', title: 'User Profile', icon: 'nc-single-02', class: ''},
   {path: '/admin/typography', title: 'Typography', icon: 'nc-caps-small', class: ''},
-  {path: '/admin/users', title: 'Users', icon: 'nc-caps-small', class: ''},
+  {path: '/admin/users', title: 'Users', icon: 'nc-circle-10', class: ''},
 
 ];
 

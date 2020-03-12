@@ -1,3 +1,5 @@
+import {CountryModel} from '../shared/country.model';
+
 export interface CustomerModel {
   client_id: string,
   client_name: string,
@@ -10,6 +12,7 @@ export interface CustomerModel {
   picpath: string,
   CountryId: string,
   CityId: string,
-  StateId: string
+  StateId: string,
+  country: CountryModel
 
 }

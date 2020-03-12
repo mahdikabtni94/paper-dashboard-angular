@@ -11,7 +11,7 @@ export class AuthService {
 
   private isAuthenticated = false;
   private tokenTimer: any;
-  private token: string
+  private token: string;
   private authStatusListener = new Subject<boolean>();
 
   constructor(private http: HttpClient, private router: Router, private notification: NotificationService) {

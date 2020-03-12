@@ -1,5 +1,5 @@
 <mat-toolbar>
-  <span>{{'new Customer'}}</span>
+  <span>{{customerService.form.controls['client_id'].value ? "Modify Customer" : "New Customer"}}</span>
   <span class="fill-remaining-space"></span>
   <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
     <mat-icon>clear</mat-icon>
@@ -29,6 +29,9 @@
         <mat-form-field>
           <input matInput formControlName="technical_contact" placeholder="technical_contact">
         </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="fax" placeholder="fax">
+        </mat-form-field>
 
       </div>
     </mat-grid-tile>
@@ -40,12 +43,12 @@
           <input formControlName="sales_contact" matInput placeholder="sales_contact">
         </mat-form-field>
         <div>
-          <button mat-stroked-button type="button" (click)="filePicker.click()">Client Image</button>
+          <button mat-stroked-button type="button" (click)="filePicker.click()">Client Image*</button>
           <input type="file" #filePicker (change)="onImagePicked($event)">
         </div>
         <div class="image-preview"
-             *ngIf="imagePreview!==''&& imagePreview && customerService.form.get('picpath').valid">
-          <img [src]="imagePreview" [alt]="'photo'">
+             *ngIf="imagePreview!==''&& imagePreview && customerService.form.get('image').valid">
+          <img [src]="imagePreview" [alt]="customerService.form.value.client_name">
 
         </div>
         <mat-form-field>

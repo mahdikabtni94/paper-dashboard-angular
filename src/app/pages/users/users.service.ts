@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {CustomerModel} from '../../customers/customer.model';
 const BACKEND_URL = environment.apiUrl ;
 
 
@@ -13,6 +14,7 @@ const BACKEND_URL = environment.apiUrl ;
 export class UsersService {
   private users: Users[] = [];
   private usersUpdated = new Subject<Users[]>();
+  private customersUpdated = new Subject<CustomerModel[]>();
   form: FormGroup = new FormGroup({
     user_id: new FormControl(null),
     email: new FormControl('', [Validators.email, Validators.required]),
@@ -24,7 +26,6 @@ export class UsersService {
     Profile: new FormControl(''),
     Activated: new FormControl(false)
   });
-
 
 
   constructor(private http: HttpClient, private  router: Router) {
@@ -56,9 +57,11 @@ export class UsersService {
       });
   }
 
+
   getUsersUpdateListner() {
     return this.usersUpdated.asObservable();
   }
+
 
   getUser(id: string) {
     return this.http.get<{ message: string, data: string }>('http://localhost:3000/findUser' + id);
@@ -136,6 +139,8 @@ export class UsersService {
   populateForm(user) {
     this.form.setValue(user);
   }
+
+
   initializeFormGroup() {
     this.form.setValue({
       'user_id': null,
@@ -149,6 +154,7 @@ export class UsersService {
       'Activated': false
     });
   }
+
   ActivateUser(id: string) {
     this.http.get(BACKEND_URL + '/activateUser/' + id)
       .subscribe(() => {
@@ -156,6 +162,7 @@ export class UsersService {
       })
 
   }
+
   DeactivateUser(id: string) {
 
     this.http.get(BACKEND_URL + '/deactivateUser/' + id)
