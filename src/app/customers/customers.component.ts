@@ -9,7 +9,6 @@ import {StateModel} from '../shared/state/state.model';
 import {CityModel} from '../shared/city/city.model';
 import {CityService} from '../shared/city/city.service';
 import {StateService} from '../shared/state/state.service';
-import {CustomerModel} from './customer.model';
 
 @Component({
   selector: 'app-customers',
@@ -20,7 +19,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
   countries: CountryModel[] = [];
   states: StateModel[] = [];
   cities: CityModel[] = [];
-   // customers: CustomerModel;
+  // customers: CustomerModel;
   imagePreview: string;
   private clientId: string;
 
@@ -42,49 +41,48 @@ export class CustomersComponent implements OnInit, OnDestroy {
 
       });
   }
-   /* if (this.customerService.form.get('client_id').value) {
-      this.clientId = this.customerService.form.get('client_id').value;
-      this.customerService.getCustomer(this.clientId).subscribe(customData => {
-        this.customers = {
-          client_id: customData.data.client_id,
-          client_name: customData.data.client_name,
-          address: customData.data.address,
-          phoneNumber: customData.data.phoneNumber,
-          email: customData.data.email,
-          technical_contact: customData.data.technical_contact,
-          sales_contact: customData.data.sales_contact,
-          fax: customData.data.fax,
-          picpath: customData.data.picpath,
-          CountryId: customData.data.CountryId,
-          CityId: customData.data.CityId,
-          StateId: customData.data.StateId
 
-        };
-        this.customerService.form.setValue({
-          client_name: this.customers.client_name,
-          address: this.customers.address,
-          phoneNumber: this.customers.phoneNumber,
-          email: this.customers.email,
-          technical_contact: this.customers.technical_contact,
-          sales_contact: this.customers.sales_contact,
-          fax: this.customers.fax,
-          image: this.customers.picpath,
-          CountryId: this.customers.CountryId,
-          CityId: this.customers.CityId,
-          StateId: this.customers.StateId
+  /* if (this.customerService.form.get('client_id').value) {
+     this.clientId = this.customerService.form.get('client_id').value;
+     this.customerService.getCustomer(this.clientId).subscribe(customData => {
+       this.customers = {
+         client_id: customData.data.client_id,
+         client_name: customData.data.client_name,
+         address: customData.data.address,
+         phoneNumber: customData.data.phoneNumber,
+         email: customData.data.email,
+         technical_contact: customData.data.technical_contact,
+         sales_contact: customData.data.sales_contact,
+         fax: customData.data.fax,
+         picpath: customData.data.picpath,
+         CountryId: customData.data.CountryId,
+         CityId: customData.data.CityId,
+         StateId: customData.data.StateId
 
-        });
-      });
-    } else {
-          this.clientId = null
+       };
+       this.customerService.form.setValue({
+         client_name: this.customers.client_name,
+         address: this.customers.address,
+         phoneNumber: this.customers.phoneNumber,
+         email: this.customers.email,
+         technical_contact: this.customers.technical_contact,
+         sales_contact: this.customers.sales_contact,
+         fax: this.customers.fax,
+         image: this.customers.picpath,
+         CountryId: this.customers.CountryId,
+         CityId: this.customers.CityId,
+         StateId: this.customers.StateId
 
-        }
-      }
+       });
+     });
+   } else {
+         this.clientId = null
+
+       }
+     }
 
 
 */
-
-
 
 
   onClear() {
@@ -139,12 +137,15 @@ export class CustomersComponent implements OnInit, OnDestroy {
         this.notificationService.success(':: Customer Updated successfully');
         this.onClose();
       }
-      }
-
     }
+
+  }
 
   ngOnDestroy(): void {
     this.countrySub.unsubscribe();
+    this.stateSub.unsubscribe();
+    this.citySub.unsubscribe();
+
   }
 
 
@@ -174,7 +175,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
     this.customerService.form.get('image').updateValueAndValidity();
     const reader = new FileReader();
     reader.onload = () => {
-      this.imagePreview = <string> reader.result
+      this.imagePreview = <string>reader.result
     };
     reader.readAsDataURL(file);
   }

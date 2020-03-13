@@ -43,6 +43,9 @@ import {ForgotPasswordComponent} from './auth/forgot-password/forgot-password.co
 import {CustomersComponent} from './customers/customers.component';
 import {CustomerModule} from './customers/customer.module';
 import {CreateUserModule} from './pages/users/create-user/create-user.module';
+import { SitesComponent } from './pages/sites/sites.component';
+import { SitesListComponent } from './pages/sites/sites-list/sites-list.component';
+import { CreateSiteComponent } from './pages/sites/create-site/create-site.component';
 
 
 @NgModule({
@@ -54,6 +57,8 @@ import {CreateUserModule} from './pages/users/create-user/create-user.module';
     MatConfirmDialogComponent,
     ResetpasswordComponent,
     ForgotPasswordComponent,
+    SitesListComponent,
+    CreateSiteComponent,
 
 
   ],
@@ -95,7 +100,7 @@ import {CreateUserModule} from './pages/users/create-user/create-user.module';
   ],
 
   bootstrap: [AppComponent],
-  entryComponents: [CustomersComponent, CreateUserComponent, MatConfirmDialogComponent,]
+  entryComponents: [CustomersComponent, CreateUserComponent, MatConfirmDialogComponent, ]
 })
 
 export class AppModule {

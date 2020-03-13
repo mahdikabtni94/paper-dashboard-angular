@@ -1,0 +1,87 @@
+<mat-toolbar>
+  <span>{{siteService.form.controls['site_id'].value ? "Modify Site" : "New Site"}}</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="siteService.form" class="normal-form" (submit)="onSaveSite()">
+  <mat-grid-list cols="2" rowHeight="450px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        <input type="hidden" formControlName="site_id">
+        <mat-form-field>
+          <input formControlName="site_label" matInput placeholder="label*">
+          <mat-error>Pls enter a site label.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="site_email" matInput placeholder="email">
+          <mat-error>Invalid Email Address.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="site_phone" matInput placeholder="phoneNumber">
+          <mat-error>Minimum 8 characters needed.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="site_technical_contact" matInput placeholder="TechnicalContact">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="site_prod_contact" placeholder="prod_contact">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName=" site_fax" placeholder="fax">
+        </mat-form-field>
+
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <div class="controles-container">
+
+        <mat-form-field>
+          <input formControlName="site_address" matInput placeholder="address">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="CountryId" placeholder="country" (ngModelChange)="onSelectCountry($event)" #country>
+            <mat-option>None</mat-option>
+            <ng-container *ngFor="let country of countries">
+              <mat-option value="{{country.country_id}}">{{country.country_name}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="StateId" placeholder="state" (ngModelChange)="onSelectState($event)">
+            <mat-option>None</mat-option>
+            <ng-container *ngFor="let state of states">
+              <mat-option value="{{state.state_id}}">{{state.state_name}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="CityId" placeholder="city">
+            <mat-option>None</mat-option>
+            <ng-container *ngFor="let city of cities">
+              <mat-option value="{{city.city_id}}">{{city.city_name}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="ClientId" placeholder="Client">
+            <mat-option>None</mat-option>
+            <ng-container *ngFor="let client of clients">
+              <mat-option value="{{client.client_id}}">{{client.client_name}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit" [disabled]="siteService.form.invalid">Submit
+          </button>
+          <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+</form>
+

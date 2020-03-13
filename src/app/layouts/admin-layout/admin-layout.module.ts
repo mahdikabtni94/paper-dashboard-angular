@@ -34,6 +34,7 @@ import {
 
 import {UsersComponent} from '../../pages/users/users.component';
 import {UsersListComponent} from '../../pages/users/users-list/users-list.component';
+import {SitesComponent} from '../../pages/sites/sites.component';
 
 
 
@@ -65,6 +66,7 @@ import {UsersListComponent} from '../../pages/users/users-list/users-list.compon
     NotificationsComponent,
     UsersComponent,
     UsersListComponent,
+    SitesComponent,
 
 
 
