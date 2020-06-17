@@ -11,13 +11,13 @@ import {
   MatSelectModule,
   MatToolbarModule
 } from '@angular/material';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 
 @NgModule({
   // tslint:disable-next-line:max-line-length
-  imports: [RouterModule, CommonModule, MatGridListModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, MatToolbarModule, ],
+  imports: [RouterModule, CommonModule, MatGridListModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, MatToolbarModule, FormsModule, ],
   declarations: [ CreateUserComponent ],
   exports: [ CreateUserComponent],
 

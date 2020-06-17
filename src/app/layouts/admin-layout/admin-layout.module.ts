@@ -22,20 +22,40 @@ import {UpgradeComponent} from '../../pages/upgrade/upgrade.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {
-  MatButtonModule,
+  MatButtonModule, MatExpansionModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
   MatPaginatorModule,
-  MatProgressSpinnerModule, MatSlideToggleModule,
+  MatProgressSpinnerModule,
+  MatSlideToggleModule,
   MatSortModule,
-  MatTableModule, MatToolbarModule
+  MatTableModule,
+  MatTabsModule,
+  MatToolbarModule
 } from '@angular/material';
 
 import {UsersComponent} from '../../pages/users/users.component';
 import {UsersListComponent} from '../../pages/users/users-list/users-list.component';
 import {SitesComponent} from '../../pages/sites/sites.component';
-
+import {SitesListComponent} from '../../pages/sites/sites-list/sites-list.component';
+import {LinesComponent} from '../../pages/lines/lines.component';
+import {LinesListComponent} from '../../pages/lines/lines-list/lines-list.component';
+import {CustomersListComponent} from '../../customers/customers-list/customers-list.component';
+import {ProfilesComponent} from '../../pages/profiles/profiles.component';
+import {ProfileListComponent} from '../../pages/profiles/profile-list/profile-list.component';
+import {MachinesComponent} from '../../pages/machines/machines.component';
+import {MachineListComponent} from '../../pages/machines/machine-list/machine-list.component';
+import {MachineTypeListComponent} from '../../pages/machine_types/machine-type-list/machine-type-list.component';
+import {StaffComponent} from '../../pages/staff/staff.component';
+import {OperatorListComponent} from '../../pages/staff/operator-list/operator-list.component';
+import {SupervisorListComponent} from '../../pages/staff/supervisor-list/supervisor-list.component';
+import {MechnicsListComponent} from '../../pages/staff/mechnics-list/mechnics-list.component';
+import {ElectronicsListComponent} from '../../pages/staff/electronics-list/electronics-list.component';
+import {OperationListComponent} from '../../pages/production-management/operation-list/operation-list.component';
+import {SequenceListComponent} from '../../pages/production-management/sequence-list/sequence-list.component';
+import {ArticleListComponent} from '../../pages/production-management/article-list/article-list.component';
+import {ProductionManagementComponent} from '../../pages/production-management/production-management.component';
 
 
 @NgModule({
@@ -53,7 +73,10 @@ import {SitesComponent} from '../../pages/sites/sites.component';
     MatFormFieldModule,
     MatInputModule,
     MatToolbarModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatTabsModule,
+    MatExpansionModule,
+
 
   ],
   declarations: [
@@ -67,7 +90,24 @@ import {SitesComponent} from '../../pages/sites/sites.component';
     UsersComponent,
     UsersListComponent,
     SitesComponent,
-
+    SitesListComponent,
+    LinesComponent,
+    LinesListComponent,
+    CustomersListComponent,
+    ProfilesComponent,
+    ProfileListComponent,
+    MachinesComponent,
+    MachineListComponent,
+    MachineTypeListComponent,
+    StaffComponent,
+    OperatorListComponent,
+    SupervisorListComponent,
+    MechnicsListComponent,
+    ElectronicsListComponent,
+    OperationListComponent,
+    SequenceListComponent,
+    ArticleListComponent,
+    ProductionManagementComponent,
 
 
   ]

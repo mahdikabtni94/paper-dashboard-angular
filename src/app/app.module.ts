@@ -14,22 +14,25 @@ import {AdminLayoutComponent} from './layouts/admin-layout/admin-layout.componen
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
+  MAT_DATE_FORMATS,
   MAT_DIALOG_DEFAULT_OPTIONS,
   MatButtonModule,
   MatCardModule,
+  MatCheckboxModule,
+  MatDatepickerModule,
   MatDialogModule,
   MatExpansionModule,
-  MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
   MatInputModule,
+  MatNativeDateModule,
   MatPaginatorModule,
   MatProgressSpinnerModule,
   MatSelectModule,
   MatSlideToggleModule,
   MatSnackBarModule,
   MatSortModule,
-  MatTableModule,
+  MatTableModule, MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
 import {LoginComponent} from './auth/login/login.component';
@@ -43,9 +46,19 @@ import {ForgotPasswordComponent} from './auth/forgot-password/forgot-password.co
 import {CustomersComponent} from './customers/customers.component';
 import {CustomerModule} from './customers/customer.module';
 import {CreateUserModule} from './pages/users/create-user/create-user.module';
-import { SitesComponent } from './pages/sites/sites.component';
-import { SitesListComponent } from './pages/sites/sites-list/sites-list.component';
-import { CreateSiteComponent } from './pages/sites/create-site/create-site.component';
+import {CreateSiteComponent} from './pages/sites/create-site/create-site.component';
+import {CreateLineComponent} from './pages/lines/create-line/create-line.component';
+import {CreateProfileComponent} from './pages/profiles/create-profile/create-profile.component';
+import {CreateMachineComponent} from './pages/machines/create-machine/create-machine.component';
+import {CreateMachineTypeComponent} from './pages/machine_types/create-machine-type/create-machine-type.component';
+import {CreateOperatorComponent} from './pages/staff/create-operator/create-operator.component';
+import {CreateSupervisorComponent} from './pages/staff/create-supervisor/create-supervisor.component';
+import {CreatemechanicComponent} from './pages/staff/create-mechanic/create-mechanic.component';
+import { CreateOperationComponent } from './pages/production-management/create-operation/create-operation.component';
+import { CreateSequenceComponent } from './pages/production-management/create-sequence/create-sequence.component';
+import { CreateArticleComponent } from './pages/production-management/create-article/create-article.component';
+import {CreateelectronicComponent} from './pages/staff/create-electronic/create-electronic.component';
+
 
 
 @NgModule({
@@ -57,8 +70,19 @@ import { CreateSiteComponent } from './pages/sites/create-site/create-site.compo
     MatConfirmDialogComponent,
     ResetpasswordComponent,
     ForgotPasswordComponent,
-    SitesListComponent,
     CreateSiteComponent,
+    CreateLineComponent,
+    CreateProfileComponent,
+    CreateMachineComponent,
+    CreateMachineTypeComponent,
+    CreateOperatorComponent,
+    CreateSupervisorComponent,
+    CreatemechanicComponent,
+    CreateelectronicComponent,
+    CreateOperationComponent,
+    CreateSequenceComponent,
+    CreateArticleComponent,
+
 
 
   ],
@@ -90,7 +114,11 @@ import { CreateSiteComponent } from './pages/sites/create-site/create-site.compo
     MatSlideToggleModule,
     CreateUserModule,
     CustomerModule,
-    MatInputModule
+    MatInputModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatTabsModule
 
 
   ],
@@ -100,7 +128,21 @@ import { CreateSiteComponent } from './pages/sites/create-site/create-site.compo
   ],
 
   bootstrap: [AppComponent],
-  entryComponents: [CustomersComponent, CreateUserComponent, MatConfirmDialogComponent, ]
+  entryComponents: [CustomersComponent,
+    CreatemechanicComponent,
+    CreateelectronicComponent,
+    CreateUserComponent,
+    MatConfirmDialogComponent,
+    CreateSiteComponent,
+    CreateLineComponent,
+    CreateProfileComponent,
+    CreateMachineComponent,
+    CreateMachineTypeComponent,
+    CreateSupervisorComponent,
+    CreateOperatorComponent,
+    CreateSequenceComponent,
+    CreateOperationComponent
+  ]
 })
 
 export class AppModule {

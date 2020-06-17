@@ -6,12 +6,13 @@ import {
   MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
-  MatInputModule,
-  MatSelectModule,
+  MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
+  MatSelectModule, MatTableModule,
   MatToolbarModule
 } from '@angular/material';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CustomersComponent} from './customers.component';
+
 
 
 @NgModule({
@@ -19,7 +20,7 @@ import {CustomersComponent} from './customers.component';
   imports: [RouterModule, CommonModule, MatGridListModule,
     ReactiveFormsModule, MatFormFieldModule, MatInputModule,
     MatSelectModule, MatButtonModule,
-    MatIconModule, MatToolbarModule, ],
+    MatIconModule, MatToolbarModule, MatProgressSpinnerModule, FormsModule, MatPaginatorModule, MatTableModule,],
   declarations: [ CustomersComponent ],
   exports: [ CustomersComponent],
 

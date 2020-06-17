@@ -1,0 +1,51 @@
+form.normal-form{
+  margin: 10px;
+}
+.controles-container{
+  width: 100%;
+  padding: 5%;
+  display : block;
+}
+.controles-container > * {
+  width: 100%;
+}
+.add-bottom-padding{
+  padding-bottom: 10px;
+}
+
+.button-row button{
+  margin: 5px;
+}
+.btn-dialog-close{
+  width: 45px;
+  min-width: 0px !important;
+  height: 40px;
+  padding: 0px !important;
+}
+.fill-remaining-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+.profile-label{
+  font-weight:bold ;
+}
+.profile-description{
+  font-weight: bold;
+}
+.checkbox-row mat-checkbox{
+  margin: 5px;
+  vertical-align: bottom;
+  display:block;
+  font-weight: bold;
+  width: 13px;
+}
+.permission-checkbox mat-checkbox{
+  margin: 5px;
+  vertical-align: bottom;
+  display:block;
+  font-weight: bold;
+  width: 13px;
+}
+
+

@@ -29,18 +29,33 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <div class="controles-container">
-        <mat-form-field>
-          <input  formControlName="Phone" matInput placeholder="Phone">
-          <mat-error>Minimum 8 characters needed.</mat-error>
-        </mat-form-field>
+        <div>
+          <ng-container *ngIf="countries">
+            <select (change)="resetPhoneNumber($event)" [(ngModel)]="selectedCountry"
+                    [ngModelOptions]="{standalone: true}">
+              <option *ngFor="let country of countries" [ngValue]="country.code">{{country.name}}</option>
+            </select>
+          </ng-container>
+          <mat-form-field>
+            <input (input)="formatPhoneNumber($event)" formControlName="Phone" matInput placeholder="Phone">
+            <mat-icon matSuffix>phone</mat-icon>
+            <mat-error *ngIf="this.userService.form.get('Phone').invalid">Not a valid phone number.</mat-error>
+          </mat-form-field>
+        </div>
         <mat-form-field>
           <input formControlName="City" matInput placeholder="City">
         </mat-form-field>
         <mat-form-field>
-          <mat-select formControlName="Profile" placeholder="Profile">
-            <mat-option>None</mat-option>
+          <mat-select formControlName="ProfileId" placeholder="Profile">
             <ng-container *ngFor="let profile of ProfileList">
-              <mat-option value="{{profile}}">{{profile}}</mat-option>
+              <mat-option value="{{profile.profile_id}}">{{profile.profile_label}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="ClientId" placeholder="Client">
+            <ng-container *ngFor="let customer of CustomerList">
+              <mat-option value="{{customer.client_id}}">{{customer.client_name}}</mat-option>
             </ng-container>
           </mat-select>
         </mat-form-field>

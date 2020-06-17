@@ -2,19 +2,27 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {AuthData} from './auth-data.model';
-import {Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {NotificationService} from '../notification.service';
+import {Users} from '../pages/users/users.model';
 
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
-
   private isAuthenticated = false;
   private tokenTimer: any;
   private token: string;
   private authStatusListener = new Subject<boolean>();
+  private currentUserSubject: BehaviorSubject<Users>;
+  public currentUser: Observable<Users>;
 
   constructor(private http: HttpClient, private router: Router, private notification: NotificationService) {
+    this.currentUserSubject = new BehaviorSubject<Users>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser = this.currentUserSubject.asObservable();
+  }
+
+  public get currentUserValue(): Users {
+    return this.currentUserSubject.value;
   }
 
   getToken() {
@@ -41,30 +49,32 @@ export class AuthService {
 
   login(email: string, password: string) {
     const authData: AuthData = {email: email, password: password};
-     this.http
-      .post<{ token: string; expiresIn: number }>(
+    this.http
+      .post<{ token: string; expiresIn: number, user: Users }>(
         'http://localhost:3000/login',
         authData
       )
       .subscribe(response => {
-        const token = response.token
-        this.token = token;
-        if (token) {
-          const expiresInDuration = response.expiresIn;
-          this.setAuthTimer(expiresInDuration);
-          this.isAuthenticated = true;
-          this.authStatusListener.next(true);
-          const now = new Date();
-          const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-          console.log(expirationDate);
-          this.saveAuthData(token, expirationDate);
-          this.router.navigate(['/admin']);
-          this.notification.success('Authentication Successful ');
-        }
-      },
+          localStorage.setItem('currentUser', JSON.stringify(response.user));
+          this.currentUserSubject.next(response.user);
+          const token = response.token;
+          this.token = token;
+          if (token) {
+            const expiresInDuration = response.expiresIn;
+            this.setAuthTimer(expiresInDuration);
+            this.isAuthenticated = true;
+            this.authStatusListener.next(true);
+            const now = new Date();
+            const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+            console.log(expirationDate);
+            this.saveAuthData(token, expirationDate);
+            this.router.navigate(['/admin']);
+            this.notification.success('Authentication Successful ');
+          }
+        },
         (err: HttpErrorResponse) => {
-     this.router.navigate(['/']);
-     this.notification.warn('Authentication Failed');
+          this.router.navigate(['/']);
+          this.notification.warn('Authentication Failed');
 
         }
       )
@@ -79,6 +89,7 @@ export class AuthService {
     this.router.navigate(['/']);
 
   }
+
   autoAuthUser() {
     const authInformation = this.getAuthData();
     if (!authInformation) {
@@ -102,6 +113,8 @@ export class AuthService {
   private clearAuthData() {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
   }
 
   private getAuthData() {
@@ -122,17 +135,18 @@ export class AuthService {
       this.logout();
     }, duration * 1000);
   }
+
   resetPassword(email: string) {
     const resetEmail = {email: email};
-    this.http.post<{message: string, token: string}>('http://localhost:3000/forgetPassword', resetEmail)
+    this.http.post<{ message: string, token: string }>('http://localhost:3000/forgetPassword', resetEmail)
       .subscribe(response => {
         this.notification.success(response.message);
         this.router.navigate(['/']);
 
       }, (err: HttpErrorResponse) => {
-      this.notification.warn(err.message);
+        this.notification.warn(err.message);
 
-    })
+      })
 
 
   }

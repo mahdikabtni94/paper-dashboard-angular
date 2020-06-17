@@ -1,0 +1,53 @@
+<mat-toolbar>
+  <span>{{machineService.form.controls['machine_id'].value ? "Modify machine" : "New machine"}}</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="machineService.form" class="normal-form" (submit)="onSavemachine()">
+  <mat-grid-list cols="2" rowHeight="450px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        <input type="hidden" formControlName="machine_id">
+        <mat-form-field>
+          <input formControlName="machine_label" matInput placeholder="label*">
+          <mat-error>Pls enter a machine label.</mat-error>
+        </mat-form-field>
+          <mat-form-field>
+            <mat-label>StartWorkingDate</mat-label>
+            <input matInput [matDatepicker]="dp3" disabled formControlName="startworkingdate">
+            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+          </mat-form-field>
+
+        <mat-form-field>
+          <input formControlName="manifacturerlifetime" matInput placeholder="manifacturerlifetime">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="LineId" placeholder=" Select Line">
+            <ng-container *ngFor="let line of lines">
+              <mat-option value="{{line.line_id}}">{{line.line_label}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="MachineTypeId" placeholder=" Select MachineType">
+            <ng-container *ngFor="let type of machineTypes">
+              <mat-option value="{{type.machinetype_id}}">{{type.type}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit" [disabled]="machineService.form.invalid">Submit</button>
+          <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+        </div>
+
+
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>
+
+

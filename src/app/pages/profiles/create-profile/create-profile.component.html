@@ -1,0 +1,61 @@
+<mat-toolbar>
+  <span>{{profileService.form.controls['profile_id'].value ? "Modify profile" : "New profile"}}</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="profileService.form" class="normal-form" (submit)="onSaveprofile()">
+  <mat-grid-list cols="1" rowHeight="600px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        <input type="hidden" formControlName="profile_id">
+        <label class="profile-label">Label</label>
+        <mat-form-field appearance="outline">
+          <input formControlName="profile_label" matInput placeholder="label*">
+          <mat-error>Pls enter a profile label.</mat-error>
+        </mat-form-field>
+        <label class="profile-description">Description</label>
+        <mat-form-field appearance="outline">
+          <input formControlName="profile_description" matInput placeholder="description">
+        </mat-form-field>
+        <div class="mat-elevation-z4">
+          <h3>Permissions</h3>
+          <div class="checkbox-row">
+            <mat-checkbox
+              [checked]="this.profileService.form.value.has_update === 'Y'"
+              (change)="this.profileService.form.value.has_update = $event.checked ? 'Y': 'N'"
+
+            >Update
+            </mat-checkbox>
+            <mat-checkbox
+              [checked]="this.profileService.form.value.has_delete === 'Y'"
+              (change)="this.profileService.form.value.has_delete = $event.checked ? 'Y': 'N'"
+            >Delete
+            </mat-checkbox>
+            <mat-checkbox
+              [checked]="this.profileService.form.value.has_save === 'Y'"
+              (change)="this.profileService.form.value.has_save = $event.checked ? 'Y': 'N'">Save
+            </mat-checkbox>
+          </div>
+        </div>
+        <div class=" mat-elevation-z4">
+          <h3>Sections</h3>
+          <div *ngFor="let permission of permissions;  let i = index">
+            <mat-checkbox class="permission-checkbox"
+                          (change)="onChange($event)"
+                          [value]="permission.permission_id">
+              {{permission.permission_label}}</mat-checkbox>
+          </div>
+        </div>
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit" [disabled]="profileService.form.invalid">Submit
+          </button>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>
+
+

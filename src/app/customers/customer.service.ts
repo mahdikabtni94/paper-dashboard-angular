@@ -7,7 +7,6 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {environment} from '../../environments/environment';
 import {mimeType} from './mime-type.validator';
 import {map} from 'rxjs/operators';
-import {CountryService} from '../shared/country.service';
 
 
 const BACKEND_URL = environment.apiUrl;
@@ -23,21 +22,23 @@ export class CustomerService {
     client_id: new FormControl(null),
     client_name: new FormControl('', Validators.required),
     address: new FormControl(''),
-    phoneNumber: new FormControl('', Validators.minLength(8)),
+    phoneNumber: new FormControl('',
+      Validators.pattern('(^\\+[0-9]{1,3}|^\\+[0-9]{2}\\(0\\)|^\\(\\+[0-9]{2}\\)\\(0\\)|^00[0-9]{2}|^0)([0-9]{8,10}$|[0-9\\-\\s]{9,13}$)')),
     email: new FormControl('', [Validators.email, Validators.required]),
     technical_contact: new FormControl(''),
     sales_contact: new FormControl(''),
     fax: new FormControl(''),
-    image: new FormControl('', {
+    picpath: new FormControl('', {
       validators: [Validators.required],
       asyncValidators: [mimeType]
     }),
     CountryId: new FormControl(''),
     CityId: new FormControl(''),
-    StateId: new FormControl('')
+    StateId: new FormControl(''),
+
   });
 
-  constructor(private http: HttpClient, private  router: Router, private countryService: CountryService) {
+  constructor(private http: HttpClient, private  router: Router) {
   }
 
   AddCustomer(client_name: string, address: string,
@@ -56,7 +57,7 @@ export class CustomerService {
     Data.append('technical_contact', technical_contact);
     Data.append('sales_contact', sales_contact);
     Data.append('fax', fax);
-    Data.append('image', image, client_name);
+    Data.append('picpath', image, client_name);
     Data.append('CityId', CityId);
     Data.append('CountryId', CountryId);
     Data.append('StateId', StateId);
@@ -80,14 +81,14 @@ export class CustomerService {
           CountryId: CountryId,
           CityId: CityId,
           StateId: StateId,
-          country : responseData.customer.country
+          country: responseData.customer.country
 
         };
 
         console.log('Country***************', customer);
         this.customers.push(customer);
         this.customersUpdated.next([...this.customers]);
-        this.router.navigate(['/admin/users']);
+        // this.router.navigate(['/admin/users']);
 
       });
   }
@@ -106,12 +107,15 @@ export class CustomerService {
       'CountryId': '',
       'CityId': '',
       'StateId': '',
-      'image': ''
+      'picpath': '',
+
 
     });
   }
+
   populateForm(customer) {
-    this.form.setValue (customer);
+    console.log('row*********', customer);
+    this.form.patchValue(customer);
   }
 
   getCustomers() {
@@ -130,9 +134,9 @@ export class CustomerService {
             sales_contact: customer.sales_contact,
             fax: customer.fax,
             picpath: customer.picpath,
-            CountryId : customer.CountryId,
-            CityId : customer.CityId,
-            StateId : customer.StateId,
+            CountryId: customer.CountryId,
+            CityId: customer.CityId,
+            StateId: customer.StateId,
 
 
           };
@@ -149,6 +153,7 @@ export class CustomerService {
   getCustomerUpdateListner() {
     return this.customersUpdated.asObservable();
   }
+
   DeleteCustomer(client_id: String) {
     this.http.delete(BACKEND_URL + '/api/customer/delete/' + client_id).subscribe(
       () => {
@@ -158,50 +163,31 @@ export class CustomerService {
       }
     );
   }
-UpdateCustomer(client_id: string, client_name: string, address: string,
-               PhoneNumber: string, email: string,
-               technical_contact: string,
-               sales_contact: string, fax: string,
-               image: File|string, CityId: string,
-               CountryId: string, StateId: string
-) {
-  let Data: any |FormData;
-  if (typeof(image) === 'object') {
-     Data = new FormData();
-    Data.append('client_name', client_name);
-    Data.append('address', address);
-    Data.append('phoneNumber', PhoneNumber);
-    Data.append('email', email);
-    Data.append('technical_contact', technical_contact);
-    Data.append('sales_contact', sales_contact);
-    Data.append('fax', fax);
-    Data.append('image', image, client_name);
-    Data.append('CityId', CityId);
-    Data.append('CountryId', CountryId);
-    Data.append('StateId', StateId);
 
-  } else {
-    Data = {
-      client_id: client_id,
-      client_name: client_name,
-      address: address,
-      phoneNumber: PhoneNumber,
-      email: email,
-      technical_contact: technical_contact,
-      sales_contact: sales_contact,
-      fax: fax,
-      picpath: image,
-      CountryId: CountryId,
-      CityId: CityId,
-      StateId: StateId
-    }
-  }
+  UpdateCustomer(client_id: string, client_name: string, address: string,
+                 PhoneNumber: string, email: string,
+                 technical_contact: string,
+                 sales_contact: string, fax: string,
+                 image: File | string, CityId: string,
+                 CountryId: string, StateId: string
+  ) {
+    let Data: any | FormData;
+    if (typeof (image) === 'object') {
+      Data = new FormData();
+      Data.append('client_name', client_name);
+      Data.append('address', address);
+      Data.append('phoneNumber', PhoneNumber);
+      Data.append('email', email);
+      Data.append('technical_contact', technical_contact);
+      Data.append('sales_contact', sales_contact);
+      Data.append('fax', fax);
+      Data.append('picpath', image, client_name);
+      Data.append('CityId', CityId);
+      Data.append('CountryId', CountryId);
+      Data.append('StateId', StateId);
 
-  this.http.put<{message: string, customer: CustomerModel}>(BACKEND_URL + '/api/customer/update/' + client_id, Data)
-    .subscribe(responseData => {
-      const UpdatedCustomers = [...this.customers];
-      const oldCustomerIndex = UpdatedCustomers.findIndex(p => p.client_id === client_id);
-      const customer: CustomerModel = {
+    } else {
+      Data = {
         client_id: client_id,
         client_name: client_name,
         address: address,
@@ -210,22 +196,43 @@ UpdateCustomer(client_id: string, client_name: string, address: string,
         technical_contact: technical_contact,
         sales_contact: sales_contact,
         fax: fax,
-        picpath: responseData.customer.picpath,
+        picpath: image,
         CountryId: CountryId,
         CityId: CityId,
-        StateId: StateId,
-        country : responseData.customer.country,
+        StateId: StateId
+      }
+    }
 
-      };
+    this.http.put<{ message: string, customer: CustomerModel }>(BACKEND_URL + '/api/customer/update/' + client_id, Data)
+      .subscribe(responseData => {
+        const UpdatedCustomers = [...this.customers];
+        const oldCustomerIndex = UpdatedCustomers.findIndex(p => p.client_id === client_id);
+        const customer: CustomerModel = {
+          client_id: client_id,
+          client_name: client_name,
+          address: address,
+          phoneNumber: PhoneNumber,
+          email: email,
+          technical_contact: technical_contact,
+          sales_contact: sales_contact,
+          fax: fax,
+          picpath: responseData.customer.picpath,
+          CountryId: CountryId,
+          CityId: CityId,
+          StateId: StateId,
+          country: responseData.customer.country,
 
-      UpdatedCustomers[oldCustomerIndex] = customer;
-      this.customers = UpdatedCustomers
-      this.customersUpdated.next([...this.customers]);
-      this.router.navigate(['/admin/users']);
+        };
+
+        UpdatedCustomers[oldCustomerIndex] = customer;
+        this.customers = UpdatedCustomers;
+        this.customersUpdated.next([...this.customers]);
+        this.router.navigate(['/admin/users']);
 
 
-    })
-}
+      })
+  }
+
   getCustomer(id: string) {
     return this.http.get<{ message: string, data: CustomerModel }>('http://localhost:3000/api/customer/find/' + id);
   }

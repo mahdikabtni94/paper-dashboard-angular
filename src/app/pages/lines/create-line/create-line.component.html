@@ -1,0 +1,39 @@
+<mat-toolbar>
+  <span>{{lineService.form.controls['line_id'].value ? "Modify line" : "New line"}}</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="lineService.form" class="normal-form" (submit)="onSaveLine()">
+  <mat-grid-list cols="2" rowHeight="450px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        <input type="hidden" formControlName="line_id">
+        <mat-form-field>
+          <input formControlName="line_label" matInput placeholder="label*">
+          <mat-error>Pls enter a line label.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="line_description" matInput placeholder="description">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="SiteId" placeholder="site">
+            <mat-option>None</mat-option>
+            <ng-container *ngFor="let site of sites">
+              <mat-option value="{{site.site_id}}">{{site.site_label}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit" [disabled]="lineService.form.invalid">Submit</button>
+          <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+        </div>
+
+
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>
+

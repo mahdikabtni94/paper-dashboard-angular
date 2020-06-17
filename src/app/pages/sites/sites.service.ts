@@ -20,8 +20,8 @@ export class SitesService {
   private sitesUpdated = new Subject<SiteModel[]>();
   form: FormGroup = new FormGroup({
     site_id: new FormControl(null),
-    site_label: new FormControl('', [Validators.email, Validators.required]),
-    site_email: new FormControl(''),
+    site_label: new FormControl('', [Validators.required]),
+    site_email: new FormControl('', Validators.email),
     site_phone: new FormControl('', Validators.minLength(8)),
     site_technical_contact: new FormControl(''),
     site_prod_contact: new FormControl(''),
@@ -76,7 +76,7 @@ export class SitesService {
         }
         this.sites.push(site);
         this.sitesUpdated.next([...this.sites]);
-        this.router.navigate(['/admin/sites']);
+        this.router.navigate(['admin/users/SiteList']);
 
       });
   }
@@ -113,7 +113,7 @@ export class SitesService {
   }
 
   populateForm(site) {
-    this.form.setValue(site);
+    this.form.patchValue(site);
   }
 
   getSiteUpdateListner() {
@@ -175,7 +175,7 @@ export class SitesService {
         UpdatedSites[oldSitesIndex] = site;
         this.sites = UpdatedSites;
         this.sitesUpdated.next([...this.sites]);
-        this.router.navigate(['/admin/sites']);
+        this.router.navigate(['admin/users/SiteList']);
 
 
       })
@@ -183,21 +183,21 @@ export class SitesService {
   }
 
   initializeFormGroup() {
-    this.form.setValue({
-      'site_id': null,
-      'site_label': '',
-      'site_email': '',
-      'site_phone': '',
-      'site_technical_contact': '',
-      'site_prod_contact': '',
-      'site_fax': '',
-      'site_address': '',
-      'CountryId': '',
-      'CityId': '',
-      'StateId': '',
-      'ClientId': '',
+  this.form.setValue({
+    'site_id': null,
+    'site_label': '',
+    'site_email': '',
+    'site_phone': '',
+    'site_technical_contact': '',
+    'site_prod_contact': '',
+    'site_fax': '',
+    'site_address': '',
+    'CountryId': '',
+    'CityId': '',
+    'StateId': '',
+    'ClientId': '',
 
-    });
-  }
+  });
+}
 }
 

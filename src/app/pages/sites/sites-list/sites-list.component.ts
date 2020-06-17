@@ -14,7 +14,7 @@ import {CreateSiteComponent} from '../create-site/create-site.component';
 })
 export class SitesListComponent implements OnInit, OnDestroy {
   sites: MatTableDataSource<SiteModel>;
-  displayedColumns: string[] = ['label', 'Email',
+  displayedColumns: string[] = ['Label', 'Email',
     'Phone', 'Technical_Contact',
     'Prod_Contact', 'Fax',
     'Address', 'Country',
@@ -39,8 +39,10 @@ export class SitesListComponent implements OnInit, OnDestroy {
       .subscribe((sites) => {
         this.isloading = false;
         this.sites = new MatTableDataSource(sites);
-        this.sites.sort = this.sort;
-        this.sites.paginator = this.paginator;
+        setTimeout(() => {
+          this.sites.sort = this.sort;
+          this.sites.paginator = this.paginator;
+        });
         this.sites.filterPredicate = (data, filter) => {
           return this.displayedColumns.some(ele => {
             return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
@@ -60,7 +62,7 @@ export class SitesListComponent implements OnInit, OnDestroy {
   }
 
   onDelete(site_id) {
-    this.dialogService.openConfirmDialog('Are you sure you want to delete this User ?').afterClosed()
+    this.dialogService.openConfirmDialog('Are you sure you want to delete this Site ?').afterClosed()
       .subscribe(res => {
         if (res) {
           this.siteService.DeleteSite(site_id);

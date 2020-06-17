@@ -1,0 +1,53 @@
+<mat-toolbar>
+  <span>{{operationService.form.controls['operation_template_id'].value ? "Modify Operation" : "New Operation"}}</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="operationService.form" class="normal-form" (submit)="onSaveoperation()">
+  <mat-grid-list cols="2" rowHeight="300px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        <input type="hidden" formControlName="operation_template_id">
+        <mat-form-field>
+          <input formControlName="label" matInput placeholder="Operation Name*">
+          <mat-error>this field is mandatory.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="description" matInput placeholder="Description">
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="accMinPrice" matInput placeholder="Accord Minute Price">
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div class="controles-container">
+
+        <mat-form-field>
+          <input formControlName="op_code" matInput placeholder="Operation Code">
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="time" matInput placeholder="Time">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="MachineTypeId" placeholder="Machine Type">
+            <ng-container *ngFor="let machine of machines">
+              <mat-option value="{{machine.machinetype_id}}">{{machine.type}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <mat-slide-toggle #slide [checked]="operationService.form.value.with_subsequence== true" (change)="OnChange()">with_subsequence</mat-slide-toggle>
+
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit" [disabled]="operationService.form.invalid">Submit</button>
+          <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+</form>
+

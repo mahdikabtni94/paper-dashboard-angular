@@ -1,24 +1,62 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UsersService} from '../users.service';
 import {MatDialogRef} from '@angular/material';
 import {NotificationService} from '../../../notification.service';
+import {ProfileModel} from '../../profiles/profile.model';
+import {Subscription} from 'rxjs';
+import {ProfileService} from '../../profiles/profile.service';
+import {CustomerModel} from '../../../customers/customer.model';
+import {CustomerService} from '../../../customers/customer.service';
+import {PhoneService} from '../../../shared/phoneCountry.service';
+import {ICountry} from '../../../shared/phoneCountry.interface';
+import {AbstractControl} from '@angular/forms';
+import {parsePhoneNumberFromString} from 'libphonenumber-js';
+
 
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
   styleUrls: ['./create-user.component.scss']
 })
-export class CreateUserComponent implements OnInit {
-
-  ProfileList = ['superUser', 'simpleUser', 'admin'];
+export class CreateUserComponent implements OnInit, OnDestroy {
+  selectedCountry: any = 'TN';
+  selectedPhoneNumber: any;
+  countries: any[];
+  subscription: Subscription;
+  ProfileList: ProfileModel[] = [];
+  CustomerList: CustomerModel[] = [];
+  private profileSub: Subscription;
+  private customerSub: Subscription;
 
   // tslint:disable-next-line:max-line-length
-  constructor(public dialogref: MatDialogRef<CreateUserComponent>, public userService: UsersService, public notificationService: NotificationService) {
+  constructor(public dialogref: MatDialogRef<CreateUserComponent>, public userService: UsersService,
+              public notificationService: NotificationService, private profileService: ProfileService,
+              private customerService: CustomerService, private phoneService: PhoneService) {
   }
 
 
   ngOnInit() {
+    this.fetchCountryList();
+    this.profileService.getProfiles();
+    this.profileSub = this.profileService.getProfilesUpdateListner()
+      .subscribe((profiles: ProfileModel[]) => {
+        this.ProfileList = profiles;
 
+      });
+    this.customerService.getCustomers();
+    this.customerSub = this.customerService.getCustomerUpdateListner()
+      .subscribe((customers: CustomerModel[]) => {
+        this.CustomerList = customers;
+
+      });
+
+  }
+
+
+  private fetchCountryList(): void {
+    this.subscription = this.phoneService.getCountries().subscribe((res: ICountry[]) => {
+      this.countries = res;
+    }, error => error);
   }
 
   onClear() {
@@ -44,7 +82,8 @@ export class CreateUserComponent implements OnInit {
           this.userService.form.value.Address,
           this.userService.form.value.Phone,
           this.userService.form.value.City,
-          this.userService.form.value.Profile);
+          this.userService.form.value.ProfileId,
+          this.userService.form.value.ClientId);
         this.userService.form.reset();
         this.userService.initializeFormGroup();
         this.notificationService.success(':: User Added successfully');
@@ -59,7 +98,8 @@ export class CreateUserComponent implements OnInit {
           this.userService.form.value.Address,
           this.userService.form.value.Phone,
           this.userService.form.value.City,
-          this.userService.form.value.Profile
+          this.userService.form.value.ProfileId,
+          this.userService.form.value.ClientId
         );
         this.userService.form.reset();
         this.userService.initializeFormGroup();
@@ -69,9 +109,52 @@ export class CreateUserComponent implements OnInit {
       }
 
     }
+  }
 
+  ngOnDestroy(): void {
+    this.customerSub.unsubscribe();
+    this.profileSub.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 
+  resetPhoneNumber(event: any): void {
+    this.userService.form.controls['Phone'].setValue('');
+  }
+
+  formatPhoneNumber(event: any): void {
+    const inputValue: any = this.userService.form.controls['Phone'].value;
+    const phoneNumber: any = parsePhoneNumberFromString(inputValue, this.selectedCountry);
+    if (phoneNumber) {
+      this.selectedPhoneNumber = phoneNumber.number;
+      const phoneN = phoneNumber.formatInternational();
+      this.userService.form.controls['Phone'].setValue(phoneN.toString());
+
+    }
   }
 
 
+}
+
+export function _validatePhoneNumberInput(c: AbstractControl): object {
+  const inputValue: string = c.value.toString();
+  const phoneNumber: any = parsePhoneNumberFromString(inputValue, this.selectedCountry);
+  if (phoneNumber) {
+    if (phoneNumber.isValid()) {
+      return null;
+    } else {
+      return {
+        phoneNumber: {
+          valid: false
+        }
+      }
+    }
+  } else {
+    return {
+      phoneNumber: {
+        valid: false
+      }
+    }
+  }
 }

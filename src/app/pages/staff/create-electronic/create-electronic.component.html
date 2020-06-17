@@ -1,0 +1,96 @@
+<mat-toolbar>
+  <span>{{staffService.form.controls['emp_id'].value ? "Modify Electronic" : "New Electronic"}}</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+<form [formGroup]="staffService.form" class="normal-form" (submit)="onSaveElectronic()">
+  <mat-grid-list cols="2" rowHeight="450px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        <input type="hidden" formControlName="emp_id">
+        <mat-form-field>
+          <input formControlName="emp_name" matInput placeholder="Name*">
+          <mat-error>Pls enter a client name.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="emp_gender" placeholder="Gender">
+            <ng-container *ngFor="let gender of genders">
+              <mat-option value="{{gender}}">{{gender}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>StartWorkingDate</mat-label>
+          <input matInput [matDatepicker]="dp3" disabled formControlName="start_working_date">
+          <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+          <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="city" matInput placeholder="City">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>LastLoginDate</mat-label>
+          <input matInput [matDatepicker]="dp1" disabled formControlName="last_login_date">
+          <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+          <mat-datepicker #dp1 disabled="false"></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="emp_matricule" matInput placeholder="Matricule">
+        </mat-form-field>
+
+
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <div class="controles-container">
+        <mat-form-field>
+          <input formControlName="emp_lastname" matInput placeholder="LastName">
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="emp_age" matInput placeholder="Age">
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="emp_address" matInput placeholder="Address">
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="emp_rfid" matInput placeholder="RFID">
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="email" matInput placeholder="Email">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="status" placeholder="Status">
+            <ng-container *ngFor="let status of statusList">
+              <mat-option value="{{status}}">{{status}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <div class="mat-elevation-z4">
+    <h3>Profile Image</h3>
+    <div>
+      <button mat-stroked-button type="button" (click)="filePicker.click()" color="primary">Electronic Image*</button>
+      <input type="file" #filePicker (change)="onImagePicked($event)">
+    </div>
+    <div class="image-preview"
+         *ngIf="imagePreview!==''&& imagePreview && staffService.form.get('profile_image').valid">
+      <img [src]="imagePreview" [alt]="staffService.form.value.emp_name">
+
+    </div>
+  </div>
+
+  <div class="button-row">
+    <button mat-raised-button color="primary" type="submit" [disabled]="staffService.form.invalid">Submit
+    </button>
+    <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+  </div>
+
+
+</form>
+
+

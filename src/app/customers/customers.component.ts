@@ -9,6 +9,9 @@ import {StateModel} from '../shared/state/state.model';
 import {CityModel} from '../shared/city/city.model';
 import {CityService} from '../shared/city/city.service';
 import {StateService} from '../shared/state/state.service';
+import {PhoneService} from '../shared/phoneCountry.service';
+import {ICountry} from '../shared/phoneCountry.interface';
+import {parsePhoneNumberFromString} from 'libphonenumber-js';
 
 @Component({
   selector: 'app-customers',
@@ -16,13 +19,15 @@ import {StateService} from '../shared/state/state.service';
   styleUrls: ['./customers.component.scss']
 })
 export class CustomersComponent implements OnInit, OnDestroy {
+
   countries: CountryModel[] = [];
   states: StateModel[] = [];
   cities: CityModel[] = [];
-  // customers: CustomerModel;
+  subscription: Subscription;
+  phoneCountries: any[];
   imagePreview: string;
-  private clientId: string;
-
+  selectedCountry: any = 'TN';
+  selectedPhoneNumber: any;
   private countrySub: Subscription;
   private stateSub: Subscription;
   private citySub: Subscription;
@@ -30,65 +35,32 @@ export class CustomersComponent implements OnInit, OnDestroy {
 
   constructor(public dialogref: MatDialogRef<CustomersComponent>, public customerService: CustomerService,
               public notificationService: NotificationService, private countryService: CountryService,
-              public cityService: CityService, public stateService: StateService) {
+              public cityService: CityService, public stateService: StateService,
+              private phoneService: PhoneService) {
   }
 
   ngOnInit() {
+    this.fetchCountryList();
     this.countryService.getCountries();
     this.countrySub = this.countryService.getCountriesUpdateListner()
       .subscribe((countries: CountryModel[]) => {
         this.countries = countries;
 
       });
+    this.imagePreview = this.customerService.form.controls['picpath'].value
   }
-
-  /* if (this.customerService.form.get('client_id').value) {
-     this.clientId = this.customerService.form.get('client_id').value;
-     this.customerService.getCustomer(this.clientId).subscribe(customData => {
-       this.customers = {
-         client_id: customData.data.client_id,
-         client_name: customData.data.client_name,
-         address: customData.data.address,
-         phoneNumber: customData.data.phoneNumber,
-         email: customData.data.email,
-         technical_contact: customData.data.technical_contact,
-         sales_contact: customData.data.sales_contact,
-         fax: customData.data.fax,
-         picpath: customData.data.picpath,
-         CountryId: customData.data.CountryId,
-         CityId: customData.data.CityId,
-         StateId: customData.data.StateId
-
-       };
-       this.customerService.form.setValue({
-         client_name: this.customers.client_name,
-         address: this.customers.address,
-         phoneNumber: this.customers.phoneNumber,
-         email: this.customers.email,
-         technical_contact: this.customers.technical_contact,
-         sales_contact: this.customers.sales_contact,
-         fax: this.customers.fax,
-         image: this.customers.picpath,
-         CountryId: this.customers.CountryId,
-         CityId: this.customers.CityId,
-         StateId: this.customers.StateId
-
-       });
-     });
-   } else {
-         this.clientId = null
-
-       }
-     }
-
-
-*/
 
 
   onClear() {
     this.customerService.form.reset();
     this.notificationService.success(':: Form Cleared');
 
+  }
+
+  private fetchCountryList(): void {
+    this.subscription = this.phoneService.getCountries().subscribe((res: ICountry[]) => {
+      this.phoneCountries = res;
+    }, error => error);
   }
 
   onClose() {
@@ -108,7 +80,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
           this.customerService.form.value.technical_contact,
           this.customerService.form.value.sales_contact,
           this.customerService.form.value.fax,
-          this.customerService.form.value.image,
+          this.customerService.form.value.picpath,
           this.customerService.form.value.CountryId,
           this.customerService.form.value.CityId,
           this.customerService.form.value.StateId
@@ -127,7 +99,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
           this.customerService.form.value.technical_contact,
           this.customerService.form.value.sales_contact,
           this.customerService.form.value.fax,
-          this.customerService.form.value.image,
+          this.customerService.form.value.picpath,
           this.customerService.form.value.CountryId,
           this.customerService.form.value.CityId,
           this.customerService.form.value.StateId
@@ -171,12 +143,27 @@ export class CustomersComponent implements OnInit, OnDestroy {
 
   onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.customerService.form.patchValue({image: file});
-    this.customerService.form.get('image').updateValueAndValidity();
+    this.customerService.form.patchValue({picpath: file});
+    this.customerService.form.get('picpath').updateValueAndValidity();
     const reader = new FileReader();
     reader.onload = () => {
       this.imagePreview = <string>reader.result
     };
     reader.readAsDataURL(file);
+  }
+
+  resetPhoneNumber(event: any): void {
+    this.customerService.form.controls['phoneNumber'].setValue('');
+  }
+
+  formatPhoneNumber(event: any): void {
+    const inputValue: any = this.customerService.form.controls['phoneNumber'].value;
+    const phoneNumber: any = parsePhoneNumberFromString(inputValue, this.selectedCountry);
+    if (phoneNumber) {
+      this.selectedPhoneNumber = phoneNumber.number;
+      const phoneN = phoneNumber.formatInternational();
+      this.customerService.form.controls['phoneNumber'].setValue(phoneN.toString());
+
+    }
   }
 }

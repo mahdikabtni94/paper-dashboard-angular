@@ -1,0 +1,25 @@
+mat-spinner{
+  margin : auto;
+}
+.post-image{
+  width : 100%;
+}
+.post-image img {
+  width: 100%;
+  box-shadow : 1px 1px 5px rgba(0,0,0,0.5);
+}
+.AddCustomer{
+  right: 150px;
+}
+.fill-remaining-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+li {
+  list-style-type: square;
+}
+
+li li {
+  list-style-type: circle;
+}

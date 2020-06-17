@@ -18,10 +18,19 @@
         <mat-form-field>
           <input formControlName="address" matInput placeholder="address">
         </mat-form-field>
-        <mat-form-field>
-          <input formControlName="phoneNumber" matInput placeholder="phoneNumber">
-          <mat-error>Minimum 8 characters needed.</mat-error>
-        </mat-form-field>
+        <div>
+          <ng-container *ngIf="phoneCountries">
+            <select (change)="resetPhoneNumber($event)" [(ngModel)]="selectedCountry"
+                    [ngModelOptions]="{standalone: true}">
+              <option *ngFor="let country of phoneCountries" [ngValue]="country.code">{{country.name}}</option>
+            </select>
+          </ng-container>
+          <mat-form-field>
+            <input (input)="formatPhoneNumber($event)" formControlName="phoneNumber" matInput placeholder="phoneNumber">
+            <mat-icon matSuffix>phone</mat-icon>
+            <mat-error *ngIf="this.customerService.form.get('phoneNumber').invalid">Not a valid phone number.</mat-error>
+          </mat-form-field>
+        </div>
         <mat-form-field>
           <input formControlName="email" matInput placeholder="Email*">
           <mat-error>Invalid Email Address.</mat-error>
@@ -47,14 +56,13 @@
           <input type="file" #filePicker (change)="onImagePicked($event)">
         </div>
         <div class="image-preview"
-             *ngIf="imagePreview!==''&& imagePreview && customerService.form.get('image').valid">
+             *ngIf="imagePreview!==''&& imagePreview && customerService.form.get('picpath').valid">
           <img [src]="imagePreview" [alt]="customerService.form.value.client_name">
 
         </div>
         <mat-form-field>
           <mat-select formControlName="CountryId" placeholder="country" (ngModelChange)="onSelectCountry($event)"
                       #country>
-            <mat-option>None</mat-option>
             <ng-container *ngFor="let country of countries">
               <mat-option value="{{country.country_id}}">{{country.country_name}}</mat-option>
             </ng-container>
@@ -62,7 +70,6 @@
         </mat-form-field>
         <mat-form-field>
           <mat-select formControlName="StateId" placeholder="state" (ngModelChange)="onSelectState($event)">
-            <mat-option>None</mat-option>
             <ng-container *ngFor="let state of states">
               <mat-option value="{{state.state_id}}">{{state.state_name}}</mat-option>
             </ng-container>
@@ -70,7 +77,6 @@
         </mat-form-field>
         <mat-form-field>
           <mat-select formControlName="CityId" placeholder="city">
-            <mat-option>None</mat-option>
             <ng-container *ngFor="let city of cities">
               <mat-option value="{{city.city_id}}">{{city.city_name}}</mat-option>
             </ng-container>

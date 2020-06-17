@@ -1,0 +1,32 @@
+<mat-toolbar>
+  <span>{{machinetypeService.form.controls['machinetype_id'].value ? "Modify Type" : "New Type"}}</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="machinetypeService.form" class="normal-form" (submit)="onSavemachineType()">
+  <mat-grid-list cols="2" rowHeight="450px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        <input type="hidden" formControlName="machinetype_id">
+        <mat-form-field>
+          <input formControlName="type" matInput placeholder="type*">
+          <mat-error>Pls enter a Machine Type.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="description" matInput placeholder="description">
+        </mat-form-field>
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit" [disabled]="machinetypeService.form.invalid">Submit
+          </button>
+          <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+        </div>
+
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>
+
+
