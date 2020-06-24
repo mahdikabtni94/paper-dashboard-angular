@@ -1,1 +1,56 @@
-<p>create-article works!</p>
+<mat-toolbar>
+  <span>{{articleService.form.controls['article_id'].value ? "Modify article" : "New article"}}</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="articleService.form" class="normal-form" (submit)="onSavearticle()">
+  <mat-grid-list cols="1" rowHeight="600px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        <input type="hidden" formControlName="article_id">
+        <mat-form-field>
+          <input formControlName="article_name" matInput placeholder="article Name*">
+          <mat-error>this field is mandatory.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="code" matInput placeholder="code">
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="description" matInput placeholder="Description">
+        </mat-form-field>
+
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Choose an Operation :</label>
+            <ng-select placeholder="Operation" formControlName="operation_templates" [multiple]="true"
+                       [(ngModel)]="selectedOpeartionTemplateIds" [items]="operation_templates"
+                       bindLabel="label" bindValue="operation_template_id"
+                       [addTag]="addArticleOperationTemplate">
+              <ng-template ng-header-tmp>
+                <label for="check_all_1" >
+                  <input id="check_all_1" type="checkbox"  [(ngModel)]="selectedAll" [ngModelOptions]="{standalone: true}" name="check_all_1" title="Select All" (change)="onSelectAll()" />
+                  Select All
+                </label>
+              </ng-template>
+              <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"  [ngModelOptions]="{standalone: true}"/>
+                {{item.label}}
+              </ng-template>
+            </ng-select>
+          </div>
+          </div>
+        </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <div class="button-row">
+    <button mat-raised-button color="primary" type="submit" [disabled]="articleService.form.invalid">Submit</button>
+    <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+  </div>
+
+</form>
+
+

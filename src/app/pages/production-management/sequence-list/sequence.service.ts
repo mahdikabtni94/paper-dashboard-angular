@@ -19,23 +19,23 @@ export class SequenceService {
   private opIdSub = new Subject<string>();
   form: FormGroup = new FormGroup({
     sequence_id: new FormControl(null),
-    stitchcount: new FormControl(''),
-    sequence_order: new FormControl(''),
+    stitchcount: new FormControl('', {validators: [Validators.required]}),
+    sequence_order: new FormControl('', {validators: [Validators.required]}),
     picture: new FormControl('', {
       validators: [Validators.required],
       asyncValidators: [mimeType]
     }),
-    coupe_fil: new FormControl(''),
-    back_stitch: new FormControl(''),
-    parent_sequence: new FormControl(''),
-    operation_template_id: new FormControl(''),
-    back_stitch_positive_tolerence: new FormControl(''),
-    back_stitch_negative_tolerence: new FormControl(''),
-    stitch_count_positive_tolerence: new FormControl(''),
-    stitch_count_negative_tolerence: new FormControl(''),
+    coupe_fil: new FormControl('', {validators: [Validators.required]}),
+    back_stitch: new FormControl('', {validators: [Validators.required]}),
+    parent_sequence: new FormControl('', {validators: [Validators.required]}),
+    operation_template_id: new FormControl('', {validators: [Validators.required]}),
+    back_stitch_positive_tolerence: new FormControl('', {validators: [Validators.required]}),
+    back_stitch_negative_tolerence: new FormControl('', {validators: [Validators.required]}),
+    stitch_count_positive_tolerence: new FormControl('', {validators: [Validators.required]}),
+    stitch_count_negative_tolerence: new FormControl('', {validators: [Validators.required]}),
     with_subsequence: new FormControl(''),
-    description: new FormControl(''),
-    second_back_stitch: new FormControl(''),
+    description: new FormControl('', {validators: [Validators.required]}),
+    second_back_stitch: new FormControl('', {validators: [Validators.required]}),
 
   });
 
@@ -96,7 +96,7 @@ export class SequenceService {
     Data.append('picture', picture, description);
     Data.append('coupe_fil', coupe_fil);
     Data.append('back_stitch', back_stitch);
-    Data.append('operation_template_id', opTemplate );
+    Data.append('operation_template_id', opTemplate);
     Data.append('parent_sequence', parent_sequence);
     Data.append('back_stitch_positive_tolerence', back_stitch_positive_tolerence);
     Data.append('back_stitch_negative_tolerence', back_stitch_negative_tolerence);
@@ -130,7 +130,7 @@ export class SequenceService {
         }
         this.Sequences.push(Sequence);
         this.SequencesUpdated.next([...this.Sequences]);
-       // this.router.navigate(['/admin/production/SequenceList']);
+        this.router.navigate(['/admin/production/:id/SequenceList']);
 
       });
   }
@@ -205,7 +205,6 @@ export class SequenceService {
         UpdatedSequences[oldUserIndex] = Sequence;
         this.Sequences = UpdatedSequences;
         this.SequencesUpdated.next([...this.Sequences]);
-        this.router.navigate(['admin/production/SequenceList']);
 
 
       })

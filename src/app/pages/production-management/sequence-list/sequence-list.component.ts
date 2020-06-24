@@ -16,8 +16,9 @@ import {CreateSequenceComponent} from '../create-sequence/create-sequence.compon
 export class SequenceListComponent implements OnInit {
   private operationId: string;
   isloading = false;
-   sequences: SequenceModel[] = [];
-   sequenceSub: Subscription;
+  sequences: SequenceModel[] = [];
+  sequenceSub: Subscription;
+
   constructor(public sequenceService: SequenceService,
               public  route: ActivatedRoute,
               private  dialog: MatDialog,
@@ -45,6 +46,7 @@ export class SequenceListComponent implements OnInit {
     });
 
   }
+
   onDelete(row: any) {
     this.dialogService.openConfirmDialog('Are you sure you want to delete this Sequence ?').afterClosed()
       .subscribe(res => {
@@ -61,9 +63,13 @@ export class SequenceListComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '60%';
+    dialogConfig.width = '78%';
+    dialogConfig.position = {
+      right: '30px'
+    };
+    dialogConfig.height = '60%';
     dialogConfig.data = {
-      opkey : this.operationId
+      opkey: this.operationId
     }
     this.dialog.open(CreateSequenceComponent, dialogConfig);
   }
@@ -73,10 +79,13 @@ export class SequenceListComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '60%';
+    dialogConfig.width = '78%';
+    dialogConfig.position = {
+      right: '30px'
+    };
     dialogConfig.height = '60%';
     dialogConfig.data = {
-      opkey : this.operationId
+      opkey: this.operationId
     }
     this.dialog.open(CreateSequenceComponent, dialogConfig);
 

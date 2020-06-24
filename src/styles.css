@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 /* notification */
+@import "~@ng-select/ng-select/themes/default.theme.css";
 snack-bar-container.success {
   background-color: #5cb85c;
   color : #fff;

@@ -1,9 +1,8 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {MatDialogRef, MatSlideToggle} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef, MatSlideToggle} from '@angular/material';
 import {NotificationService} from '../../../notification.service';
 import {SequenceService} from '../sequence-list/sequence.service';
-import {MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-create-sequence',
@@ -20,12 +19,15 @@ export class CreateSequenceComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public opkey: any,
     public notificationService: NotificationService,
     public  sequenceService: SequenceService) {
+
+
   }
 
   ngOnInit() {
     console.log(this.opkey.opkey);
     this.sequenceService.form.value.operation_template_id = this.opkey.opkey;
     this.imagePreview = this.sequenceService.form.controls['picture'].value;
+    this.sequenceService.form.patchValue({with_subsequence: false});
 
   }
 

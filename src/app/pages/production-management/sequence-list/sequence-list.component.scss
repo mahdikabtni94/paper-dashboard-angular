@@ -5,11 +5,19 @@ mat-spinner{
   width : 100%;
 }
 .post-image img {
-  width: 100%;
+  width: 35%;
   box-shadow : 1px 1px 5px rgba(0,0,0,0.5);
 }
-.AddCustomer{
-  right: 150px;
+.box {
+  display: flex;
+  flex-wrap: wrap;
+  height: 200px;
+  align-content: space-between;
+}
+.AddSequence{
+  margin-left: 800px;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 .fill-remaining-space {
   /* This fills the remaining space, by using flexbox.

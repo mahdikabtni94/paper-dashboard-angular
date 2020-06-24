@@ -13,7 +13,10 @@ form.normal-form{
 }
 
 .button-row button{
-  margin: 5px;
+margin-left: 400px;
+  size: 100px;
+  background-color: #4CAF50;
+
 }
 .btn-dialog-close{
   width: 45px;
@@ -38,17 +41,21 @@ input[type="file"]{
 }
 .mat-elevation-z5{
   margin: 20px;
-  display:  flex;
-  width: 100%;
+  width : 300px;
 
 }
-.descriptionSeq{
-  display: inline;
+.box1{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 200px;
+  height: 200px;
+  align-content: space-between;
+}
+.box1 mat-form-field{
+  margin-right: 20px;
+}
+.selected{
+  align-self: center;
+}
 
-}
-.backStitchSeq{
-  display: block;
-}
-.backsitch{
-  display: inline;
-}

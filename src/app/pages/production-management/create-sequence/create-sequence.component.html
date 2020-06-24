@@ -12,90 +12,120 @@
       <div class="controles-container">
         <input type="hidden" formControlName="sequence_id">
         <div class="mat-elevation-z5">
-          <div class="descriptionSeq">
+          <div class="box1">
             <h3>Description </h3>
+            <div>
             <label> Description: </label>
+            </div>
+            <div>
             <mat-form-field appearance="outline">
               <input formControlName="description" matInput placeholder="description">
+              <mat-error>This field is mandatory.</mat-error>
             </mat-form-field>
+            </div>
           </div>
-
         </div>
         <div class="mat-elevation-z5">
-          <div class="backStitchSeq">
             <h3>Back Stitch</h3>
-            <div class="backsitch">
-              <label> Init Back Stitch Count</label>
+          <div class="box1">
+            <div>
+              <label> Init Back Stitch Count:</label>
               <mat-form-field appearance="outline">
                 <input formControlName="back_stitch" matInput placeholder="back_stitch">
+                <mat-error>This field is mandatory.</mat-error>
               </mat-form-field>
-
-              <label> Second Back Stitch Count</label>
+            </div>
+            <div>
+              <label> Second Back Stitch Count:</label>
               <mat-form-field appearance="outline">
                 <input formControlName="second_back_stitch" matInput placeholder="second_back_stitch">
+                <mat-error>This field is mandatory.</mat-error>
               </mat-form-field>
-              <label> Positive Tolerance</label>
+            </div>
+            <div>
+              <label> Positive Tolerance:</label>
               <mat-form-field appearance="outline">
                 <input formControlName="back_stitch_positive_tolerence" matInput placeholder="Positive Tolerance">
+                <mat-error>This field is mandatory.</mat-error>
               </mat-form-field>
-              <label> Negative Tolerance</label>
+            </div>
+            <div class="selected">
+              <label> Negative Tolerance:</label>
               <mat-form-field appearance="outline">
                 <input formControlName="back_stitch_negative_tolerence" matInput placeholder="Negative Tolerance">
+                <mat-error>This field is mandatory.</mat-error>
               </mat-form-field>
             </div>
-          </div>
-        </div>
+            </div>
+            </div>
 
         <div class="mat-elevation-z5">
-          <div class="backStitchSeq">
             <h3>Stitch Count</h3>
-            <div class="backsitch">
-              <label> Stitch Count</label>
+          <div class="box1">
+            <div>
+              <label> Stitch Count:</label>
               <mat-form-field appearance="outline">
                 <input formControlName="stitchcount" matInput placeholder="Stitch Count">
+                <mat-error>This field is mandatory.</mat-error>
               </mat-form-field>
-              <label> Positive Tolerance</label>
+            </div>
+            <div>
+              <label> Positive Tolerance:</label>
               <mat-form-field appearance="outline">
                 <input formControlName="stitch_count_positive_tolerence" matInput placeholder="Positive Tolerance">
+                <mat-error>This field is mandatory.</mat-error>
               </mat-form-field>
-              <label> Negative Tolerance</label>
+            </div>
+            <div>
+              <label> Negative Tolerance:</label>
               <mat-form-field appearance="outline">
                 <input formControlName="stitch_count_negative_tolerence" matInput placeholder="Negative Tolerance">
+                <mat-error>This field is mandatory.</mat-error>
               </mat-form-field>
             </div>
           </div>
         </div>
         <div class="mat-elevation-z5">
-          <div class="backStitchSeq">
+
             <h3>Coupe fil</h3>
-            <div class="backsitch">
-              <label>Cut Stitch</label>
+          <div class="box1">
+            <div>
+              <label>Cut Stitch:</label>
               <mat-form-field appearance="outline">
                 <input formControlName="coupe_fil" matInput placeholder="Cut Stitch">
-              </mat-form-field>
-              <label> Sequence Order</label>
-              <mat-form-field appearance="outline">
-                <input formControlName="sequence_order" matInput placeholder="Sequence Order">
+                <mat-error>This field is mandatory.</mat-error>
               </mat-form-field>
             </div>
-          </div>
+            <div>
+              <label> Sequence Order:</label>
+              <mat-form-field appearance="outline">
+                <input formControlName="sequence_order" matInput placeholder="Sequence Order">
+                <mat-error>This field is mandatory.</mat-error>
+              </mat-form-field>
+            </div>
+            </div>
         </div>
-        <div class="mat-elevation-z5">
-          <div class="backStitchSeq">
+          <div class="mat-elevation-z5">
+
             <h3>Sequence Details</h3>
-            <div class="backsitch">
-              <label>Parent Sequence</label>
+            <div class="box1">
+              <div>
+              <label>Parent Sequence:</label>
               <mat-form-field appearance="outline">
                 <input formControlName="parent_sequence" matInput placeholder="Parent Sequence">
+                <mat-error>This field is mandatory.</mat-error>
               </mat-form-field>
+              </div>
+              <div>
               <mat-slide-toggle #slide [checked]="this.sequenceService.form.value.with_subsequence== true"
                                 (change)="OnChange()">with_subsequence
               </mat-slide-toggle>
+              </div>
             </div>
-          </div>
-        </div>
+            </div>
         <div class="mat-elevation-z5">
         <h3>Sequence Image</h3>
+        <div class="box1">
         <div>
           <button mat-stroked-button type="button" (click)="filePicker.click()" color="primary">Sequence Image*</button>
           <input type="file" #filePicker (change)="onImagePicked($event)">
@@ -104,6 +134,7 @@
              *ngIf="imagePreview!==''&& imagePreview && sequenceService.form.get('picture').valid">
           <img [src]="imagePreview" [alt]="sequenceService.form.value.description">
 
+        </div>
         </div>
         </div>
         <div class="button-row">

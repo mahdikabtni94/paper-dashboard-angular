@@ -1,12 +1,12 @@
 <mat-spinner *ngIf="isloading"></mat-spinner>
 <button class="AddSequence" mat-raised-button color="primary" (click)="onCreate()">
-  Add
+  Add Sequence
 </button>
 <mat-accordion multi="true" *ngIf="sequences.length > 0 && !isloading">
   <mat-expansion-panel *ngFor="let sequence of sequences;let i = index">
     <mat-expansion-panel-header>
       <mat-panel-title>
-       Sequence: {{i}}
+        Sequence: {{i}}
       </mat-panel-title>
       <mat-panel-description>
         back stitch:{{sequence.back_stitch}}|cut stitch:{{sequence.coupe_fil}}| stitch count:{{sequence.stitchcount}}
@@ -18,31 +18,37 @@
         </button>
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <span class="mat-h1">Picture</span>
-    <div class="post-image">
-      <img [src]="sequence.picture" [alt]="sequence.description">
-    </div>
-    <span class="fill-remaining-space"></span>
-    <ul>
-    <li>Stitch Count
-      <ul>
-        <li>Positive Tolerance: {{sequence.stitch_count_positive_tolerence}}</li>
-        <li>Negative Tolerance: {{sequence.stitch_count_negative_tolerence}}</li>
-      </ul>
-    </li>
-      <ul>
-        <li>Description: {{sequence.description}}</li>
-      </ul>
-    </ul>
-    <span class="fill-remaining-space"></span>
-    <ul>
-      <li>Printer Back Stitch
+    <div class="box">
+      <div>
+      <span class="mat-h1">Picture</span>
+      <div class="post-image">
+        <img [src]="sequence.picture" [alt]="sequence.description">
+      </div>
+      </div>
+      <div>
         <ul>
-          <li>Positive Tolerance: {{sequence.back_stitch_positive_tolerence}}</li>
-          <li>Negative Tolerance: {{sequence.back_stitch_negative_tolerence}}</li>
+          <li>Stitch Count
+            <ul>
+              <li>Positive Tolerance: {{sequence.stitch_count_positive_tolerence}}</li>
+              <li>Negative Tolerance: {{sequence.stitch_count_negative_tolerence}}</li>
+            </ul>
+          </li>
         </ul>
-      </li>
-    </ul>
+        <ul>
+          <li>Description: {{sequence.description}}</li>
+        </ul>
+      </div>
+      <div>
+        <ul>
+          <li>Printer Back Stitch
+            <ul>
+              <li>Positive Tolerance: {{sequence.back_stitch_positive_tolerence}}</li>
+              <li>Negative Tolerance: {{sequence.back_stitch_negative_tolerence}}</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
   </mat-expansion-panel>
 </mat-accordion>
 <p class="info-text mat-body-1" *ngIf="sequences.length <= 0 && !isloading">No sequences added yet!</p>

@@ -19,7 +19,7 @@ export class CreateProfileComponent implements OnInit, OnDestroy {
 
   constructor(public dialogref: MatDialogRef<CreateProfileComponent>, public profileService: ProfileService,
               public notificationService: NotificationService, private permissionsService: PermissionsService,
-              private formBuilder: FormBuilder) {
+              ) {
   }
 
   ngOnInit() {

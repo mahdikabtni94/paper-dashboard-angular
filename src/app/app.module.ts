@@ -58,6 +58,7 @@ import { CreateOperationComponent } from './pages/production-management/create-o
 import { CreateSequenceComponent } from './pages/production-management/create-sequence/create-sequence.component';
 import { CreateArticleComponent } from './pages/production-management/create-article/create-article.component';
 import {CreateelectronicComponent} from './pages/staff/create-electronic/create-electronic.component';
+import {NgSelectModule} from '@ng-select/ng-select';
 
 
 
@@ -118,7 +119,8 @@ import {CreateelectronicComponent} from './pages/staff/create-electronic/create-
     MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatTabsModule
+    MatTabsModule,
+    NgSelectModule
 
 
   ],
@@ -141,7 +143,8 @@ import {CreateelectronicComponent} from './pages/staff/create-electronic/create-
     CreateSupervisorComponent,
     CreateOperatorComponent,
     CreateSequenceComponent,
-    CreateOperationComponent
+    CreateOperationComponent,
+    CreateArticleComponent
   ]
 })
 

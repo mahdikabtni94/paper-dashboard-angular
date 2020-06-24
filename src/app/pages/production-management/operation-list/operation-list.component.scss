@@ -1,5 +1,7 @@
 .AddOperation{
-  margin: 20px;
+  margin-left: 800px;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 .fill-remaining-space {
   /* This fills the remaining space, by using flexbox.
@@ -10,8 +12,15 @@ mat-spinner{
   margin : auto;
 }
 .OP1{
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  height: 200px;
+  flex-direction: column;
+  align-content: space-between;
 }
 mat-accordion{
   margin : 20px;
+}
+.mat-h1{
+  color: dodgerblue;
 }
