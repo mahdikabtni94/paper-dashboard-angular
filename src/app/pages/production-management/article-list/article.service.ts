@@ -1,6 +1,6 @@
 import {environment} from '../../../../environments/environment';
 import {Injectable} from '@angular/core';
-import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
@@ -20,7 +20,7 @@ export class ArticleService {
     code: new FormControl(''),
     article_name: new FormControl('', Validators.required),
     description: new FormControl(''),
-    operation_templates: new FormControl([]),
+    operation_templates: new FormControl([], Validators.required),
 
   });
 
@@ -77,7 +77,7 @@ export class ArticleService {
         };
         this.articles.push(article);
         this.articlesUpdated.next([...this.articles]);
-        this.router.navigate(['/admin/production/articleList']);
+        this.router.navigate(['/admin/production/ArticleList']);
 
       });
   }
@@ -110,7 +110,7 @@ export class ArticleService {
         Updatedarticles[oldUserIndex] = article;
         this.articles = Updatedarticles;
         this.articlesUpdated.next([...this.articles]);
-        this.router.navigate(['admin/production/articleList']);
+        this.router.navigate(['admin/production/ArticleList']);
 
 
       })

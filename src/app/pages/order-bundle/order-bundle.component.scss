@@ -1,0 +1,108 @@
+form.normal-form {
+  margin: 10px;
+}
+
+.controles-container {
+  width: 100%;
+  padding: 5%;
+}
+
+.controles-container > * {
+  width: 100%;
+}
+
+.label-code {
+  display: flex;
+  flex-direction: row;
+}
+
+.label-code mat-form-field {
+  width: 50%;
+  margin-right: 30px;
+}
+
+.article-client {
+  display: flex;
+  flex-direction: row;
+}
+
+.article-client mat-form-field {
+  width: 50%;
+  margin-right: 30px;
+}
+
+.nextButton button {
+  color : white;
+  background-color: dodgerblue;
+  width: 80px;
+  margin-top: 20px;
+  position: absolute;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+}
+.button-row  button{
+  color : white;
+  background-color: dodgerblue;
+  width: 80px;
+  margin-top: 20px;
+  position: absolute;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.back-row button{
+  background-color: gray;
+  width: 110px;
+  margin-top: 20px;
+  position: absolute;
+  left:40%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+}
+.code-number{
+  display: flex;
+  flex-direction: row;
+}
+
+.code-number mat-form-field{
+  width: 50%;
+  margin-right: 30px;
+}
+.version-size-quantity{
+  display: flex;
+  flex-direction: row;
+}
+
+.version-size-quantity mat-form-field{
+  width: 30%;
+  margin-right: 30px;
+}
+.line-operation{
+  display: flex;
+  flex-direction: row;
+}
+.line-operation > * {
+  width: 50%;
+}
+.operation{
+  width: 50%;
+}
+.accordion-margin mat-accordion{
+  margin: 30px;
+}
+.add-button button{
+  float: right;
+  margin: 5px;
+  background-color: darkgray;
+  color: white;
+}
+.remove-button button{
+  float: left;
+  margin: 5px;
+  background-color: deeppink;
+  color: white;
+
+}

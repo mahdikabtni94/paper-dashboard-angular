@@ -73,7 +73,14 @@ export class SidebarComponent {
           {
             path: '/admin/production',
             title: 'Production Management',
-            icon: '',
+            icon: 'playlist_add',
+            class: '',
+            children: [],
+          },
+          {
+            path: '/admin/AddOrderWBundles',
+            title: 'Bundle',
+            icon: 'note_add',
             class: '',
             children: [],
           },

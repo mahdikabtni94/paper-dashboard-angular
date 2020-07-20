@@ -1,0 +1,147 @@
+<mat-horizontal-stepper #stepper>
+  <mat-step errorMessage="Invalid Order">
+    <form [formGroup]="this.orderService.form" class="normal-form">
+      <div class="controles-container">
+        <ng-template matStepLabel>Fill order :</ng-template>
+        <div class="label-code">
+          <mat-form-field>
+            <mat-label>Label</mat-label>
+            <input matInput placeholder="Label" formControlName="order_label" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Order Code</mat-label>
+            <input matInput placeholder="Order Code" formControlName="order_code">
+          </mat-form-field>
+        </div>
+        <mat-form-field>
+          <mat-label>Order Description</mat-label>
+          <input matInput placeholder="Order Description" formControlName="order_description">
+        </mat-form-field>
+        <div class="article-client">
+          <mat-form-field>
+            <mat-label>Article</mat-label>
+            <mat-select formControlName="ArticleId" placeholder=" Select Article">
+              <ng-container *ngFor="let article of articles">
+                <mat-option value="{{article.article_id}}">{{article.article_name}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Client</mat-label>
+            <mat-select formControlName="CustomerId" placeholder=" Select Client">
+              <ng-container *ngFor="let customer of customers">
+                <mat-option value="{{customer.client_id}}">{{customer.client_name}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="nextButton">
+          <button mat-button matStepperNext>Next
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <div class="accordion-margin">
+    <mat-accordion multi="true" *ngFor="let r of range;let i = index">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Bundle#{{i}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form [formGroup]="this.bundleService.form">
+          <div class="controles-container">
+            <ng-template matStepLabel>Generate Bundles</ng-template>
+            <div class="code-number">
+              <mat-form-field>
+                <mat-label>Number</mat-label>
+                <input matInput formControlName="num_bundle" placeholder="num_bundle" [(ngModel)]="r.num_bundle">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Code</mat-label>
+                <input matInput formControlName="code" placeholder="Code" [(ngModel)]="r.code">
+              </mat-form-field>
+            </div>
+            <div class="version-size-quantity">
+              <mat-form-field>
+                <mat-label>Version</mat-label>
+                <input matInput formControlName="version" placeholder="version" [(ngModel)]="r.version">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Size</mat-label>
+                <input matInput formControlName="size" placeholder="Size" [(ngModel)]="r.size">
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Quantity</mat-label>
+                <input matInput formControlName="quantity" placeholder="Quantity" [(ngModel)]="r.quantity">
+              </mat-form-field>
+            </div>
+            <div class="line-operation">
+              <mat-form-field>
+                <mat-select formControlName="LineId" placeholder=" Select Line" [(ngModel)]="r.LineId">
+                  <ng-container *ngFor="let line of lines">
+                    <mat-option value="{{line.line_id}}">{{line.line_label}}</mat-option>
+                  </ng-container>
+                </mat-select>
+              </mat-form-field>
+              <div class="operation">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Choose Operations :</label>
+                    <ng-select placeholder="Operations" formControlName="operations" [multiple]="true"
+                               [(ngModel)]="r.operations" [items]="operation_templates"
+                               bindLabel="label" bindValue="operation_template_id"
+                               [addTag]="addArticleOperationTemplate">
+                      <ng-template ng-header-tmp>
+                        <label for="check_all_1">
+                          <input id="check_all_1" type="checkbox" [(ngModel)]="selectedAll"
+                                 [ngModelOptions]="{standalone: true}" name="check_all_1" title="Select All"
+                                 (change)="onSelectAll()"/>
+                          Select All
+                        </label>
+                      </ng-template>
+                      <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+                               [ngModelOptions]="{standalone: true}"/>
+                        {{item.label}}
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="add-button">
+        <button  mat-raised-button (click)="add()">
+          <mat-icon>add</mat-icon>
+          Add Bundle
+        </button>
+        </div>
+        <div  class="remove-button">
+          <button mat-raised-button (click)="remove(i)">
+            <mat-icon>delete_outline</mat-icon>
+            Remove Bundle
+          </button>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    </div>
+    <div class="back-row">
+      <button mat-button matStepperPrevious>
+        <mat-icon matPrefix>chevron_left</mat-icon>
+        Previous
+      </button>
+    </div>
+    <div class="button-row">
+      <button mat-raised-button color="primary" type="submit" (click)="onSubmit()"
+              [disabled]="bundleService.form.invalid">Add
+      </button>
+    </div>
+  </mat-step>
+
+</mat-horizontal-stepper>

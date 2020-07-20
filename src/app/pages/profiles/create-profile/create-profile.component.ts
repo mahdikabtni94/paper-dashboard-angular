@@ -5,7 +5,7 @@ import {ProfileService} from '../profile.service';
 import {PermissionsModel} from '../../../shared/permissions/permissions.model';
 import {Subscription} from 'rxjs';
 import {PermissionsService} from '../../../shared/permissions/permissions.service';
-import {FormArray, FormBuilder, FormControl} from '@angular/forms';
+import {FormArray, FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-create-profile',

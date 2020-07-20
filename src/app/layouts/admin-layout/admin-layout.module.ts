@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {AdminLayoutRoutes} from './admin-layout.routing';
 // tslint:disable-next-line:import-spacing
@@ -27,9 +27,9 @@ import {
   MatIconModule,
   MatInputModule,
   MatPaginatorModule,
-  MatProgressSpinnerModule,
+  MatProgressSpinnerModule, MatSelectModule,
   MatSlideToggleModule,
-  MatSortModule,
+  MatSortModule, MatStepperModule,
   MatTableModule,
   MatTabsModule,
   MatToolbarModule
@@ -56,6 +56,8 @@ import {OperationListComponent} from '../../pages/production-management/operatio
 import {SequenceListComponent} from '../../pages/production-management/sequence-list/sequence-list.component';
 import {ArticleListComponent} from '../../pages/production-management/article-list/article-list.component';
 import {ProductionManagementComponent} from '../../pages/production-management/production-management.component';
+import {OrderBundleComponent} from '../../pages/order-bundle/order-bundle.component';
+import {NgSelectModule} from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -76,6 +78,10 @@ import {ProductionManagementComponent} from '../../pages/production-management/p
     MatSlideToggleModule,
     MatTabsModule,
     MatExpansionModule,
+    MatStepperModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    NgSelectModule,
 
 
   ],
@@ -108,6 +114,7 @@ import {ProductionManagementComponent} from '../../pages/production-management/p
     SequenceListComponent,
     ArticleListComponent,
     ProductionManagementComponent,
+    OrderBundleComponent,
 
 
   ]

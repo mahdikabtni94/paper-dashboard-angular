@@ -14,7 +14,6 @@ import {AdminLayoutComponent} from './layouts/admin-layout/admin-layout.componen
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
-  MAT_DATE_FORMATS,
   MAT_DIALOG_DEFAULT_OPTIONS,
   MatButtonModule,
   MatCardModule,
@@ -32,7 +31,9 @@ import {
   MatSlideToggleModule,
   MatSnackBarModule,
   MatSortModule,
-  MatTableModule, MatTabsModule,
+  MatStepperModule,
+  MatTableModule,
+  MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
 import {LoginComponent} from './auth/login/login.component';
@@ -54,12 +55,12 @@ import {CreateMachineTypeComponent} from './pages/machine_types/create-machine-t
 import {CreateOperatorComponent} from './pages/staff/create-operator/create-operator.component';
 import {CreateSupervisorComponent} from './pages/staff/create-supervisor/create-supervisor.component';
 import {CreatemechanicComponent} from './pages/staff/create-mechanic/create-mechanic.component';
-import { CreateOperationComponent } from './pages/production-management/create-operation/create-operation.component';
-import { CreateSequenceComponent } from './pages/production-management/create-sequence/create-sequence.component';
-import { CreateArticleComponent } from './pages/production-management/create-article/create-article.component';
+import {CreateOperationComponent} from './pages/production-management/create-operation/create-operation.component';
+import {CreateSequenceComponent} from './pages/production-management/create-sequence/create-sequence.component';
+import {CreateArticleComponent} from './pages/production-management/create-article/create-article.component';
 import {CreateelectronicComponent} from './pages/staff/create-electronic/create-electronic.component';
 import {NgSelectModule} from '@ng-select/ng-select';
-
+import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 
 
 @NgModule({
@@ -83,7 +84,6 @@ import {NgSelectModule} from '@ng-select/ng-select';
     CreateOperationComponent,
     CreateSequenceComponent,
     CreateArticleComponent,
-
 
 
   ],
@@ -120,13 +120,15 @@ import {NgSelectModule} from '@ng-select/ng-select';
     MatDatepickerModule,
     MatNativeDateModule,
     MatTabsModule,
-    NgSelectModule
+    NgSelectModule,
+    MatStepperModule
 
 
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
+    {provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}},
   ],
 
   bootstrap: [AppComponent],

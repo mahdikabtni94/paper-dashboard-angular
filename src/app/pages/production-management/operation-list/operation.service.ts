@@ -20,7 +20,7 @@ export class OperationService {
     label: new FormControl('', Validators.required),
     op_code: new FormControl(''),
     description: new FormControl(''),
-    MachineTypeId: new FormControl(''),
+    MachineTypeId: new FormControl('', Validators.required),
     time: new FormControl(''),
     accMinPrice: new FormControl(''),
     with_subsequence: new FormControl(false),
@@ -57,7 +57,7 @@ export class OperationService {
     return this.operationsUpdated.asObservable();
   }
 
-  AddOperation( label: string,
+  AddOperation(label: string,
                op_code: string, MachineTypeId: string,
                description: string,
                time: string, accMinPrice: string,

@@ -5,7 +5,6 @@ import {MatDialogRef} from '@angular/material';
 import {NotificationService} from '../../../notification.service';
 import {ArticleService} from '../article-list/article.service';
 import {OperationService} from '../operation-list/operation.service';
-import {NgSelectModule, NgOption} from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-create-article',
