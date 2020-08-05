@@ -26,7 +26,7 @@ export class ArticleListComponent implements OnInit, OnDestroy {
   constructor(public articleService: ArticleService,
               private  dialog: MatDialog,
               private notificationService: NotificationService,
-              private  dialogService: DialogService,) {
+              private  dialogService: DialogService) {
   }
 
   ngOnInit() {
@@ -48,6 +48,7 @@ export class ArticleListComponent implements OnInit, OnDestroy {
 
       });
   }
+
   onEdit(row) {
     this.articleService.populateForm(row);
     const dialogConfig = new MatDialogConfig();
@@ -87,7 +88,8 @@ export class ArticleListComponent implements OnInit, OnDestroy {
   applyFilter() {
     this.articles.filter = this.searchKey.trim().toLowerCase();
   }
+
   ngOnDestroy(): void {
     this.articleSub.unsubscribe();
-}
+  }
 }

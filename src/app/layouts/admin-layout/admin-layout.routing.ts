@@ -28,6 +28,7 @@ import {OperationListComponent} from '../../pages/production-management/operatio
 import {SequenceListComponent} from '../../pages/production-management/sequence-list/sequence-list.component';
 import {ArticleListComponent} from '../../pages/production-management/article-list/article-list.component';
 import {OrderBundleComponent} from '../../pages/order-bundle/order-bundle.component';
+import {UpdateOrderComponent} from '../../pages/order-bundle/update-order/update-order.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -72,6 +73,7 @@ export const AdminLayoutRoutes: Routes = [
       {path: ':id/SequenceList', component: SequenceListComponent}
     ]
   },
-  {
-    path: 'AddOrderWBundles', component: OrderBundleComponent}
+  { path: 'AddOrderWBundles', component: OrderBundleComponent},
+  { path: 'updateOrder', component: UpdateOrderComponent},
+
 ];

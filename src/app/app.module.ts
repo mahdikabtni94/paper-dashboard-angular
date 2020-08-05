@@ -61,6 +61,7 @@ import {CreateArticleComponent} from './pages/production-management/create-artic
 import {CreateelectronicComponent} from './pages/staff/create-electronic/create-electronic.component';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
+import { UpdateOrderComponent } from './pages/order-bundle/update-order/update-order.component';
 
 
 @NgModule({
@@ -84,7 +85,6 @@ import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
     CreateOperationComponent,
     CreateSequenceComponent,
     CreateArticleComponent,
-
 
   ],
   imports: [

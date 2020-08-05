@@ -55,6 +55,7 @@ export class MachineListComponent implements OnInit, OnDestroy {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '60%';
+    dialogConfig.height = '60%';
     this.dialog.open(CreateMachineComponent, dialogConfig);
   }
 
@@ -74,6 +75,7 @@ export class MachineListComponent implements OnInit, OnDestroy {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '60%';
+    dialogConfig.height = '60%';
     this.dialog.open(CreateMachineComponent, dialogConfig);
 
   }

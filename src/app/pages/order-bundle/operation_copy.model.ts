@@ -10,7 +10,6 @@ export interface OperationCopyModel {
   time: string;
   accMinPrice: string,
   BundleId: string,
-  LineId: string,
   with_subsequence: boolean
 
 }

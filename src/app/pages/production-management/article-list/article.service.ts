@@ -1,11 +1,12 @@
 import {environment} from '../../../../environments/environment';
 import {Injectable} from '@angular/core';
-import { FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {ArticleModel} from './article.model';
 import {Subject} from 'rxjs';
+import {OperationModel} from '../operation-list/operation.model';
 
 const BACKEND_URL = environment.apiUrl;
 
@@ -15,6 +16,8 @@ const BACKEND_URL = environment.apiUrl;
 export class ArticleService {
   private articles: ArticleModel[] = [];
   private articlesUpdated = new Subject<ArticleModel[]>();
+  private operations: any[] = [];
+  private operationsUpdated = new Subject<any[]>();
   form: FormGroup = new FormGroup({
     article_id: new FormControl(null),
     code: new FormControl(''),
@@ -127,6 +130,7 @@ export class ArticleService {
     );
   }
 
+
   populateForm(article) {
     setTimeout(() => {
       this.form.patchValue(article);
@@ -142,5 +146,31 @@ export class ArticleService {
       'operation_templates': []
 
     });
+  }
+
+  FindOperationsByArticleId(articleid: string) {
+    this.http.get<{ message: string, data: OperationModel[] }>(BACKEND_URL + '/api/article/findOperationsById/' + articleid)
+      .pipe(map((operationData) => {
+        return operationData.data.map(operations => {
+          return {
+            operation_template_id: operations.operation_template_id,
+            label: operations.label,
+            description: operations.description,
+            MachineTypeId: operations.MachineTypeId,
+            time: operations.time,
+            accMinPrice: operations.accMinPrice,
+            with_subsequence: operations.with_subsequence
+
+          };
+        });
+      }))
+      .subscribe((operations) => {
+        this.operations = operations;
+        this.operationsUpdated.next([...this.operations]);
+
+      });
+  }
+  getOperationsUpdateListner() {
+    return this.operationsUpdated.asObservable();
   }
 }

@@ -10,4 +10,5 @@ export interface MachineModel {
   MachineTypeId: string,
   line: LineModel,
   machine_type: MachineTypeModel,
+  operation_templates: [],
 }

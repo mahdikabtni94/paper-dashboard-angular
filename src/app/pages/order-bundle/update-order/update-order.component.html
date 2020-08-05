@@ -1,0 +1,30 @@
+<div class="container">
+  <h2>Find Order</h2>
+  <button mat-raised-button >
+    <mat-icon>search</mat-icon>
+  </button>
+  <ng-autocomplete
+    [data]="orderList"
+    (inputChanged)="ShowInput($event)"
+    [searchKeyword]="keyword"
+    [itemTemplate]="itemTemplate"
+    [debounceTime]="300"
+    [isLoading]="isLoadingResult"
+    [notFoundTemplate]="notFoundTemplate"
+    placeHolder="Enter Order Code"
+  >
+  </ng-autocomplete>
+
+  <ng-template #itemTemplate let-item>
+    <a [innerHTML]="item.order_code"></a>
+  </ng-template>
+
+  <ng-template #notFoundTemplate let-notFound>
+    <div [innerHTML]="notFound"></div>
+  </ng-template>
+</div>
+<div class="searchButton">
+<button mat-raised-button >
+ Start
+</button>
+</div>

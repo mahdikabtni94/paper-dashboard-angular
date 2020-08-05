@@ -64,9 +64,10 @@ export class CustomersComponent implements OnInit, OnDestroy {
   }
 
   onClose() {
-    this.customerService.form.reset();
-    this.customerService.initializeFormGroup();
-    this.dialogref.close();
+    setTimeout(() => {
+      this.dialogref.close();
+    }, 200);
+
   }
 
   onSaveCustomer() {

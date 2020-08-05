@@ -99,10 +99,34 @@ form.normal-form {
   background-color: darkgray;
   color: white;
 }
+#clonebutton {
+  background-color: orangered;
+  color: white;
+}
 .remove-button button{
   float: left;
   margin: 5px;
   background-color: deeppink;
   color: white;
 
+}
+.add-operations{
+  margin: 20px;
+}
+.add-operations button{
+  color: white;
+  background-color: #6f42c1;
+}
+.margin-line{
+  margin: 20px;
+}
+
+.bundleManagement{
+  margin-left: 600px;
+  margin-bottom: 50px;
+}
+.bundleManagement button{
+  color: white;
+  background-color:dodgerblue;
+  width: 200px;
 }

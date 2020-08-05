@@ -88,7 +88,7 @@ export class CustomerService {
         console.log('Country***************', customer);
         this.customers.push(customer);
         this.customersUpdated.next([...this.customers]);
-        // this.router.navigate(['/admin/users']);
+        this.router.navigate(['/admin/users']);
 
       });
   }

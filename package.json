@@ -28,6 +28,7 @@
     "@ng-select/ng-select": "^3.0.2",
     "@ngui/map": "0.30.3",
     "@types/googlemaps": "3.36.5",
+    "angular-ng-autocomplete": "^2.0.1",
     "arrive": "2.4.1",
     "body-parser": "^1.19.0",
     "bootstrap": "4.3.1",

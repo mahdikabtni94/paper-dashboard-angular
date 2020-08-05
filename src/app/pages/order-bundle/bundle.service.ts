@@ -6,7 +6,7 @@ import {map} from 'rxjs/operators';
 import {BundleModel} from './bundle.model';
 import {Subject} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import {OperationCopyModel} from './operation_copy.model';
+import {GroupOp} from './operationGroup.model';
 
 const BACKEND_URL = environment.apiUrl;
 
@@ -24,10 +24,14 @@ export class BundleService {
     size: new FormControl(''),
     quantity: new FormControl(''),
     OrderId: new FormControl(''),
+
+  });
+  OperationLineForm: FormGroup = new FormGroup({
     LineId: new FormControl(''),
     operations: new FormControl([]),
 
   });
+
 
   constructor(private http: HttpClient, private  router: Router) {
   }
@@ -64,8 +68,7 @@ export class BundleService {
 
   Addbundle(num_bundle: string, code: string, version: string,
             size: string, quantity: string,
-            OrderId: string, LineId: string,
-            operations: []) {
+            OrderId: string, Operations_group: GroupOp[]) {
 
     const Data = {
       'num_bundle': num_bundle,
@@ -74,13 +77,12 @@ export class BundleService {
       'size': size,
       'quantity': quantity,
       'OrderId': OrderId,
-      'LineId': LineId,
-      'operations': operations,
+      'Operations_group': Operations_group
 
     };
-    this.http.post<{ message: string, data: BundleModel }>(BACKEND_URL + '/api/bundle/add', Data)
+    this.http.post<{ message: string, data: any }>(BACKEND_URL + '/api/bundle/add', Data)
       .subscribe((responseData) => {
-        const bundle: BundleModel = {
+        const bundle: any = {
           bundle_id: responseData.data.bundle_id,
           num_bundle: num_bundle,
           code: code,
@@ -88,10 +90,9 @@ export class BundleService {
           size: size,
           quantity: quantity,
           OrderId: OrderId,
-          LineId: LineId,
           order: responseData.data.order,
           lines: responseData.data.lines,
-          operations: operations,
+          operations: responseData.data.operations,
 
         };
         this.bundles.push(bundle);
@@ -104,7 +105,7 @@ export class BundleService {
   Updatebundle(bundle_id: string, num_bundle: string, code: string,
                version: string, size: string,
                quantity: string, OrderId: string,
-               LineId: string, operations: [],
+               Operations_group: GroupOp[],
   ) {
 
     const bundleData = {
@@ -115,8 +116,7 @@ export class BundleService {
       size: size,
       quantity: quantity,
       OrderId: OrderId,
-      LineId: LineId,
-      operations: operations
+      Operations_group: Operations_group
 
     };
     this.http.put<{ message: string, data: BundleModel }>
@@ -124,7 +124,7 @@ export class BundleService {
       .subscribe(responseData => {
         const Updatedbundles = [...this.bundles];
         const oldUserIndex = Updatedbundles.findIndex(p => p.bundle_id === bundle_id);
-        const bundle: BundleModel = {
+        const bundle: any = {
           bundle_id: bundle_id,
           num_bundle: num_bundle,
           code: code,
@@ -132,10 +132,9 @@ export class BundleService {
           size: size,
           quantity: quantity,
           OrderId: OrderId,
-          LineId: LineId,
           order: responseData.data.order,
           lines: responseData.data.lines,
-          operations: operations
+          operations: responseData.data.operations
 
         };
         Updatedbundles[oldUserIndex] = bundle;

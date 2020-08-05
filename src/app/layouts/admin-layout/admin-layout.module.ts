@@ -58,6 +58,8 @@ import {ArticleListComponent} from '../../pages/production-management/article-li
 import {ProductionManagementComponent} from '../../pages/production-management/production-management.component';
 import {OrderBundleComponent} from '../../pages/order-bundle/order-bundle.component';
 import {NgSelectModule} from '@ng-select/ng-select';
+import {UpdateOrderComponent} from '../../pages/order-bundle/update-order/update-order.component';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 
 
 @NgModule({
@@ -82,6 +84,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
     ReactiveFormsModule,
     MatSelectModule,
     NgSelectModule,
+    AutocompleteLibModule,
 
 
   ],
@@ -115,6 +118,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
     ArticleListComponent,
     ProductionManagementComponent,
     OrderBundleComponent,
+    UpdateOrderComponent,
 
 
   ]

@@ -15,12 +15,14 @@ const BACKEND_URL = environment.apiUrl;
 })
 export class OrderService {
   private orders: OrderModel[] = [];
+  private order: OrderModel;
   private ordersUpdated = new Subject<OrderModel[]>();
   form: FormGroup = new FormGroup({
     order_id: new FormControl(null),
     order_label: new FormControl('', Validators.required),
     order_code: new FormControl(''),
     order_description: new FormControl(''),
+    quantity: new FormControl(''),
     ArticleId: new FormControl('', Validators.required),
     CustomerId: new FormControl('', Validators.required),
 
@@ -39,6 +41,7 @@ export class OrderService {
             order_code: order.order_code,
             order_description: order.order_description,
             order_name: order.order_name,
+            quantity: order.quantity,
             ArticleId: order.ArticleId,
             CustomerId: order.CustomerId,
             article: order.article,
@@ -60,13 +63,15 @@ export class OrderService {
   }
 
   Addorder(order_label: string, order_code: string,
-           order_description: string, ArticleId: string,
-           CustomerId: string, bundles: any[]) {
+           order_description: string, quantity: string,
+           ArticleId: string,
+           CustomerId: string, bundles: BundleModel[]) {
 
     const Data = {
       'order_label': order_label,
       'order_code': order_code,
       'order_description': order_description,
+      'quantity': quantity,
       'ArticleId': ArticleId,
       'CustomerId': CustomerId,
       'bundles': bundles
@@ -81,6 +86,7 @@ export class OrderService {
           order_description: order_description,
           ArticleId: ArticleId,
           CustomerId: CustomerId,
+          quantity: quantity,
           article: responseData.data.article,
           customer: responseData.data.customer,
           bundles: bundles
@@ -89,7 +95,7 @@ export class OrderService {
         };
         this.orders.push(order);
         this.ordersUpdated.next([...this.orders]);
-       // this.router.navigate(['/admin/bundles/AddOrderWBundles']);
+        this.router.navigate(['/admin/updateOrder']);
 
       });
   }
@@ -97,7 +103,7 @@ export class OrderService {
   Updateorder(order_id: string, order_label: string,
               order_code: string, order_description: string,
               CustomerId: string, ArticleId: string,
-              bundles: []
+              quantity: string, bundles: []
   ) {
 
     const orderData = {
@@ -106,6 +112,7 @@ export class OrderService {
       order_code: order_code,
       order_description: order_description,
       CustomerId: CustomerId,
+      quantity: quantity,
       ArticleId: ArticleId,
       bundles: bundles
 
@@ -122,6 +129,7 @@ export class OrderService {
           order_description: order_description,
           ArticleId: ArticleId,
           CustomerId: CustomerId,
+          quantity: quantity,
           article: responseData.data.article,
           customer: responseData.data.customer,
           bundles: bundles
@@ -130,7 +138,7 @@ export class OrderService {
         Updatedorders[oldUserIndex] = order;
         this.orders = Updatedorders;
         this.ordersUpdated.next([...this.orders]);
-     //   this.router.navigate(['admin/production/orderList']);
+        //   this.router.navigate(['admin/production/orderList']);
 
 
       })
@@ -163,5 +171,19 @@ export class OrderService {
       'CustomerId': '',
 
     });
+  }
+
+  FindOrderByCode(order_code: string) {
+    return this.http.get<{ message: string, data: any }>('http://localhost:3000/order/findByOrder' + order_code).subscribe(
+      (responseData) => {
+        const newOrder: any = {
+          quantity: responseData.data.quantity,
+          article: responseData.data.article,
+
+        }
+
+
+      }
+    );
   }
 }

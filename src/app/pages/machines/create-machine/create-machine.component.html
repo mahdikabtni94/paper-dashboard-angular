@@ -7,7 +7,7 @@
 </mat-toolbar>
 
 <form [formGroup]="machineService.form" class="normal-form" (submit)="onSavemachine()">
-  <mat-grid-list cols="2" rowHeight="450px">
+  <mat-grid-list cols="1" rowHeight="600px">
     <mat-grid-tile>
       <div class="controles-container">
         <input type="hidden" formControlName="machine_id">
@@ -15,12 +15,12 @@
           <input formControlName="machine_label" matInput placeholder="label*">
           <mat-error>Pls enter a machine label.</mat-error>
         </mat-form-field>
-          <mat-form-field>
-            <mat-label>StartWorkingDate</mat-label>
-            <input matInput [matDatepicker]="dp3" disabled formControlName="startworkingdate">
-            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
-          </mat-form-field>
+        <mat-form-field>
+          <mat-label>StartWorkingDate</mat-label>
+          <input matInput [matDatepicker]="dp3" disabled formControlName="startworkingdate">
+          <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+          <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+        </mat-form-field>
 
         <mat-form-field>
           <input formControlName="manifacturerlifetime" matInput placeholder="manifacturerlifetime">
@@ -33,21 +33,44 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-          <mat-select formControlName="MachineTypeId" placeholder=" Select MachineType">
+          <mat-select formControlName="MachineTypeId" placeholder=" Select MachineType" (ngModelChange)="onSelectMachineType($event)"
+                      #country>
             <ng-container *ngFor="let type of machineTypes">
               <mat-option value="{{type.machinetype_id}}">{{type.type}}</mat-option>
             </ng-container>
           </mat-select>
         </mat-form-field>
-        <div class="button-row">
-          <button mat-raised-button color="primary" type="submit" [disabled]="machineService.form.invalid">Submit</button>
-          <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Choose Operations :</label>
+            <ng-select placeholder="Operation" formControlName="operation_templates" [multiple]="true"
+                       [(ngModel)]="selectedOpeartionTemplateIds" [items]="operation_templates"
+                       bindLabel="label" bindValue="operation_template_id"
+                       [addTag]="addMachineOperationTemplate">
+              <ng-template ng-header-tmp>
+                <label for="check_all_1">
+                  <input id="check_all_1" type="checkbox" [(ngModel)]="selectedAll"
+                         [ngModelOptions]="{standalone: true}" name="check_all_1" title="Select All"
+                         (change)="onSelectAll()"/>
+                  Select All
+                </label>
+              </ng-template>
+              <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+                       [ngModelOptions]="{standalone: true}"/>
+                {{item.label}}
+              </ng-template>
+            </ng-select>
+          </div>
         </div>
-
-
       </div>
+
     </mat-grid-tile>
   </mat-grid-list>
+  <div class="button-row">
+    <button mat-raised-button color="primary" type="submit" [disabled]="machineService.form.invalid">Submit</button>
+    <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+  </div>
 </form>
 
 

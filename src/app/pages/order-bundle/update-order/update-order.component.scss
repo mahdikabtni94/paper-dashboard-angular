@@ -1,0 +1,31 @@
+
+.container {
+  width: 100%;
+  max-width: 300px;
+  display: table;
+  margin: 0 auto;
+
+  h2 {
+    text-align: center;
+    color: #5a283d;
+  }
+
+  button {
+    pointer-events: none;
+    position: relative;
+    left: 270px;
+    top: 38px;
+    background-color: dodgerblue;
+  }
+}
+.searchButton{
+  margin-left: 480px;
+  margin-top: 50px;
+}
+
+.searchButton button{
+  color: white;
+  background-color: dodgerblue;
+  width: 80px;
+
+}

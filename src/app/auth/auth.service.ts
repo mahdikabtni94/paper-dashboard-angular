@@ -50,16 +50,20 @@ export class AuthService {
   login(email: string, password: string) {
     const authData: AuthData = {email: email, password: password};
     this.http
-      .post<{ token: string; expiresIn: number, user: Users }>(
+      .post<{ token: string; expiresIn: number, user: Users, message: string }>(
         'http://localhost:3000/login',
         authData
       )
       .subscribe(response => {
           localStorage.setItem('currentUser', JSON.stringify(response.user));
           this.currentUserSubject.next(response.user);
+          if (response.user.Activated === false) {
+            this.router.navigate(['/']);
+            this.notification.warn('Account is not Activated');
+          }
           const token = response.token;
           this.token = token;
-          if (token) {
+          if (token && response.user.Activated === true) {
             const expiresInDuration = response.expiresIn;
             this.setAuthTimer(expiresInDuration);
             this.isAuthenticated = true;

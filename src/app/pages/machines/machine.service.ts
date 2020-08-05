@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
 import {MachineModel} from './machine.model';
+import {OperationModel} from '../production-management/operation-list/operation.model';
 
 const BACKEND_URL = environment.apiUrl;
 
@@ -16,6 +17,8 @@ export class MachineService {
 
   private machine: MachineModel[] = [];
   private machineUpdated = new Subject<MachineModel[]>();
+  private Operations: OperationModel[] = [];
+  private OperationsUpdated = new Subject<OperationModel[]>();
   form: FormGroup = new FormGroup({
     machine_id: new FormControl(null),
     machine_label: new FormControl('', Validators.required),
@@ -23,20 +26,23 @@ export class MachineService {
     manifacturerlifetime: new FormControl(''),
     LineId: new FormControl(''),
     MachineTypeId: new FormControl(''),
+    operation_templates: new FormControl([], Validators.required),
   });
 
   constructor(private http: HttpClient, private  router: Router) {
   }
 
   Addmachine(machine_label: string, startworkingdate: Date,
-             manifacturerlifetime: string, LineId: string, MachineTypeId: string
+             manifacturerlifetime: string, LineId: string,
+             MachineTypeId: string, operation_templates: []
   ) {
     const Data = {
       'machine_label': machine_label,
       'startworkingdate': startworkingdate,
       'manifacturerlifetime': manifacturerlifetime,
       'LineId': LineId,
-      'MachineTypeId': MachineTypeId
+      'MachineTypeId': MachineTypeId,
+      'operation_templates': operation_templates
 
     }
     this.http.post<{ message: string, data: MachineModel }>(BACKEND_URL + '/api/machine/add', Data)
@@ -50,6 +56,7 @@ export class MachineService {
           MachineTypeId: MachineTypeId,
           line: responseData.data.line,
           machine_type: responseData.data.machine_type,
+          operation_templates: operation_templates
 
         }
         this.machine.push(Machine);
@@ -71,7 +78,8 @@ export class MachineService {
             LineId: machine.LineId,
             MachineTypeId: machine.MachineTypeId,
             line: machine.line,
-            machine_type: machine.machine_type
+            machine_type: machine.machine_type,
+            operation_templates: machine.operation_templates
 
 
           };
@@ -105,7 +113,8 @@ export class MachineService {
 
   Updatemachine(machine_id: string, machine_label: string,
                 startworkingdate: Date, manifacturerlifetime: string,
-                LineId: string, MachineTypeId: string
+                LineId: string, MachineTypeId: string,
+                operation_templates: []
   ) {
 
     const machineData = {
@@ -114,7 +123,8 @@ export class MachineService {
       startworkingdate: startworkingdate,
       manifacturerlifetime: manifacturerlifetime,
       LineId: LineId,
-      MachineTypeId: MachineTypeId
+      MachineTypeId: MachineTypeId,
+      operation_templates: operation_templates
 
     }
     this.http.put<{ message: string, data: MachineModel }>(BACKEND_URL + '/api/machine/update/' + machine_id, machineData)
@@ -129,7 +139,8 @@ export class MachineService {
           LineId: LineId,
           MachineTypeId: MachineTypeId,
           line: responseData.data.line,
-          machine_type: responseData.data.machine_type
+          machine_type: responseData.data.machine_type,
+          operation_templates: operation_templates
 
         };
         Updatedmachine[oldmachineIndex] = machine;
@@ -149,11 +160,44 @@ export class MachineService {
       'startworkingdate': new Date(),
       'manifacturerlifetime': '',
       'LineId': '',
-      'MachineTypeId': ''
+      'MachineTypeId': '',
+      'operation_templates': []
 
 
     });
   }
 
 
+  getOperationsByType(MachineType: string) {
+    this.http.get<{ message: string, data: any }>(BACKEND_URL + '/api/operation_template/find')
+      .pipe(map((Data) => {
+        return Data.data.map(operation => {
+          return {
+            operation_template_id: operation.operation_template_id,
+            label: operation.label,
+            op_code: operation.op_code,
+            description: operation.description,
+            MachineTypeId: operation.MachineTypeId,
+            machine_type : operation.machine_type,
+            time: operation.time,
+            accMinPrice: operation.accMinPrice,
+            with_subsequence: operation.with_subsequence
+          };
+        });
+      }))
+      .subscribe((transformedoperations) => {
+        const Updatedoperations = transformedoperations.filter(operation => {
+          return operation.MachineTypeId == MachineType
+        });
+        this.Operations = Updatedoperations;
+        this.OperationsUpdated.next([...this.Operations]);
+
+      });
+
+  }
+
+  getOperationsUpdateListner() {
+    return this.OperationsUpdated.asObservable();
+
+  }
 }
