@@ -1,6 +1,6 @@
 <div class="container">
   <h2>Find Order</h2>
-  <button mat-raised-button >
+  <button mat-raised-button (click)="findOrder(orderCode)">
     <mat-icon>search</mat-icon>
   </button>
   <ng-autocomplete
@@ -11,6 +11,7 @@
     [debounceTime]="300"
     [isLoading]="isLoadingResult"
     [notFoundTemplate]="notFoundTemplate"
+    [(ngModel)]="orderCode"
     placeHolder="Enter Order Code"
   >
   </ng-autocomplete>
@@ -23,8 +24,116 @@
     <div [innerHTML]="notFound"></div>
   </ng-template>
 </div>
+<div class="updateOrder" *ngIf="order!=null && nextPressed == false">
+  <form [formGroup]="orderService.UpdatedOrderForm" class="normal-form">
+    <div class="controles-container">
+      <div class="Article-Quantity">
+        <div class="align-quantity">
+          <label> Quantity</label>
+          <mat-form-field appearance="fill">
+            <input formControlName="addedQuantity" matInput placeholder="Add Additional Quantity">
+          </mat-form-field>
+        </div>
+        <div class="align-quantity">
+          <label> Article</label>
+          <mat-form-field appearance="fill">
+            <input [(ngModel)]="order.article.article_name" formControlName="ArticleId" matInput placeholder="Article">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="line-operation">
+    <div class="form-group">
+      <label> Operations :</label>
+      <ng-select placeholder="Operation" [multiple]="true"
+                 [(ngModel)]="selectedOpeartionTemplateIds" [items]="operation_templates"
+                 bindLabel="label" bindValue="operation_template_id"
+                 [addTag]="addArticleOperationTemplate">
+        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+          <input id="item2-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}"/>
+          {{item.label}}
+        </ng-template>
+      </ng-select>
+    </div>
+    <div class="form-group">
+      <label>Lines :</label>
+      <ng-select placeholder="Lines" [multiple]="true"
+                 (change)="getSelectedLines()"
+                 [(ngModel)]="linesChosen"
+                 [items]="lines"
+                 bindLabel="line_label" bindValue="line_id"
+                 [addTag]="addArticleLineTemplate">
+        <ng-template ng-header-tmp>
+          <label for="check_all_1">
+            <input id="check_all_1" type="checkbox" [(ngModel)]="selectedAll"
+                   [ngModelOptions]="{standalone: true}" name="check_all_1" title="Select All"
+                   (change)="onSelectAll()"/>
+            Select All
+          </label>
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+          <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+                 [ngModelOptions]="{standalone: true}"/>
+          {{item.line_label}}
+        </ng-template>
+      </ng-select>
+    </div>
+  </div>
+  <div class="row" *ngIf="linesOperations.length>0">
+    <div class="col-md-6" *ngFor="let line of linesOperations; let index = index">
+      <ul>
+        <li> {{line.line_label}}</li>
+      </ul>
+      <ng-select [(ngModel)]="linesOperations[index].operationsUpdated" [ngModelOptions]="{standalone: true}"
+                 [multiple]="true"
+                 bindLabel="label"
+                 [addTag]="addlineOperationGroupItem"
+                 [items]="line.operations"
+                 bindValue="operation_id"
+                 placeholder="Operations">
+        <ng-template ng-header-tmp let-item="item">
+
+          <label for="check_all_1">
+            <input type="checkbox" [(ngModel)]="linesOperations[index].selectAll"
+                   [ngModelOptions]="{standalone: true}" name="check_all_1"
+                   title="Select All" (click)="onSelectAllOperationsLine(index) "/>
+
+            Select All
+          </label>
+        </ng-template>
+
+        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+          <input type="checkbox" [ngModel]="item$.selected"
+                 [ngModelOptions]="{standalone: true}"/>{{item.label}}:
+          {{item.description}}
+        </ng-template>
+      </ng-select>
+    </div>
+  </div>
+</div>
+<div *ngIf="nextPressed == true">
+  <div [formGroup]="BundleForm">
+    <div formArrayName="items"
+         *ngFor="let item of BundleForm.get('items').controls; let i = index;">
+      <div [formGroupName]="i">
+        <input formControlName="size" placeholder="Item name">
+        <input formControlName="quantity" placeholder="Item description">
+        <input formControlName="code" placeholder="Item price">
+        <input formControlName=" num_bundle" placeholder="Item price">
+        <input formControlName="numOfBundles" placeholder="Item price">
+      </div>
+      <span (click)="addItem()" class="btn btn-success">+</span>
+
+    </div>
+  <button mat-raised-button (click)="previousPage()">
+    Previous
+  </button>
+</div>
+
+
 <div class="searchButton">
-<button mat-raised-button >
- Start
-</button>
+  <button mat-raised-button (click)="nextpage()">
+    Start
+  </button>
 </div>

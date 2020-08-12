@@ -43,6 +43,7 @@ export class LineService {
           line_description: line_description,
           SiteId: SiteId,
           site: responseData.data.site,
+          operations: responseData.data.operations
 
         }
         this.lines.push(line);

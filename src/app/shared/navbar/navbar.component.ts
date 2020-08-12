@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {AuthService} from '../../auth/auth.service';
 import {Subscription} from 'rxjs';
+import {Users} from '../../pages/users/users.model';
 
 @Component({
   moduleId: module.id,
@@ -23,6 +24,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public isCollapsed = true;
   @ViewChild('navbar-cmp', {static: false}) button;
   userIsAuthenticated = false;
+  private currentUser: Users;
 
   // tslint:disable-next-line:max-line-length
   constructor(location: Location, private renderer: Renderer, private element: ElementRef, private router: Router, private authservice: AuthService) {
@@ -33,6 +35,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userIsAuthenticated = this.authservice.getIsAuth();
+    this.currentUser = this.authservice.currentUserValue;
     this.authListenerSubs = this.authservice.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
     });

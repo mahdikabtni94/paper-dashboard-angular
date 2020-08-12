@@ -1,4 +1,5 @@
 import {SiteModel} from '../sites/site.model';
+import {OperationModel} from '../production-management/operation-list/operation.model';
 
 export interface LineModel {
   line_id?: string,
@@ -6,6 +7,7 @@ export interface LineModel {
   line_description?: string,
   SiteId?: string,
   site?: SiteModel,
+  operations?: OperationModel[]
 
 
 }

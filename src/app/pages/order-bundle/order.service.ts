@@ -7,6 +7,8 @@ import {OrderModel} from './order.model';
 import {Subject} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {BundleModel} from './bundle.model';
+import {OperationModel} from '../production-management/operation-list/operation.model';
+import {LineModel} from '../lines/line.model';
 
 const BACKEND_URL = environment.apiUrl;
 
@@ -15,8 +17,10 @@ const BACKEND_URL = environment.apiUrl;
 })
 export class OrderService {
   private orders: OrderModel[] = [];
-  private order: OrderModel;
   private ordersUpdated = new Subject<OrderModel[]>();
+  private operationsUpdated = new Subject<OperationModel[]>();
+  private lineOperations: any[] = [];
+  private lineOperationsUpdated = new Subject<any[]>();
   form: FormGroup = new FormGroup({
     order_id: new FormControl(null),
     order_label: new FormControl('', Validators.required),
@@ -26,6 +30,10 @@ export class OrderService {
     ArticleId: new FormControl('', Validators.required),
     CustomerId: new FormControl('', Validators.required),
 
+  });
+  UpdatedOrderForm: FormGroup = new FormGroup({
+    ArticleId: new FormControl({value: '', disabled: true}),
+    addedQuantity: new FormControl(''),
   });
 
   constructor(private http: HttpClient, private  router: Router) {
@@ -174,16 +182,92 @@ export class OrderService {
   }
 
   FindOrderByCode(order_code: string) {
-    return this.http.get<{ message: string, data: any }>('http://localhost:3000/order/findByOrder' + order_code).subscribe(
-      (responseData) => {
-        const newOrder: any = {
-          quantity: responseData.data.quantity,
-          article: responseData.data.article,
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<{ message: string, order: OrderModel, lines: LineModel[], operations: OperationModel[] }>(BACKEND_URL + '/api/order/findByOrder/' + order_code)
 
-        }
-
-
-      }
-    );
   }
+
+
+  getOperationUpdateListner() {
+    return this.operationsUpdated.asObservable();
+  }
+
+
+  FindOperationsByLine(line_id: string) {
+    this.http.get<{ message: string, data: any[] }>(BACKEND_URL + '/api/article/findOperationsById/' + line_id)
+      .pipe(map((operationData) => {
+        return operationData.data.map(operation => {
+          return {
+            operation_id: operation.operation_id,
+            label: operation.label,
+            op_code: operation.op_code,
+            description: operation.description,
+            MachineTypeId: operation.MachineTypeId,
+            time: operation.time,
+            accMinPrice: operation.accMinPrice,
+            BundleId: operation.BundleId,
+            bundle: operation.bundle,
+          };
+        });
+      }))
+      .subscribe((transformedOperations) => {
+        this.lineOperations = transformedOperations;
+        this.lineOperationsUpdated.next([...this.lineOperations]);
+
+      });
+  }
+
+  getLineOperationsUpdateListner() {
+    return this.lineOperationsUpdated.asObservable();
+  }
+
+  /* FindLinesByArticle(line_id: string) {
+    this.http.get<{ message: string, data: any[] }>(BACKEND_URL + '/api/article/findLinesById/' + line_id)
+      .pipe(map((lineData) => {
+        return lineData.data.map(line => {
+          return {
+            line_id: line.line_id,
+            line_label: line.line_label,
+            line_description: line.line_description,
+            SiteId: line.SiteId,
+            site: line.site,
+          };
+        });
+      }))
+      .subscribe((transformedlines) => {
+        this.lines = transformedlines;
+        this.linesUpdated.next([...this.lines]);
+
+      });
+  }
+
+  getLinesUpdateListner() {
+    return this.linesUpdated.asObservable();
+  }*/
+  /*
+  FindOperationsByArticle(article_id: string) {
+    this.http.get<{ message: string, data: OperationModel[] }>(BACKEND_URL + '/api/article/findOperationsById/' + article_id)
+      .pipe(map((operationData) => {
+        return operationData.data.map(operation => {
+          return {
+            operation_template_id: operation.operation_template_id,
+            label: operation.label,
+            op_code: operation.op_code,
+            description: operation.description,
+            MachineTypeId: operation.MachineTypeId,
+            time: operation.time,
+            accMinPrice: operation.accMinPrice,
+            with_subsequence: operation.with_subsequence,
+            machine_type: operation.machine_type,
+          };
+        });
+      }))
+      .subscribe((transformedOperations) => {
+        this.operations = transformedOperations;
+        this.operationsUpdated.next([...this.operations]);
+
+      });
+  }*/
+
+
 }

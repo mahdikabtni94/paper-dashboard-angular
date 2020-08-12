@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './navbar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {MatButtonModule} from '@angular/material';
+import {MatButtonModule, MatIconModule} from '@angular/material';
 
 @NgModule({
-  imports: [RouterModule, CommonModule, NgbModule, MatButtonModule],
+  imports: [RouterModule, CommonModule, NgbModule, MatButtonModule, MatIconModule],
     declarations: [ NavbarComponent ],
     exports: [ NavbarComponent ]
 })

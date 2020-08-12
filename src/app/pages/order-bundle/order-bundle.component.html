@@ -1,10 +1,9 @@
-
 <mat-horizontal-stepper #stepper>
   <mat-step errorMessage="Invalid Order">
     <form [formGroup]="this.orderService.form" class="normal-form">
       <div class="controles-container">
         <div class="bundleManagement">
-          <button mat-raised-button (click)="UpdateOrder()" >
+          <button mat-raised-button [routerLink]="['/admin/updateOrder']">
             Quick Bundle Management
           </button>
         </div>
@@ -20,19 +19,20 @@
           </mat-form-field>
         </div>
         <div class="label-code">
-        <mat-form-field>
-          <mat-label>Order Description</mat-label>
-          <input matInput placeholder="Order Description" formControlName="order_description">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Quantity</mat-label>
-          <input matInput placeholder="Order Quantity" formControlName="quantity">
-        </mat-form-field>
+          <mat-form-field>
+            <mat-label>Order Description</mat-label>
+            <input matInput placeholder="Order Description" formControlName="order_description">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Quantity</mat-label>
+            <input matInput placeholder="Order Quantity" formControlName="quantity">
+          </mat-form-field>
         </div>
         <div class="article-client">
           <mat-form-field>
             <mat-label>Article</mat-label>
-            <mat-select formControlName="ArticleId" placeholder=" Select Article" (ngModelChange)="onSelectArticle($event)">
+            <mat-select formControlName="ArticleId" placeholder=" Select Article"
+                        (ngModelChange)="onSelectArticle($event)">
               <ng-container *ngFor="let article of articles">
                 <mat-option value="{{article.article_id}}">{{article.article_name}}</mat-option>
               </ng-container>
@@ -106,14 +106,14 @@
                     </mat-expansion-panel-header>
                     <div class="line-operation">
                       <div class="margin-line">
-                      <mat-form-field >
-                        <mat-select placeholder=" Select Line" [(ngModel)]="r.Operations_group[groupIndex].line_id">
-                          <ng-container *ngFor="let line of lines">
-                            <mat-option value="{{line.line_id}}">{{line.line_label}}</mat-option>
-                          </ng-container>
-                        </mat-select>
-                      </mat-form-field>
-                    </div>
+                        <mat-form-field>
+                          <mat-select placeholder=" Select Line" [(ngModel)]="r.Operations_group[groupIndex].line_id">
+                            <ng-container *ngFor="let line of lines">
+                              <mat-option value="{{line.line_id}}">{{line.line_label}}</mat-option>
+                            </ng-container>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
                       <div class="operation">
                         <div class="col-md-12">
                           <div class="form-group">
@@ -141,7 +141,7 @@
                         </div>
                       </div>
                     </div>
-                    <button mat-raised-button  color="warn" (click)="removeOperationsGroup(i,groupIndex)">
+                    <button mat-raised-button color="warn" (click)="removeOperationsGroup(i,groupIndex)">
                       <mat-icon>library_add</mat-icon>
                       Remove Operation_Group
                     </button>

@@ -57,7 +57,7 @@ export class SidebarComponent {
           },
           {
             path: '/admin/lines',
-            title: 'Lines',
+            title: 'Lines/Machines',
             icon: 'link',
             class: '',
             children: [],
@@ -79,36 +79,35 @@ export class SidebarComponent {
           },
           {
             path: '/admin/AddOrderWBundles',
-            title: 'Bundle',
+            title: 'Orders',
             icon: 'note_add',
             class: '',
             children: [],
           },
+        ]
+      },
+      {
+        path: '',
+        title: 'Staff',
+        icon: '',
+        class: '',
+        children: [
           {
-            path: '',
-            title: 'Staff',
-            icon: '',
+            path: '/admin',
+            title: 'Attendance',
+            icon: 'work',
             class: '',
-            children: [
-              {
-                path: '/admin',
-                title: 'Attendance',
-                icon: 'work',
-                class: '',
-                children: []
+            children: []
 
-              },
-              {
-                path: '/admin/staff',
-                title: 'Staff',
-                icon: 'person_pin',
-                class: '',
-                children: []
-
-              },
-            ],
           },
+          {
+            path: '/admin/staff',
+            title: 'Staff',
+            icon: 'person_pin',
+            class: '',
+            children: []
 
+          },
         ],
       },
 

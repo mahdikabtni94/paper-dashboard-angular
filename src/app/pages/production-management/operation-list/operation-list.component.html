@@ -5,13 +5,14 @@
 <mat-spinner *ngIf="isloading"></mat-spinner>
 <mat-accordion multi="true" *ngFor="let operation of operations, let i= index">
   <div *ngIf="operations.length > 0 && !isloading">
-    <mat-expansion-panel >
+    <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
           Operation: {{i}}
         </mat-panel-title>
         <mat-panel-description>
-          <button mat-icon-button [routerLink]="['/admin/production',operation.operation_template_id,'SequenceList']">
+          <button mat-icon-button [disabled]="operations[i].with_subsequence== false"
+                  [routerLink]="['/admin/production',operation.operation_template_id,'SequenceList']">
             <mat-icon>list</mat-icon>
           </button>
           <button mat-icon-button (click)="onEdit(operation)">
@@ -24,23 +25,23 @@
       </mat-expansion-panel-header>
       <div class="OP1">
         <div>
-        <span class="mat-h1"> > Operation Name</span>
-        <p>{{ operation.label }}</p>
-        <span class="mat-h1">> Description</span>
-        <p>{{ operation.description }}</p>
+          <span class="mat-h1"> > Operation Name</span>
+          <p>{{ operation.label }}</p>
+          <span class="mat-h1">> Description</span>
+          <p>{{ operation.description }}</p>
         </div>
-     <div>
-      <span class="mat-h1">> Time</span>
-      <p>{{ operation.time }}</p>
-      <span class="mat-h1">> Accord minute price</span>
-      <p>{{ operation.accMinPrice}}</p>
-     </div>
-     <div>
-      <span class="mat-h1">> Code</span>
-      <p>{{ operation.op_code }}</p>
-      <span class="mat-h1">> Model</span>
-      <p>{{ operation.machine_type.type }}</p>
-     </div>
+        <div>
+          <span class="mat-h1">> Time</span>
+          <p>{{ operation.time }}</p>
+          <span class="mat-h1">> Accord minute price</span>
+          <p>{{ operation.accMinPrice}}</p>
+        </div>
+        <div>
+          <span class="mat-h1">> Code</span>
+          <p>{{ operation.op_code }}</p>
+          <span class="mat-h1">> Model</span>
+          <p>{{ operation.machine_type.type }}</p>
+        </div>
       </div>
     </mat-expansion-panel>
     <mat-expansion-panel>

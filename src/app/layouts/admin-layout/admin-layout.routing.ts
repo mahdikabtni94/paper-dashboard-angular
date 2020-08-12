@@ -73,7 +73,8 @@ export const AdminLayoutRoutes: Routes = [
       {path: ':id/SequenceList', component: SequenceListComponent}
     ]
   },
-  { path: 'AddOrderWBundles', component: OrderBundleComponent},
+
   { path: 'updateOrder', component: UpdateOrderComponent},
+  { path: 'AddOrderWBundles', component: OrderBundleComponent},
 
 ];

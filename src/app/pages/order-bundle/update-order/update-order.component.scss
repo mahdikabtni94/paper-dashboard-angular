@@ -11,21 +11,67 @@
   }
 
   button {
-    pointer-events: none;
     position: relative;
     left: 270px;
     top: 38px;
     background-color: dodgerblue;
   }
 }
-.searchButton{
+
+.controles-container {
+  width: 100%;
+  padding: 5%;
+}
+
+.controles-container > * {
+  width: 100%;
+}
+
+.searchButton {
   margin-left: 480px;
   margin-top: 50px;
 }
 
-.searchButton button{
+.searchButton button {
   color: white;
   background-color: dodgerblue;
   width: 80px;
 
 }
+
+.updateOrder {
+  margin: 50px;
+}
+
+.Article-Quantity  {
+  display: flex;
+  flex-direction: row;
+}
+
+.Article-Quantity mat-form-field {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  margin-right: 30px;
+}
+.align-quantity{
+  display: block;
+  width: 100%;
+}
+
+
+.operation {
+  width: 50%;
+}
+
+.line-operation {
+  display: flex;
+  flex-direction: row;
+}
+
+.line-operation > * {
+  margin-top: 10px;
+  margin-right: 50px;
+  width: 50%;
+}
+
