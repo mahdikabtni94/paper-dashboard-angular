@@ -1,15 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {OrderService} from '../order.service';
 import {Subscription} from 'rxjs';
 import {OperationModel} from '../../production-management/operation-list/operation.model';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {NotificationService} from '../../../notification.service';
 
 @Component({
   selector: 'app-update-order',
   templateUrl: './update-order.component.html',
   styleUrls: ['./update-order.component.scss']
 })
-export class UpdateOrderComponent implements OnInit {
+export class UpdateOrderComponent implements OnInit, OnDestroy {
   public keyword = 'order_code';
   public orderList = [];
   private orderCode: string | object;
@@ -27,9 +28,10 @@ export class UpdateOrderComponent implements OnInit {
   nextPressed = false;
   BundleForm: FormGroup;
   bundles: FormArray;
+  bundlesUpdated = [];
+  private index = 0;
 
-  constructor(private orderService: OrderService, private formBuilder: FormBuilder) {
-
+  constructor(private orderService: OrderService, private formBuilder: FormBuilder, private notificationService: NotificationService) {
 
   }
 
@@ -53,13 +55,16 @@ export class UpdateOrderComponent implements OnInit {
       code: '',
       num_bundle: '',
       numOfBundles: '',
+      version: ''
     });
   }
 
   addItem(): void {
     this.bundles = this.BundleForm.get('items') as FormArray;
     this.bundles.push(this.createItem());
+    this.index++
   }
+
 
   ShowInput($event: any) {
     this.isLoadingResult = true;
@@ -137,10 +142,55 @@ export class UpdateOrderComponent implements OnInit {
 
   nextpage() {
     this.nextPressed = true;
+    console.log('OrderUpdatedddddddd', this.linesOperations);
+    console.log('linesUpdatedddd', this.linesChosen);
   }
 
   previousPage() {
     this.nextPressed = false;
 
+  }
+
+  removeItem(i): void {
+    this.bundles = this.BundleForm.get('items') as FormArray;
+    this.bundles.removeAt(i);
+    this.index--
+
+  }
+
+  onSubmit() {
+    this.bundles = this.BundleForm.get('items') as FormArray;
+
+    for (const control of this.bundles.controls) {
+      if (control instanceof FormGroup) {
+        let j;
+        for (j = 0; j < control.value.numOfBundles; j++) {
+          this.bundlesUpdated.push(control.value);
+        }
+      }
+    }
+    console.log('AddedQuantity', this.orderService.UpdatedOrderForm.value.addedQuantity);
+    console.log('BundlessUpdated', this.bundlesUpdated);
+    console.log('lineOperationsUpdated', this.linesOperations);
+    console.log('operationTemplates', this.selectedOpeartionTemplateIds);
+    console.log('lines', this.linesChosen);
+    this.orderService.Updateorder(
+      this.orderCode,
+      this.orderService.UpdatedOrderForm.value.addedQuantity,
+      this.selectedOpeartionTemplateIds,
+      this.linesChosen,
+      this.linesOperations,
+      this.bundlesUpdated
+    )
+    this.orderService.UpdatedOrderForm.reset();
+    this.orderService.initializeUpdatedFormGroup();
+    this.notificationService.success(':: Order Updated successfully');
+    location.reload();
+
+  }
+
+  ngOnDestroy(): void {
+    this.orderSearched.unsubscribe();
+    this.orderSub.unsubscribe();
   }
 }

@@ -108,48 +108,27 @@ export class OrderService {
       });
   }
 
-  Updateorder(order_id: string, order_label: string,
-              order_code: string, order_description: string,
-              CustomerId: string, ArticleId: string,
-              quantity: string, bundles: []
+  Updateorder(order_code: string | object, AddedQuantity: string,
+              operation_templates: string[], lines: string[],
+              lineOperations: any[], bundles: any[]
   ) {
 
     const orderData = {
-      order_id: order_id,
-      order_label: order_label,
-      order_code: order_code,
-      order_description: order_description,
-      CustomerId: CustomerId,
-      quantity: quantity,
-      ArticleId: ArticleId,
-      bundles: bundles
-
+      AddedQuantity: AddedQuantity,
+      operation_templates: operation_templates,
+      lines: lines,
+      lineOperations: lineOperations,
+      bundles: bundles,
     };
-    this.http.put<{ message: string, data: OrderModel }>
-    (BACKEND_URL + '/api/order/update/' + order_id, orderData)
-      .subscribe(responseData => {
-        const Updatedorders = [...this.orders];
-        const oldUserIndex = Updatedorders.findIndex(p => p.order_id === order_id);
-        const order: OrderModel = {
-          order_id: order_id,
-          order_label: order_label,
-          order_code: order_code,
-          order_description: order_description,
-          ArticleId: ArticleId,
-          CustomerId: CustomerId,
-          quantity: quantity,
-          article: responseData.data.article,
-          customer: responseData.data.customer,
-          bundles: bundles
+    this.http.put<{ message: string, order: any, article: any }>
+    (BACKEND_URL + '/api/order/update/' + order_code, orderData).subscribe(response => {
+      const UpdatedOrders = [...this.orders];
+      const oldOrderIndex = UpdatedOrders.findIndex(p => p.order_code === order_code);
+      UpdatedOrders[oldOrderIndex] = response.order;
+      this.orders = UpdatedOrders;
+      this.ordersUpdated.next([...this.orders]);
 
-        };
-        Updatedorders[oldUserIndex] = order;
-        this.orders = Updatedorders;
-        this.ordersUpdated.next([...this.orders]);
-        //   this.router.navigate(['admin/production/orderList']);
-
-
-      })
+    })
 
   }
 
@@ -177,6 +156,14 @@ export class OrderService {
       'order_description': '',
       'ArticleId': '',
       'CustomerId': '',
+
+    });
+  }
+
+  initializeUpdatedFormGroup() {
+    this.form.patchValue({
+      'ArticleId': '',
+      'AddedQuantity': '',
 
     });
   }

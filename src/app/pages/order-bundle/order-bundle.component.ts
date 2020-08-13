@@ -172,11 +172,6 @@ export class OrderBundleComponent implements OnInit, OnDestroy {
 
   }
 
-  UpdateOrder() {
-    this.router.navigate(['/admin/updateOrder']);
-
-  }
-
 
   ngOnDestroy(): void {
     this.lineSub.unsubscribe();

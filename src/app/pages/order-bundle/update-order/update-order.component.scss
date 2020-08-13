@@ -74,4 +74,37 @@
   margin-right: 50px;
   width: 50%;
 }
+.previousButton{
+  color : white;
+  background-color: dodgerblue;
+  width: 80px;
+  margin-top: 20px;
+  position: absolute;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.previousButton button{
+  background-color: gray;
+  width: 110px;
+  margin-top: 20px;
+  position: absolute;
+  left:40%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 
+}
+.BundleUpdate input{
+  margin : 10px;
+}
+.button-row  button{
+  color : white;
+  background-color: dodgerblue;
+  width: 80px;
+  margin-top: 20px;
+  position: relative;
+  left: 60%;
+  top : 20px;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}

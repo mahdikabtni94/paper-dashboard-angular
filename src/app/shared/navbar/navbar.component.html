@@ -33,7 +33,9 @@
           </div>
         </div>
       </form>
-        <button *ngIf="userIsAuthenticated" class="logoutbutton" mat-button color="warn" (click)="onLogout()">Logout</button>
+        <button *ngIf="userIsAuthenticated" class="logoutbutton" mat-button color="warn" (click)="onLogout()">
+          <mat-icon matSuffix>subdirectory_arrow_right</mat-icon>
+          Logout</button>
 
 
     </div>

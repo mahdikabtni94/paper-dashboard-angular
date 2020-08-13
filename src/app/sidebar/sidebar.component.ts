@@ -66,13 +66,13 @@ export class SidebarComponent {
       },
       {
         path: '',
-        title: 'KPIs',
+        title: 'Product Management',
         icon: '',
         class: '',
         children: [
           {
             path: '/admin/production',
-            title: 'Production Management',
+            title: 'Articles/Operations',
             icon: 'playlist_add',
             class: '',
             children: [],

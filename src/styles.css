@@ -1,67 +1,76 @@
 /* You can add global styles to this file, and also import other style files */
 /* notification */
 @import "~@ng-select/ng-select/themes/default.theme.css";
+
 snack-bar-container.success {
   background-color: #5cb85c;
-  color : #fff;
+  color: #fff;
 }
 
 snack-bar-container.warn {
   background-color: #f99157;
-  color : #fff;
+  color: #fff;
 }
 
 
-snack-bar-container.notification simple-snack-bar{
+snack-bar-container.notification simple-snack-bar {
   font-size: 18px !important;
   font-weight: bold;
 }
+
 /* mat-confirm-dialog (customised dialog) */
 .confirm-dialog-container .mat-dialog-container {
   border-radius: .25em .25em .4em .4em;
   padding: 0px;
 }
-.confirm-dialog-container .content-container{
+
+.confirm-dialog-container .content-container {
   margin: 5px 5px 15px 5px;
   color: #8f9cb5;
   display: flex;
 }
-.confirm-dialog-container #close-icon{
+
+.confirm-dialog-container #close-icon {
   margin-left: auto;
   order: 2;
   font-weight: bolder;
 }
-.confirm-dialog-container #close-icon:hover{
+
+.confirm-dialog-container #close-icon:hover {
   cursor: pointer;
 }
 
-.confirm-dialog-container #no-button{
+.confirm-dialog-container #no-button {
   height: 50px;
   width: 50%;
   background-color: #fc7169;
-  color:white;
+  color: white;
   border-radius: 0px;
 }
 
-.confirm-dialog-container #yes-button{
+.confirm-dialog-container #yes-button {
   height: 50px;
   width: 50%;
   background-color: #b6bece;
-  color:white;
+  color: white;
   border-radius: 0px;
 }
 
-.confirm-dialog-container span.content-span{
-  padding:  35px 16px;
+.confirm-dialog-container span.content-span {
+  padding: 35px 16px;
   text-align: center;
   font-size: 20px;
 }
-.user-greetings{
+
+.user-greetings {
   color: red;
   font-weight: bold;
-  font-size : large;
+  font-size: large;
 }
-.user-greetings mat-icon{
-  width: 30px;
-  height : 30px;
+
+.user-greetings mat-icon {
+  position: relative;
+  top: 15px;
+  font-size: 45px;
+  margin-right: 30px;
 }

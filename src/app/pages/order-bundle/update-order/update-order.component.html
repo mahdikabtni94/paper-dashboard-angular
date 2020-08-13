@@ -111,29 +111,45 @@
       </ng-select>
     </div>
   </div>
+  <div class="searchButton">
+    <button mat-raised-button (click)="nextpage()">
+      Start
+    </button>
+  </div>
 </div>
-<div *ngIf="nextPressed == true">
+<div *ngIf="nextPressed == true && order!=null">
   <div [formGroup]="BundleForm">
     <div formArrayName="items"
          *ngFor="let item of BundleForm.get('items').controls; let i = index;">
       <div [formGroupName]="i">
-        <input formControlName="size" placeholder="Item name">
-        <input formControlName="quantity" placeholder="Item description">
-        <input formControlName="code" placeholder="Item price">
-        <input formControlName=" num_bundle" placeholder="Item price">
-        <input formControlName="numOfBundles" placeholder="Item price">
+        <div class="BundleUpdate">
+          <input formControlName="size" placeholder="Size">
+          <input formControlName="quantity" placeholder="Quantity">
+          <input formControlName="code" placeholder="Code">
+          <input formControlName="num_bundle" placeholder="Start From">
+          <input formControlName="version" placeholder="Version">
+          <input formControlName="numOfBundles" placeholder="number of bundles">
+
+        </div>
       </div>
       <span (click)="addItem()" class="btn btn-success">+</span>
-
+      <span (click)="removeItem(i)" class="btn btn-danger">-</span>
     </div>
-  <button mat-raised-button (click)="previousPage()">
-    Previous
-  </button>
+    <div class="previousButton">
+      <button mat-raised-button (click)="previousPage()">
+        <mat-icon matPrefix>chevron_left</mat-icon>
+        Previous
+      </button>
+    </div>
+    <div class="button-row">
+      <button mat-raised-button color="primary" type="submit" (click)="onSubmit()"
+      >Save
+      </button>
+    </div>
+  </div>
 </div>
 
 
-<div class="searchButton">
-  <button mat-raised-button (click)="nextpage()">
-    Start
-  </button>
-</div>
+
+
+
