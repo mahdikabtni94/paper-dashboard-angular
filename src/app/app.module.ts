@@ -61,9 +61,7 @@ import {CreateArticleComponent} from './pages/production-management/create-artic
 import {CreateelectronicComponent} from './pages/staff/create-electronic/create-electronic.component';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
-import { BoxesComponent } from './pages/boxes/boxes.component';
-import { CreateBoxComponent } from './pages/boxes/create-box/create-box.component';
-import { BoxListComponent } from './pages/boxes/box-list/box-list.component';
+import {CreateBoxComponent} from './pages/boxes/create-box/create-box.component';
 
 
 @NgModule({
@@ -87,9 +85,8 @@ import { BoxListComponent } from './pages/boxes/box-list/box-list.component';
     CreateOperationComponent,
     CreateSequenceComponent,
     CreateArticleComponent,
-    BoxesComponent,
     CreateBoxComponent,
-    BoxListComponent,
+
 
   ],
   imports: [
@@ -151,7 +148,8 @@ import { BoxListComponent } from './pages/boxes/box-list/box-list.component';
     CreateOperatorComponent,
     CreateSequenceComponent,
     CreateOperationComponent,
-    CreateArticleComponent
+    CreateArticleComponent,
+    CreateBoxComponent
   ]
 })
 

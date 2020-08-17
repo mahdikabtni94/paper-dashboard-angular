@@ -10,16 +10,101 @@ export interface RouteInfo {
   icon: string;
   class: string;
   children: RouteInfo[];
+  permissions?: any[];
+  active?: boolean;
 }
 
-export const ROUTES = [
-  {path: '/admin/dashboard', title: 'Dashboard', icon: 'nc-bank', class: ''},
-  {path: '/admin/icons', title: 'Icons', icon: 'nc-diamond', class: ''},
-  {path: '/admin/maps', title: 'Maps', icon: 'nc-pin-3', class: ''},
-  {path: '/admin/notifications', title: 'Notifications', icon: 'nc-bell-55', class: ''},
-  {path: '/admin/user', title: 'User Profile', icon: 'nc-single-02', class: ''},
-  {path: '/admin/typography', title: 'Typography', icon: 'nc-caps-small', class: ''},
-  {path: '/admin/users', title: 'Users', icon: 'nc-circle-10', class: ''},
+export const ROUTES: RouteInfo[] = [
+  {
+    path: '',
+    title: 'Setup',
+    icon: '',
+    class: '',
+    permissions: ['Setup'],
+    active: true,
+    children: [
+      {
+        path: '/admin/users',
+        title: 'Users',
+        icon: 'person_add',
+        class: '',
+        active: true,
+        children: [],
+      },
+      {
+        path: '/admin/lines',
+        title: 'Lines/Machines',
+        icon: 'link',
+        class: '',
+        children: [],
+        active: true,
+      },
+      {
+        path: '/admin/box',
+        title: 'Boxs',
+        icon: 'inbox',
+        class: '',
+        children: [],
+        active: true,
+      },
+
+
+    ],
+  },
+  {
+    path: '',
+    title: 'Product Management',
+    icon: '',
+    class: '',
+    permissions: ['Product Management'],
+    active: true,
+    children: [
+      {
+        path: '/admin/production',
+        title: 'Articles/Operations',
+        icon: 'playlist_add',
+        class: '',
+        active: true,
+        children: [],
+      },
+      {
+        path: '/admin/AddOrderWBundles',
+        title: 'Orders',
+        icon: 'note_add',
+        class: '',
+        active: true,
+        children: [],
+      },
+    ]
+  },
+  {
+    path: '',
+    title: 'Staff',
+    icon: '',
+    class: '',
+    permissions: ['Staff'],
+    active: true,
+    children: [
+      {
+        path: '/admin',
+        title: 'Attendance',
+        icon: 'work',
+        class: '',
+        children: [],
+        active: true,
+
+      },
+      {
+        path: '/admin/staff',
+        title: 'Staff',
+        icon: 'person_pin',
+        class: '',
+        children: [],
+        active: true,
+
+      },
+    ],
+  },
 ];
 
 @Component({
@@ -30,91 +115,56 @@ export const ROUTES = [
 })
 
 export class SidebarComponent {
+  permissions: any;
+  userFromStorage: any;
   public menuItems: any[];
   nestedTreeControl: NestedTreeControl<RouteInfo>;
   nestedDataSource: MatTreeNestedDataSource<RouteInfo>;
   dataChange: BehaviorSubject<RouteInfo[]> = new BehaviorSubject<RouteInfo[]>([]);
 
   constructor() {
+    this.userFromStorage = (localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')) : {};
+    if (this.userFromStorage && this.userFromStorage.permissions) {
+
+      this.menuItems = ROUTES.filter(menuItem => {
+        if (menuItem.permissions && JSON.parse(localStorage.getItem('user')).permissions.indexOf(menuItem.permissions[0]) === -1) {
+
+          return null
+        } else {
+          if (menuItem.children && menuItem.children.length) {
+            let i = 0;
+
+            let menuItemSize = 0;
+            menuItem.children.forEach(submenu => {
+
+              if (submenu.permissions && JSON.parse(localStorage.getItem('user')).permissions.indexOf(submenu.permissions[0]) === -1) {
+                menuItem.children[i].active = false;
+                menuItemSize++;
+              } else {
+                menuItem.children[i].active = true;
+
+              }
+              i++;
+
+            })
+
+            // menuItem.badge = String(menuItem.submenu.length - menuItemSize);
+          }
+          return menuItem
+        }
+      });
+    } else {
+      console.log('not permissions')
+    }
     this.nestedTreeControl = new NestedTreeControl<RouteInfo>(this._getChildren);
     this.nestedDataSource = new MatTreeNestedDataSource();
-
     this.dataChange.subscribe(data => this.nestedDataSource.data = data);
 
-    this.dataChange.next([
-      {
-        path: '',
-        title: 'Setup',
-        icon: '',
-        class: '',
-        children: [
-          {
-            path: '/admin/users',
-            title: 'Users',
-            icon: 'person_add',
-            class: '',
-            children: [],
-          },
-          {
-            path: '/admin/lines',
-            title: 'Lines/Machines',
-            icon: 'link',
-            class: '',
-            children: [],
-          },
-        ],
-      },
-      {
-        path: '',
-        title: 'Product Management',
-        icon: '',
-        class: '',
-        children: [
-          {
-            path: '/admin/production',
-            title: 'Articles/Operations',
-            icon: 'playlist_add',
-            class: '',
-            children: [],
-          },
-          {
-            path: '/admin/AddOrderWBundles',
-            title: 'Orders',
-            icon: 'note_add',
-            class: '',
-            children: [],
-          },
-        ]
-      },
-      {
-        path: '',
-        title: 'Staff',
-        icon: '',
-        class: '',
-        children: [
-          {
-            path: '/admin',
-            title: 'Attendance',
-            icon: 'work',
-            class: '',
-            children: []
-
-          },
-          {
-            path: '/admin/staff',
-            title: 'Staff',
-            icon: 'person_pin',
-            class: '',
-            children: []
-
-          },
-        ],
-      },
-
-    ]);
+    this.dataChange.next(this.menuItems);
   }
 
   private _getChildren = (node: RouteInfo) => of(node.children);
   hasNestedChild = (_: number, nodeData: RouteInfo) => !(nodeData.path);
+
 
 }

@@ -60,6 +60,8 @@ import {OrderBundleComponent} from '../../pages/order-bundle/order-bundle.compon
 import {NgSelectModule} from '@ng-select/ng-select';
 import {UpdateOrderComponent} from '../../pages/order-bundle/update-order/update-order.component';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import {BoxListComponent} from '../../pages/boxes/box-list/box-list.component';
+import {BoxesComponent} from '../../pages/boxes/boxes.component';
 
 
 @NgModule({
@@ -119,6 +121,8 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
     ProductionManagementComponent,
     OrderBundleComponent,
     UpdateOrderComponent,
+    BoxListComponent,
+    BoxesComponent,
 
 
   ]

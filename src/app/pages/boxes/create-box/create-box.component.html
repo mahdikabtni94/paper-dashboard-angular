@@ -1,1 +1,53 @@
-<p>create-box works!</p>
+<mat-toolbar>
+  <span>{{boxService.form.controls['box_id'].value ? "Modify box" : "New box"}}</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="boxService.form" class="normal-form" (submit)="onSavebox()">
+  <mat-grid-list cols="2" rowHeight="450px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        <input type="hidden" formControlName="box_id">
+        <mat-form-field>
+          <input formControlName="box_label" matInput placeholder="label*">
+          <mat-error>Pls enter a box label.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="address_mac" matInput placeholder="Mac Address">
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="description" matInput placeholder="Description">
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="version" matInput placeholder="Version">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="MachineId" placeholder="Machine">
+            <mat-option>None</mat-option>
+            <ng-container *ngFor="let machine of machines">
+              <mat-option value="{{machine.machine_id}}">{{machine.machine_label}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="SiteId" placeholder="site">
+            <mat-option>None</mat-option>
+            <ng-container *ngFor="let site of sites">
+              <mat-option value="{{site.site_id}}">{{site.site_label}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit" [disabled]="boxService.form.invalid">Submit</button>
+          <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+        </div>
+
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>
+
+

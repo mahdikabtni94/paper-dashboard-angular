@@ -29,6 +29,8 @@ import {SequenceListComponent} from '../../pages/production-management/sequence-
 import {ArticleListComponent} from '../../pages/production-management/article-list/article-list.component';
 import {OrderBundleComponent} from '../../pages/order-bundle/order-bundle.component';
 import {UpdateOrderComponent} from '../../pages/order-bundle/update-order/update-order.component';
+import {BoxesComponent} from '../../pages/boxes/boxes.component';
+import {BoxListComponent} from '../../pages/boxes/box-list/box-list.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -74,7 +76,12 @@ export const AdminLayoutRoutes: Routes = [
     ]
   },
 
-  { path: 'updateOrder', component: UpdateOrderComponent},
-  { path: 'AddOrderWBundles', component: OrderBundleComponent},
+  {path: 'updateOrder', component: UpdateOrderComponent},
+  {path: 'AddOrderWBundles', component: OrderBundleComponent},
+  {
+    path: 'Box', component: BoxesComponent, children: [
+      {path: 'BoxList', component: BoxListComponent},
+    ]
+  }
 
 ];

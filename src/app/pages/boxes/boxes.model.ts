@@ -1,13 +1,15 @@
 import {SiteModel} from '../sites/site.model';
-import {OperationModel} from '../production-management/operation-list/operation.model';
+import {MachineModel} from '../machines/machine.model';
 
 export interface BoxModel {
-  line_id?: string,
-  line_label?: string,
-  line_description?: string,
+  box_id?: string,
+  box_label?: string,
+  address_mac?: string,
+  description?: string,
+  version?: string,
+  MachineId?: string,
+  machine: MachineModel,
   SiteId?: string,
-  site?: SiteModel,
-  operations?: OperationModel[]
-
+  site: SiteModel
 
 }
