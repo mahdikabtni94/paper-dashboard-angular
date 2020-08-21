@@ -14,7 +14,7 @@ export class BoxesComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.menuItems = UserRoutes.filter(menuItem => menuItem);
+    this.menuItems = BoxRoutes.filter(menuItem => menuItem);
   }
 
 }

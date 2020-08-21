@@ -6,6 +6,8 @@ import {DialogService} from '../../../dialog.service';
 import {OperationModel} from './operation.model';
 import {Subscription} from 'rxjs';
 import {CreateOperationComponent} from '../create-operation/create-operation.component';
+import {AuthService} from '../../../auth/auth.service';
+import {Users} from '../../users/users.model';
 
 @Component({
   selector: 'app-operation-list',
@@ -13,14 +15,21 @@ import {CreateOperationComponent} from '../create-operation/create-operation.com
   styleUrls: ['./operation-list.component.scss']
 })
 export class OperationListComponent implements OnInit, OnDestroy {
+  userFromStorage: any;
+  UserProfile: any;
   isloading = false;
+  currentUser: Users;
   operations: OperationModel[] = [];
   operationsSub: Subscription;
 
   constructor(public operationService: OperationService,
               private  dialog: MatDialog,
               private notificationService: NotificationService,
-              private  dialogService: DialogService) {
+              private  dialogService: DialogService,
+              private authService: AuthService) {
+    this.userFromStorage = this.authService.getToken();
+    const tokenInfo = this.authService.getDecodedAccessToken(this.userFromStorage);
+    this.UserProfile = tokenInfo.profile;
   }
 
   ngOnInit() {
@@ -35,7 +44,10 @@ export class OperationListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.operationsSub.unsubscribe();
+    if (this.operationsSub && !this.operationsSub.closed) {
+      this.operationsSub.unsubscribe();
+    }
+
   }
 
   onDelete(row: any) {

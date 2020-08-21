@@ -31,6 +31,7 @@ import {OrderBundleComponent} from '../../pages/order-bundle/order-bundle.compon
 import {UpdateOrderComponent} from '../../pages/order-bundle/update-order/update-order.component';
 import {BoxesComponent} from '../../pages/boxes/boxes.component';
 import {BoxListComponent} from '../../pages/boxes/box-list/box-list.component';
+import {BundleListComponent} from '../../pages/order-bundle/bundle-list/bundle-list.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -82,6 +83,7 @@ export const AdminLayoutRoutes: Routes = [
     path: 'Box', component: BoxesComponent, children: [
       {path: 'BoxList', component: BoxListComponent},
     ]
-  }
+  },
+  {path: 'BundleList', component: BundleListComponent},
 
 ];

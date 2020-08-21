@@ -1,4 +1,4 @@
-<button class="AddOperation" mat-raised-button color="primary" (click)="onCreate()">
+<button class="AddOperation" *ngIf="UserProfile.has_save=='Y' "mat-raised-button color="primary" (click)="onCreate()">
   Add Operation
 </button>
 
@@ -15,10 +15,10 @@
                   [routerLink]="['/admin/production',operation.operation_template_id,'SequenceList']">
             <mat-icon>list</mat-icon>
           </button>
-          <button mat-icon-button (click)="onEdit(operation)">
+          <button mat-icon-button *ngIf="UserProfile.has_update=='Y'"(click)="onEdit(operation)">
             <mat-icon>launch</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="onDelete(operation.operation_template_id)">
+          <button mat-icon-button color="warn" *ngIf="UserProfile.has_delete=='Y'"(click)="onDelete(operation.operation_template_id)">
             <mat-icon>delete_outline</mat-icon>
           </button>
         </mat-panel-description>

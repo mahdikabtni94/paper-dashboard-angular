@@ -1,7 +1,7 @@
 <mat-spinner *ngIf="isloading"></mat-spinner>
 <div class="search-div">
 
-  <button class="Addbox" mat-raised-button  (click)="onCreatebox()">
+  <button class="Addbox" mat-raised-button *ngIf="UserProfile.has_save=='Y'" (click)="onCreatebox()">
     <mat-icon>add</mat-icon>
     Create box
   </button>
@@ -26,9 +26,9 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
       <mat-cell *matCellDef="let element">{{element.description}}</mat-cell>
     </ng-container>
-    <ng-container matColumnDef="site.site_label">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>site</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.site.site_label}}</mat-cell>
+    <ng-container matColumnDef="line.line_label">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>line</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.line.line_label}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="machine.machine_label">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Machine</mat-header-cell>
@@ -37,10 +37,10 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <button mat-icon-button (click)="onEdit(row)">
+        <button mat-icon-button *ngIf="UserProfile.has_update=='Y'"(click)="onEdit(row)">
           <mat-icon>launch</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="onDelete(row.box_id)">
+        <button mat-icon-button color="warn" *ngIf="UserProfile.has_delete=='Y'"(click)="onDelete(row.box_id)">
           <mat-icon>delete_outbox</mat-icon>
         </button>
       </mat-cell>

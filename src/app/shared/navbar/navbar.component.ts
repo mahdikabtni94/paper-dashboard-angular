@@ -20,7 +20,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private toggleButton;
   private sidebarVisible: boolean;
   private authListenerSubs: Subscription;
-
+  userFromStorage: any;
+  UserName: any;
   public isCollapsed = true;
   @ViewChild('navbar-cmp', {static: false}) button;
   userIsAuthenticated = false;
@@ -35,7 +36,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userIsAuthenticated = this.authservice.getIsAuth();
-    this.currentUser = this.authservice.currentUserValue;
+    this.userFromStorage = this.authservice.getToken();
+    const tokenInfo = this.authservice.getDecodedAccessToken(this.userFromStorage);
+    this.UserName = tokenInfo.Username;
     this.authListenerSubs = this.authservice.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
     });
@@ -115,6 +118,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   onLogout() {
-  this.authservice.logout();
+    this.authservice.logout();
   }
 }

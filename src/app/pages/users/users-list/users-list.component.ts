@@ -15,8 +15,10 @@ import {AuthService} from '../../../auth/auth.service';
   styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent implements OnInit, OnDestroy {
+  userFromStorage: any;
   users: MatTableDataSource<Users>;
   currentUser: Users;
+  UserProfile: any;
   displayedColumns: string[] = ['UserName', 'Name', 'Email', 'Address', 'Phone', 'City', 'Profile', 'Activate', 'actions'];
   private usersSub: Subscription;
 
@@ -32,7 +34,10 @@ export class UsersListComponent implements OnInit, OnDestroy {
               private  dialogService: DialogService,
               private authService: AuthService
   ) {
-    this.currentUser = this.authService.currentUserValue
+    this.userFromStorage = this.authService.getToken();
+    const tokenInfo = this.authService.getDecodedAccessToken(this.userFromStorage);
+    this.UserProfile = tokenInfo.profile;
+    console.log('tokennnnnnnnnnn', tokenInfo);
 
   }
 

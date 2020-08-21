@@ -1,3 +1,10 @@
+ <app-alert
+     [message]="error"
+     *ngIf="UserProfile.profile_label!=='SuperAdmin' && error!== null"
+     (close)="onHandleError()"
+   ></app-alert>
+ <span *ngIf="UserProfile.profile_label!=='SuperAdmin'">Your not allowed to view this Content</span>
+<div *ngIf="UserProfile.profile_label=='SuperAdmin'">
 <mat-spinner *ngIf="isloading"></mat-spinner>
 <div class="search-div">
 
@@ -47,6 +54,7 @@
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
 
 
+</div>
 </div>
 
 

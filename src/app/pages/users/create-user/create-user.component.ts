@@ -41,6 +41,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
     this.profileSub = this.profileService.getProfilesUpdateListner()
       .subscribe((profiles: ProfileModel[]) => {
         this.ProfileList = profiles;
+      this.ProfileList = this.ProfileList.filter(profile => profile.profile_label !== 'SuperAdmin')
 
       });
     this.customerService.getCustomers();

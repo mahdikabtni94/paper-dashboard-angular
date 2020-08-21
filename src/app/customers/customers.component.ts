@@ -12,6 +12,7 @@ import {StateService} from '../shared/state/state.service';
 import {PhoneService} from '../shared/phoneCountry.service';
 import {ICountry} from '../shared/phoneCountry.interface';
 import {parsePhoneNumberFromString} from 'libphonenumber-js';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   selector: 'app-customers',

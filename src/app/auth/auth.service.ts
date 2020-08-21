@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {AuthData} from './auth-data.model';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import {NotificationService} from '../notification.service';
 import {Users} from '../pages/users/users.model';
+import * as jwt_decode from 'jwt-decode';
 
 
 @Injectable({providedIn: 'root'})
@@ -14,15 +15,8 @@ export class AuthService {
   private token: string;
   private authStatusListener = new Subject<boolean>();
   private currentUserSubject: BehaviorSubject<Users>;
-  public currentUser: Observable<Users>;
 
   constructor(private http: HttpClient, private router: Router, private notification: NotificationService) {
-    this.currentUserSubject = new BehaviorSubject<Users>(JSON.parse(localStorage.getItem('currentUser')));
-    this.currentUser = this.currentUserSubject.asObservable();
-  }
-
-  public get currentUserValue(): Users {
-    return this.currentUserSubject.value;
   }
 
   getToken() {
@@ -55,8 +49,6 @@ export class AuthService {
         authData
       )
       .subscribe(response => {
-          localStorage.setItem('currentUser', JSON.stringify(response.user));
-          this.currentUserSubject.next(response.user);
           if (response.user.Activated === false) {
             this.router.navigate(['/']);
             this.notification.warn('Account is not Activated');
@@ -153,6 +145,14 @@ export class AuthService {
       })
 
 
+  }
+
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch (Error) {
+      return null;
+    }
   }
 
 }

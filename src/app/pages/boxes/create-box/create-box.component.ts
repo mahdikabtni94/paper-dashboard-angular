@@ -1,12 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {SiteModel} from '../../sites/site.model';
+import {LineModel} from '../../lines/line.model';
 import {Subscription} from 'rxjs';
 import {MatDialogRef} from '@angular/material';
-import {SitesService} from '../../sites/sites.service';
+
 import {NotificationService} from '../../../notification.service';
 import {MachineModel} from '../../machines/machine.model';
 import {BoxService} from '../boxes.service';
 import {MachineService} from '../../machines/machine.service';
+import {LineService} from '../../lines/line.service';
 
 @Component({
   selector: 'app-create-box',
@@ -15,23 +16,23 @@ import {MachineService} from '../../machines/machine.service';
 })
 export class CreateBoxComponent implements OnInit, OnDestroy {
 
-  sites: SiteModel[];
+  lines: LineModel[];
   machines: MachineModel[];
-  private siteSub: Subscription;
+  private lineSub: Subscription;
   private machineSub: Subscription;
 
   constructor(public dialogref: MatDialogRef<CreateBoxComponent>,
               public boxService: BoxService,
-              public siteService: SitesService,
+              public lineService: LineService,
               public machineService: MachineService,
               public notificationService: NotificationService) {
   }
 
   ngOnInit() {
-    this.siteService.getSites();
-    this.siteSub = this.siteService.getSiteUpdateListner()
-      .subscribe((sites: SiteModel[]) => {
-        this.sites = sites;
+    this.lineService.getLines();
+    this.lineSub = this.lineService.getlineUpdateListner()
+      .subscribe((lines: LineModel[]) => {
+        this.lines = lines;
 
       });
     this.machineService.getmachine();
@@ -62,7 +63,7 @@ export class CreateBoxComponent implements OnInit, OnDestroy {
           this.boxService.form.value.description,
           this.boxService.form.value.version,
           this.boxService.form.value.MachineId,
-          this.boxService.form.value.SiteId,
+          this.boxService.form.value.LineId,
         );
         this.boxService.form.reset();
         this.boxService.initializeFormGroup();
@@ -76,7 +77,7 @@ export class CreateBoxComponent implements OnInit, OnDestroy {
           this.boxService.form.value.description,
           this.boxService.form.value.version,
           this.boxService.form.value.MachineId,
-          this.boxService.form.value.SiteId,
+          this.boxService.form.value.LineId,
         );
         this.boxService.form.reset();
         this.boxService.initializeFormGroup();
@@ -88,7 +89,7 @@ export class CreateBoxComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.siteSub.unsubscribe();
+    this.lineSub.unsubscribe();
     this.machineSub.unsubscribe();
   }
 

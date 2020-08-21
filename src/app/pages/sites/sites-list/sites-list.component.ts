@@ -6,6 +6,8 @@ import {NotificationService} from '../../../notification.service';
 import {DialogService} from '../../../dialog.service';
 import {SitesService} from '../sites.service';
 import {CreateSiteComponent} from '../create-site/create-site.component';
+import {AuthService} from '../../../auth/auth.service';
+import {Users} from '../../users/users.model';
 
 @Component({
   selector: 'app-sites-list',
@@ -13,7 +15,10 @@ import {CreateSiteComponent} from '../create-site/create-site.component';
   styleUrls: ['./sites-list.component.scss']
 })
 export class SitesListComponent implements OnInit, OnDestroy {
+  userFromStorage: any;
+  UserProfile:any;
   sites: MatTableDataSource<SiteModel>;
+  currentUser: Users;
   displayedColumns: string[] = ['Label', 'Email',
     'Phone', 'Technical_Contact',
     'Prod_Contact', 'Fax',
@@ -29,7 +34,11 @@ export class SitesListComponent implements OnInit, OnDestroy {
               private  dialog: MatDialog,
               private notificationService: NotificationService,
               private  dialogService: DialogService,
+              private authService: AuthService
   ) {
+    this.userFromStorage = this.authService.getToken();
+    const tokenInfo = this.authService.getDecodedAccessToken(this.userFromStorage);
+    this.UserProfile = tokenInfo.profile;
   }
 
   ngOnInit() {

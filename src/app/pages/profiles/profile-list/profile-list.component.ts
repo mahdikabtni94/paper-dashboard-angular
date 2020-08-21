@@ -6,6 +6,8 @@ import {NotificationService} from '../../../notification.service';
 import {DialogService} from '../../../dialog.service';
 import {ProfileService} from '../profile.service';
 import {CreateProfileComponent} from '../create-profile/create-profile.component';
+import {AuthService} from '../../../auth/auth.service';
+import {Users} from '../../users/users.model';
 
 @Component({
   selector: 'app-profile-list',
@@ -13,7 +15,10 @@ import {CreateProfileComponent} from '../create-profile/create-profile.component
   styleUrls: ['./profile-list.component.scss']
 })
 export class ProfileListComponent implements OnInit, OnDestroy {
+  userFromStorage: any;
+  UserProfile: any;
   profiles: MatTableDataSource<ProfileModel>;
+  currentUser: Users;
   displayedColumns: string[] = ['profile_label', 'profile_description', 'actions'];
   private profileSub: Subscription;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
@@ -21,12 +26,17 @@ export class ProfileListComponent implements OnInit, OnDestroy {
 
   searchKey: string;
   isloading = false;
+  error = 'Access Denied: you dont have the rights to access this section';
 
   constructor(public profileService: ProfileService,
               private  dialog: MatDialog,
               private notificationService: NotificationService,
               private  dialogService: DialogService,
+              private authService: AuthService
   ) {
+    this.userFromStorage = this.authService.getToken();
+    const tokenInfo = this.authService.getDecodedAccessToken(this.userFromStorage);
+    this.UserProfile = tokenInfo.profile;
   }
 
   ngOnInit() {
@@ -93,4 +103,7 @@ export class ProfileListComponent implements OnInit, OnDestroy {
     this.profileSub.unsubscribe();
   }
 
+  onHandleError() {
+    this.error = null
+  }
 }

@@ -5,6 +5,8 @@ import {CustomerService} from '../customer.service';
 import {NotificationService} from '../../notification.service';
 import {DialogService} from '../../dialog.service';
 import {CustomersComponent} from '../customers.component';
+import {AuthService} from '../../auth/auth.service';
+import {Users} from '../../pages/users/users.model';
 
 @Component({
   selector: 'app-customers-list',
@@ -12,8 +14,11 @@ import {CustomersComponent} from '../customers.component';
   styleUrls: ['./customers-list.component.scss']
 })
 export class CustomersListComponent implements OnInit, OnDestroy {
+  userFromStorage: any;
+  UserProfile: any
   customers: MatTableDataSource<any>;
   isloading = false;
+  currentUser: Users;
   displayedCustomerColumns: string[] = ['client_name', 'address',
     'phoneNumber', 'email',
     'technical_contact', 'sales_contact',
@@ -23,9 +28,13 @@ export class CustomersListComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort, {static: false}) customersort: MatSort;
   @ViewChild(MatPaginator, {static: false}) customerpaginator: MatPaginator;
   searchKey: string;
+
   constructor(private customerService: CustomerService, private  dialog: MatDialog,
               private notificationService: NotificationService,
-              private  dialogService: DialogService) {
+              private  dialogService: DialogService, private authService: AuthService) {
+    this.userFromStorage = this.authService.getToken();
+    const tokenInfo = this.authService.getDecodedAccessToken(this.userFromStorage);
+    this.UserProfile = tokenInfo.profile;
   }
 
   ngOnInit() {
@@ -51,6 +60,7 @@ export class CustomersListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.customerSub.unsubscribe();
   }
+
   onCreateCustomer() {
     this.customerService.initializeFormGroup();
     const dialogConfig = new MatDialogConfig();
@@ -60,6 +70,7 @@ export class CustomersListComponent implements OnInit, OnDestroy {
     this.dialog.open(CustomersComponent, dialogConfig);
 
   }
+
   onSearchClear() {
     this.searchKey = '';
     this.applyFilter();
@@ -68,6 +79,7 @@ export class CustomersListComponent implements OnInit, OnDestroy {
   applyFilter() {
     this.customers.filter = this.searchKey.trim().toLowerCase();
   }
+
   onDeleteCustomer(client_id) {
     this.dialogService.openConfirmDialog('Are you sure you want to delete this Customer ?').afterClosed()
       .subscribe(res => {
@@ -78,6 +90,7 @@ export class CustomersListComponent implements OnInit, OnDestroy {
       });
 
   }
+
   onEditCustomer(row) {
     this.customerService.populateForm(row);
     const dialogConfig = new MatDialogConfig();

@@ -1,7 +1,7 @@
 <mat-spinner *ngIf="isloading"></mat-spinner>
 <div class="search-div">
 
-  <button class="AddSite" mat-raised-button color="primary" (click)="onCreateSite()">
+  <button class="AddSite" mat-raised-button color="primary" *ngIf="UserProfile.has_save=='Y'"(click)="onCreateSite()">
     <mat-icon>add</mat-icon>
     Create Site
   </button>
@@ -53,10 +53,10 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <button mat-icon-button (click)="onEdit(row)">
+        <button mat-icon-button (click)="onEdit(row)" *ngIf="UserProfile.has_update=='Y'">
           <mat-icon>launch</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="onDelete(row.site_id)">
+        <button mat-icon-button color="warn"  *ngIf="UserProfile.has_delete=='Y'"(click)="onDelete(row.site_id)">
           <mat-icon>delete_outline</mat-icon>
         </button>
       </mat-cell>

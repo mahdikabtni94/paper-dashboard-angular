@@ -7,6 +7,7 @@ import {MatDialog, MatDialogConfig} from '@angular/material';
 import {NotificationService} from '../../../notification.service';
 import {DialogService} from '../../../dialog.service';
 import {CreateSequenceComponent} from '../create-sequence/create-sequence.component';
+import {AuthService} from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-sequence-list',
@@ -14,6 +15,8 @@ import {CreateSequenceComponent} from '../create-sequence/create-sequence.compon
   styleUrls: ['./sequence-list.component.scss']
 })
 export class SequenceListComponent implements OnInit {
+  userFromStorage: any;
+  UserProfile: any;
   private operationId: string;
   isloading = false;
   sequences: SequenceModel[] = [];
@@ -23,7 +26,11 @@ export class SequenceListComponent implements OnInit {
               public  route: ActivatedRoute,
               private  dialog: MatDialog,
               private notificationService: NotificationService,
-              private  dialogService: DialogService) {
+              private  dialogService: DialogService,
+              private authService: AuthService) {
+    this.userFromStorage = this.authService.getToken();
+    const tokenInfo = this.authService.getDecodedAccessToken(this.userFromStorage);
+    this.UserProfile = tokenInfo.profile;
   }
 
   ngOnInit() {

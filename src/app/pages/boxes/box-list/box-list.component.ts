@@ -6,6 +6,8 @@ import {DialogService} from '../../../dialog.service';
 import {BoxService} from '../boxes.service';
 import {CreateBoxComponent} from '../create-box/create-box.component';
 import {BoxModel} from '../boxes.model';
+import {AuthService} from '../../../auth/auth.service';
+import {Users} from '../../users/users.model';
 
 @Component({
   selector: 'app-box-list',
@@ -13,10 +15,12 @@ import {BoxModel} from '../boxes.model';
   styleUrls: ['./box-list.component.scss']
 })
 export class BoxListComponent implements OnInit, OnDestroy {
-
+  userFromStorage: any;
+  UserProfile: any;
   boxs: MatTableDataSource<BoxModel>;
+  currentUser: Users;
   displayedColumns: string[] = ['box_label', 'address_mac',
-    'description', 'site.site_label', 'machine.machine_label', 'actions'];
+    'description', 'line.line_label', 'machine.machine_label', 'actions'];
   private boxSub: Subscription;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
@@ -27,7 +31,11 @@ export class BoxListComponent implements OnInit, OnDestroy {
               private  dialog: MatDialog,
               private notificationService: NotificationService,
               private  dialogService: DialogService,
+              private authService: AuthService
   ) {
+    this.userFromStorage = this.authService.getToken();
+    const tokenInfo = this.authService.getDecodedAccessToken(this.userFromStorage);
+    this.UserProfile = tokenInfo.profile;
   }
 
   ngOnInit() {
@@ -36,7 +44,7 @@ export class BoxListComponent implements OnInit, OnDestroy {
     this.boxSub = this.boxService.getboxUpdateListner()
       .subscribe((boxs) => {
         this.isloading = false;
-        this.boxs = new MatTableDataSource(boxs);
+        this.boxs = new MatTableDataSource<BoxModel>(boxs);
         setTimeout(() => {
           this.boxs.sort = this.sort;
           this.boxs.paginator = this.paginator;
@@ -56,6 +64,7 @@ export class BoxListComponent implements OnInit, OnDestroy {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '60%';
+    dialogConfig.height = '60%';
     this.dialog.open(CreateBoxComponent, dialogConfig);
   }
 
@@ -75,6 +84,7 @@ export class BoxListComponent implements OnInit, OnDestroy {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '60%';
+    dialogConfig.height = '60%';
     this.dialog.open(CreateBoxComponent, dialogConfig);
 
   }

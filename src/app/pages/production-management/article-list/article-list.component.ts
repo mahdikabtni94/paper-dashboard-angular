@@ -6,6 +6,8 @@ import {NotificationService} from '../../../notification.service';
 import {DialogService} from '../../../dialog.service';
 import {ArticleService} from './article.service';
 import {CreateArticleComponent} from '../create-article/create-article.component';
+import {AuthService} from '../../../auth/auth.service';
+import {Users} from '../../users/users.model';
 
 
 @Component({
@@ -14,8 +16,10 @@ import {CreateArticleComponent} from '../create-article/create-article.component
   styleUrls: ['./article-list.component.scss']
 })
 export class ArticleListComponent implements OnInit, OnDestroy {
-
+  userFromStorage: any;
+  UserProfile: any;
   articles: MatTableDataSource<ArticleModel>;
+  currentUser: Users;
   displayedColumns: string[] = ['article_name', 'code', 'description', 'actions'];
   private articleSub: Subscription;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
@@ -26,7 +30,11 @@ export class ArticleListComponent implements OnInit, OnDestroy {
   constructor(public articleService: ArticleService,
               private  dialog: MatDialog,
               private notificationService: NotificationService,
-              private  dialogService: DialogService) {
+              private  dialogService: DialogService,
+              private authService: AuthService) {
+    this.userFromStorage = this.authService.getToken();
+    const tokenInfo = this.authService.getDecodedAccessToken(this.userFromStorage);
+    this.UserProfile = tokenInfo.profile;
   }
 
   ngOnInit() {
@@ -90,6 +98,9 @@ export class ArticleListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.articleSub.unsubscribe();
+    if (this.articleSub && !this.articleSub.closed) {
+      this.articleSub.unsubscribe();
+    }
+
   }
 }

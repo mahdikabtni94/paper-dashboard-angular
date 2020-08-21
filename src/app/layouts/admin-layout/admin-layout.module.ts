@@ -22,14 +22,17 @@ import {UpgradeComponent} from '../../pages/upgrade/upgrade.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {
-  MatButtonModule, MatExpansionModule,
+  MatButtonModule,
+  MatExpansionModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
   MatPaginatorModule,
-  MatProgressSpinnerModule, MatSelectModule,
+  MatProgressSpinnerModule,
+  MatSelectModule,
   MatSlideToggleModule,
-  MatSortModule, MatStepperModule,
+  MatSortModule,
+  MatStepperModule,
   MatTableModule,
   MatTabsModule,
   MatToolbarModule
@@ -62,6 +65,8 @@ import {UpdateOrderComponent} from '../../pages/order-bundle/update-order/update
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import {BoxListComponent} from '../../pages/boxes/box-list/box-list.component';
 import {BoxesComponent} from '../../pages/boxes/boxes.component';
+import {BundleListComponent} from '../../pages/order-bundle/bundle-list/bundle-list.component';
+import {AlertComponent} from '../../shared/alert/alert.component';
 
 
 @NgModule({
@@ -123,7 +128,8 @@ import {BoxesComponent} from '../../pages/boxes/boxes.component';
     UpdateOrderComponent,
     BoxListComponent,
     BoxesComponent,
-
+    BundleListComponent,
+    AlertComponent,
 
   ]
 

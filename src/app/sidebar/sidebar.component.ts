@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material';
 import {BehaviorSubject, of} from 'rxjs';
+import {AuthService} from '../auth/auth.service';
 
 
 export interface RouteInfo {
@@ -40,7 +41,7 @@ export const ROUTES: RouteInfo[] = [
         active: true,
       },
       {
-        path: '/admin/box',
+        path: '/admin/Box',
         title: 'Boxs',
         icon: 'inbox',
         class: '',
@@ -71,6 +72,14 @@ export const ROUTES: RouteInfo[] = [
         path: '/admin/AddOrderWBundles',
         title: 'Orders',
         icon: 'note_add',
+        class: '',
+        active: true,
+        children: [],
+      },
+      {
+        path: '/admin/BundleList',
+        title: 'Bundles Info',
+        icon: 'apps',
         class: '',
         active: true,
         children: [],
@@ -116,18 +125,22 @@ export const ROUTES: RouteInfo[] = [
 
 export class SidebarComponent {
   permissions: any;
+  UserProfile: any;
   userFromStorage: any;
   public menuItems: any[];
   nestedTreeControl: NestedTreeControl<RouteInfo>;
   nestedDataSource: MatTreeNestedDataSource<RouteInfo>;
   dataChange: BehaviorSubject<RouteInfo[]> = new BehaviorSubject<RouteInfo[]>([]);
 
-  constructor() {
-    this.userFromStorage = (localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')) : {};
-    if (this.userFromStorage && this.userFromStorage.permissions) {
+  constructor(private authService: AuthService) {
+    this.userFromStorage = this.authService.getToken();
+    const tokenInfo = this.authService.getDecodedAccessToken(this.userFromStorage);
+    this.UserProfile = tokenInfo.permissions;
+    console.log('Userprofileeeeeeeee', this.UserProfile);
+    if (this.UserProfile ) {
 
       this.menuItems = ROUTES.filter(menuItem => {
-        if (menuItem.permissions && JSON.parse(localStorage.getItem('user')).permissions.indexOf(menuItem.permissions[0]) === -1) {
+        if (menuItem.permissions && this.UserProfile.indexOf(menuItem.permissions[0]) === -1) {
 
           return null
         } else {
@@ -137,7 +150,8 @@ export class SidebarComponent {
             let menuItemSize = 0;
             menuItem.children.forEach(submenu => {
 
-              if (submenu.permissions && JSON.parse(localStorage.getItem('user')).permissions.indexOf(submenu.permissions[0]) === -1) {
+              if (submenu.permissions && this.UserProfile.indexOf
+              (submenu.permissions[0]) === -1) {
                 menuItem.children[i].active = false;
                 menuItemSize++;
               } else {

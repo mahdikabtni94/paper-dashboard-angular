@@ -1,0 +1,53 @@
+<mat-spinner *ngIf="isloading"></mat-spinner>
+<div class="search-div">
+  <mat-form-field class="search-form-field" floatLabel="never">
+    <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+<div class="mat-elevation-z8">
+  <mat-table [dataSource]="bundles" *ngIf=" bundles!=null && !isloading" matSort>
+    <ng-container matColumnDef="code">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> bundle Code</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.code}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="num_bundle">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Bundle Number</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.num_bundle}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="size">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Size</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.size}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="quantity">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Quantity</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.quantity}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="order.order_label">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Order</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.order.order_label}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="noData">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        No bundles Added
+      </mat-footer-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns" class="row-color"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-footer-row *matFooterRowDef="['noData']"
+                    [ngClass]="{'hide':!(bundles!=null && bundles.data.length===0)}"></mat-footer-row>
+
+  </mat-table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+
+
+</div>
+
+
+
+
+
+
+

@@ -22,7 +22,7 @@ export class BoxService {
     description: new FormControl(''),
     version: new FormControl(''),
     MachineId: new FormControl(''),
-    SiteId: new FormControl(''),
+    LineId: new FormControl(''),
 
   });
 
@@ -32,7 +32,7 @@ export class BoxService {
   Addbox(box_label: string,
          address_mac: string, description: string,
          version: string, MachineId: string,
-         SiteId: string
+         LineId: string
   ) {
     const Data = {
       'box_label': box_label,
@@ -40,7 +40,7 @@ export class BoxService {
       'description': description,
       'version': version,
       'MachineId': MachineId,
-      'SiteId': SiteId
+      'LineId': LineId
 
 
     }
@@ -52,15 +52,15 @@ export class BoxService {
           address_mac: address_mac,
           version: version,
           description: description,
-          SiteId: SiteId,
-          site: responseData.data.site,
+          LineId: LineId,
+          line: responseData.data.line,
           MachineId: MachineId,
           machine: responseData.data.machine
 
         }
         this.boxs.push(box);
         this.boxsUpdated.next([...this.boxs]);
-        this.router.navigate(['/admin/boxs']);
+        this.router.navigate(['/admin/Box']);
 
       });
   }
@@ -72,11 +72,11 @@ export class BoxService {
           return {
             box_id: box.box_id,
             box_label: box.box_label,
-            addressmac: box.address_mac,
+            address_mac: box.address_mac,
             description: box.description,
             version: box.version,
-            SiteId: box.SiteId,
-            site: box.site,
+            LineId: box.LineId,
+            line: box.line,
             MachineId: box.MachineId,
             machine: box.machine
           };
@@ -111,7 +111,7 @@ export class BoxService {
   Updatebox(box_id: string, box_label: string,
             address_mac: string, description: string,
             version: string, MachineId: string,
-            SiteId: string
+            LineId: string
   ) {
 
     const boxData = {
@@ -121,7 +121,7 @@ export class BoxService {
       description: description,
       version: version,
       MachineId: MachineId,
-      SiteId: SiteId
+      LineId: LineId
 
     }
     this.http.put<{ message: string, data: BoxModel }>(BACKEND_URL + '/api/box/update/' + box_id, boxData)
@@ -134,15 +134,15 @@ export class BoxService {
           description: description,
           address_mac: address_mac,
           version: version,
-          SiteId: SiteId,
-          site: responseData.data.site,
+          LineId: LineId,
+          line: responseData.data.line,
           MachineId: MachineId,
           machine: responseData.data.machine
         };
         Updatedboxs[oldboxsIndex] = box;
         this.boxs = Updatedboxs;
         this.boxsUpdated.next([...this.boxs]);
-        this.router.navigate(['/admin/boxs/boxList']);
+        this.router.navigate(['/admin/Box']);
 
 
       })
@@ -156,7 +156,7 @@ export class BoxService {
       'address_mac': '',
       'description': '',
       'version': '',
-      'SiteId': '',
+      'LineId': '',
       'MachineId': ''
 
 

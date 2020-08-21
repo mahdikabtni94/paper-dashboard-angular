@@ -7,6 +7,8 @@ import {DialogService} from '../../../dialog.service';
 import {LineModel} from '../line.model';
 import {LineService} from '../line.service';
 import {CreateLineComponent} from '../create-line/create-line.component';
+import {Users} from '../../users/users.model';
+import {AuthService} from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-lines-list',
@@ -14,7 +16,10 @@ import {CreateLineComponent} from '../create-line/create-line.component';
   styleUrls: ['./lines-list.component.scss']
 })
 export class LinesListComponent implements OnInit, OnDestroy {
+  userFromStorage: any;
+  UserProfile: any;
   lines: MatTableDataSource<LineModel>;
+  currentUser: Users;
   displayedColumns: string[] = ['line_label', 'line_description',
     'site.site_label', 'actions'];
   private lineSub: Subscription;
@@ -27,7 +32,11 @@ export class LinesListComponent implements OnInit, OnDestroy {
               private  dialog: MatDialog,
               private notificationService: NotificationService,
               private  dialogService: DialogService,
+              private authService: AuthService
   ) {
+    this.userFromStorage = this.authService.getToken();
+    const tokenInfo = this.authService.getDecodedAccessToken(this.userFromStorage);
+    this.UserProfile = tokenInfo.profile;
   }
 
   ngOnInit() {

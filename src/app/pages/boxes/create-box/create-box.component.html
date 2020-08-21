@@ -33,10 +33,10 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-          <mat-select formControlName="SiteId" placeholder="site">
+          <mat-select formControlName="LineId" placeholder="line">
             <mat-option>None</mat-option>
-            <ng-container *ngFor="let site of sites">
-              <mat-option value="{{site.site_id}}">{{site.site_label}}</mat-option>
+            <ng-container *ngFor="let line of lines">
+              <mat-option value="{{line.line_id}}">{{line.line_label}}</mat-option>
             </ng-container>
           </mat-select>
         </mat-form-field>

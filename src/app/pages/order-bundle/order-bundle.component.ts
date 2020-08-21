@@ -10,10 +10,8 @@ import {CustomerModel} from '../../customers/customer.model';
 import {LineModel} from '../lines/line.model';
 import {LineService} from '../lines/line.service';
 import {OperationModel} from '../production-management/operation-list/operation.model';
-import {OperationService} from '../production-management/operation-list/operation.service';
 import {BundleModel} from './bundle.model';
 import {GroupOp} from './operationGroup.model';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-order-bundle',
@@ -32,8 +30,6 @@ export class OrderBundleComponent implements OnInit, OnDestroy {
   private operationsSub: Subscription;
   private selectedAll: boolean;
   private operation_templates: OperationModel[];
-
-  // selectedOpeartionTemplateIds: string[];
   public range = [];
   public index = 0;
 
@@ -41,8 +37,7 @@ export class OrderBundleComponent implements OnInit, OnDestroy {
   constructor(public orderService: OrderService, public lineService: LineService,
               public notificationService: NotificationService, private bundleService: BundleService,
               public articleService: ArticleService, public  customerService: CustomerService,
-              public operationService: OperationService, private cd: ChangeDetectorRef,
-              public router: Router
+              private cd: ChangeDetectorRef,
   ) {
 
 
@@ -172,15 +167,6 @@ export class OrderBundleComponent implements OnInit, OnDestroy {
 
   }
 
-
-  ngOnDestroy(): void {
-    this.lineSub.unsubscribe();
-    this.articleSub.unsubscribe();
-    this.operationsSub.unsubscribe();
-    this.customerSub.unsubscribe();
-  }
-
-
   onSelectArticle(article: string) {
     this.articleService.FindOperationsByArticleId(article);
     this.operationsSub = this.articleService.getOperationsUpdateListner()
@@ -190,4 +176,20 @@ export class OrderBundleComponent implements OnInit, OnDestroy {
       });
 
   }
+
+  ngOnDestroy(): void {
+    if (this.lineSub && !this.lineSub.closed) {
+      this.lineSub.unsubscribe()
+    }
+    if (this.operationsSub && !this.operationsSub.closed) {
+      this.operationsSub.unsubscribe()
+    }
+    if (this.articleSub && !this.articleSub.closed) {
+      this.articleSub.unsubscribe()
+    }
+    if (this.customerSub && !this.customerSub.closed) {
+      this.customerSub.unsubscribe()
+    }
+  }
+
 }

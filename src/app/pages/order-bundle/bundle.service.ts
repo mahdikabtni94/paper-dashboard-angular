@@ -48,10 +48,7 @@ export class BundleService {
             size: bundle.size,
             quantity: bundle.quantity,
             OrderId: bundle.OrderId,
-            LineId: bundle.LineId,
             order: bundle.order,
-            line: bundle.line
-
           };
         });
       }))

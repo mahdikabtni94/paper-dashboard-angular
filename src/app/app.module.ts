@@ -62,6 +62,7 @@ import {CreateelectronicComponent} from './pages/staff/create-electronic/create-
 import {NgSelectModule} from '@ng-select/ng-select';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {CreateBoxComponent} from './pages/boxes/create-box/create-box.component';
+import { AlertComponent } from './shared/alert/alert.component';
 
 
 @NgModule({
@@ -86,6 +87,7 @@ import {CreateBoxComponent} from './pages/boxes/create-box/create-box.component'
     CreateSequenceComponent,
     CreateArticleComponent,
     CreateBoxComponent,
+
 
 
   ],
@@ -123,7 +125,7 @@ import {CreateBoxComponent} from './pages/boxes/create-box/create-box.component'
     MatNativeDateModule,
     MatTabsModule,
     NgSelectModule,
-    MatStepperModule
+    MatStepperModule,
 
 
   ],

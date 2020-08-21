@@ -61,7 +61,7 @@ export class MachineService {
         }
         this.machine.push(Machine);
         this.machineUpdated.next([...this.machine]);
-        this.router.navigate(['/admin/lines/MachineList']);
+        this.router.navigate(['/admin/lines']);
 
       });
   }

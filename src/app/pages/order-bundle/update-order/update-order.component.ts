@@ -190,7 +190,11 @@ export class UpdateOrderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.orderSearched.unsubscribe();
-    this.orderSub.unsubscribe();
+    if (this.orderSearched && !this.orderSearched.closed) {
+      this.orderSearched.unsubscribe()
+    }
+    if (this.orderSub && !this.orderSub.closed) {
+      this.orderSub.unsubscribe();
+    }
   }
 }

@@ -6,6 +6,8 @@ import {DialogService} from '../../../dialog.service';
 import {MachineTypeTypeService} from '../machine-type.service';
 import {MachineTypeModel} from '../machine_type.model';
 import {CreateMachineTypeComponent} from '../create-machine-type/create-machine-type.component';
+import {Users} from '../../users/users.model';
+import {AuthService} from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-machine-type-list',
@@ -13,7 +15,10 @@ import {CreateMachineTypeComponent} from '../create-machine-type/create-machine-
   styleUrls: ['./machine-type-list.component.scss']
 })
 export class MachineTypeListComponent implements OnInit, OnDestroy {
+  userFromStorage: any;
+  UserProfile: any;
   MachineTypes: MatTableDataSource<MachineTypeModel>;
+  currentUser: Users;
   displayedColumns: string[] = ['type', 'description', 'actions'];
   private typeSub: Subscription;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
@@ -24,7 +29,11 @@ export class MachineTypeListComponent implements OnInit, OnDestroy {
   constructor(public machineTypeService: MachineTypeTypeService,
               private  dialog: MatDialog,
               private notificationService: NotificationService,
-              private  dialogService: DialogService) {
+              private  dialogService: DialogService,
+              private authService: AuthService) {
+    this.userFromStorage = this.authService.getToken();
+    const tokenInfo = this.authService.getDecodedAccessToken(this.userFromStorage);
+    this.UserProfile = tokenInfo.profile;
   }
 
   ngOnInit() {

@@ -1,5 +1,6 @@
 import {SiteModel} from '../sites/site.model';
 import {MachineModel} from '../machines/machine.model';
+import {LineModel} from '../lines/line.model';
 
 export interface BoxModel {
   box_id?: string,
@@ -9,7 +10,7 @@ export interface BoxModel {
   version?: string,
   MachineId?: string,
   machine: MachineModel,
-  SiteId?: string,
-  site: SiteModel
+  LineId?: string,
+  line?: LineModel
 
 }
