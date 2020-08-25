@@ -127,6 +127,7 @@ export class OrderBundleComponent implements OnInit, OnDestroy {
       if (this.range[i].Operations_group) {
         for (const groupIndex in this.range[i].Operations_group) {
           if (this.range[i].Operations_group[groupIndex]) {
+            const operationQuantity = this.range[i].quantity;
             const selectedOperations = this.operation_templates.filter(
               // tslint:disable-next-line:triple-equals
               operation => operation.operation_template_id !== this.range[i].Operations_group);
@@ -140,6 +141,8 @@ export class OrderBundleComponent implements OnInit, OnDestroy {
                 machine_type: operation.machine_type,
                 time: operation.time,
                 accMinPrice: operation.accMinPrice,
+                quantity : operationQuantity,
+
 
               }
             });

@@ -22,6 +22,7 @@ export class CreateOperatorComponent implements OnInit {
 
   ngOnInit() {
     this.imagePreview = this.staffService.form.controls['profile_image'].value
+    this.staffService.form.controls['last_login_date'].disable()
 
   }
 
