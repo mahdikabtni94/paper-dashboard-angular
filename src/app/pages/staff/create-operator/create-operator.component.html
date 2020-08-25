@@ -15,6 +15,10 @@
           <mat-error>Pls enter a client name.</mat-error>
         </mat-form-field>
         <mat-form-field>
+          <input formControlName="emp_rfid" matInput placeholder="RFID*">
+          <mat-error>RFID is mandatory</mat-error>
+        </mat-form-field>
+        <mat-form-field>
           <mat-select formControlName="emp_gender" placeholder="Gender">
             <ng-container *ngFor="let gender of genders">
               <mat-option value="{{gender}}">{{gender}}</mat-option>
@@ -55,9 +59,7 @@
         <mat-form-field>
           <input formControlName="emp_address" matInput placeholder="Address">
         </mat-form-field>
-        <mat-form-field>
-          <input formControlName="emp_rfid" matInput placeholder="RFID">
-        </mat-form-field>
+
         <mat-form-field>
           <input formControlName="email" matInput placeholder="Email">
         </mat-form-field>

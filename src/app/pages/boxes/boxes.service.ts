@@ -18,11 +18,11 @@ export class BoxService {
   form: FormGroup = new FormGroup({
     box_id: new FormControl(null),
     box_label: new FormControl('', Validators.required),
-    address_mac: new FormControl(''),
+    address_mac: new FormControl('', Validators.required),
     description: new FormControl(''),
-    version: new FormControl(''),
-    MachineId: new FormControl(''),
-    LineId: new FormControl(''),
+    version: new FormControl('', Validators.required),
+    MachineId: new FormControl('', Validators.required),
+    LineId: new FormControl('', Validators.required),
 
   });
 

@@ -30,7 +30,7 @@ export class StaffService {
     start_working_date: new FormControl(new Date()),
     last_login_date: new FormControl(new Date()),
     emp_address: new FormControl(''),
-    emp_rfid: new FormControl(''),
+    emp_rfid: new FormControl('', Validators.required),
     city: new FormControl(''),
     emp_age: new FormControl(''),
     emp_matricule: new FormControl(''),
