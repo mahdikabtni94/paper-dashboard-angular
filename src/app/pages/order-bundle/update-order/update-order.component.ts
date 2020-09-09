@@ -185,7 +185,7 @@ export class UpdateOrderComponent implements OnInit, OnDestroy {
     this.orderService.UpdatedOrderForm.reset();
     this.orderService.initializeUpdatedFormGroup();
     this.notificationService.success(':: Order Updated successfully');
-    location.reload();
+   // location.reload();
 
   }
 

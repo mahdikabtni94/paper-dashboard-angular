@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {OrderModel} from './order.model';
@@ -9,6 +9,7 @@ import {environment} from '../../../environments/environment';
 import {BundleModel} from './bundle.model';
 import {OperationModel} from '../production-management/operation-list/operation.model';
 import {LineModel} from '../lines/line.model';
+import {NotificationService} from '../../notification.service';
 
 const BACKEND_URL = environment.apiUrl;
 
@@ -24,9 +25,9 @@ export class OrderService {
   form: FormGroup = new FormGroup({
     order_id: new FormControl(null),
     order_label: new FormControl('', Validators.required),
-    order_code: new FormControl(''),
+    order_code: new FormControl('', Validators.required),
     order_description: new FormControl(''),
-    quantity: new FormControl(''),
+    quantity: new FormControl('', Validators.required),
     ArticleId: new FormControl('', Validators.required),
     CustomerId: new FormControl('', Validators.required),
 
@@ -36,7 +37,7 @@ export class OrderService {
     addedQuantity: new FormControl(''),
   });
 
-  constructor(private http: HttpClient, private  router: Router) {
+  constructor(private http: HttpClient, private  router: Router, private notification: NotificationService) {
   }
 
   getorders() {
@@ -87,25 +88,31 @@ export class OrderService {
     };
     this.http.post<{ message: string, data: OrderModel }>(BACKEND_URL + '/api/order/addOrderWbundle', Data)
       .subscribe((responseData) => {
-        const order: OrderModel = {
-          order_id: responseData.data.order_id,
-          order_label: order_label,
-          order_code: order_code,
-          order_description: order_description,
-          ArticleId: ArticleId,
-          CustomerId: CustomerId,
-          quantity: quantity,
-          article: responseData.data.article,
-          customer: responseData.data.customer,
-          bundles: bundles
+          const order: OrderModel = {
+            order_id: responseData.data.order_id,
+            order_label: order_label,
+            order_code: order_code,
+            order_description: order_description,
+            ArticleId: ArticleId,
+            CustomerId: CustomerId,
+            quantity: quantity,
+            article: responseData.data.article,
+            customer: responseData.data.customer,
+            bundles: bundles
 
 
-        };
-        this.orders.push(order);
-        this.ordersUpdated.next([...this.orders]);
-        this.router.navigate(['/admin/updateOrder']);
+          };
+          this.orders.push(order);
+          this.ordersUpdated.next([...this.orders]);
+          this.notification.success(':: Order Added successfully');
+          this.router.navigate(['/admin/updateOrder']);
 
-      });
+        },
+        (err: HttpErrorResponse) => {
+          this.notification.warn('Operation Failed');
+
+        }
+      );
   }
 
   Updateorder(order_code: string | object, AddedQuantity: string,
@@ -127,6 +134,7 @@ export class OrderService {
       UpdatedOrders[oldOrderIndex] = response.order;
       this.orders = UpdatedOrders;
       this.ordersUpdated.next([...this.orders]);
+      this.router.navigate(['/admin/BundleList'])
 
     })
 

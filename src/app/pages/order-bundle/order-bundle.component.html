@@ -1,4 +1,4 @@
-<mat-horizontal-stepper #stepper>
+<mat-horizontal-stepper #stepper [linear]="true">
   <mat-step errorMessage="Invalid Order">
     <form [formGroup]="this.orderService.form" class="normal-form">
       <div class="controles-container">
@@ -48,7 +48,7 @@
           </mat-form-field>
         </div>
         <div class="nextButton">
-          <button mat-button matStepperNext>Next
+          <button mat-button matStepperNext [disabled]="orderService.form.invalid">Next
             <mat-icon>chevron_right</mat-icon>
           </button>
         </div>

@@ -1,4 +1,7 @@
 <mat-spinner *ngIf="isloading"></mat-spinner>
+<div class="op-name">
+  {{operation?.label}}
+</div>
 <button class="AddSequence" mat-raised-button  *ngIf="UserProfile.has_save=='Y'" (click)="onCreate()">
   Add Sequence
 </button>

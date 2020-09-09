@@ -52,6 +52,7 @@ export class OperatorListComponent implements OnInit, OnDestroy {
   }
 
   onEdit(row) {
+    console.log('rowwwwwwwwww', row);
     this.staffService.populateForm(row);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;

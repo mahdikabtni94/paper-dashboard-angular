@@ -50,7 +50,7 @@ export class ArticleListComponent implements OnInit, OnDestroy {
         });
         this.articles.filterPredicate = (data, filter) => {
           return this.displayedColumns.some(ele => {
-            return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
+            return ele === 'article_name' && data[ele].toLowerCase().indexOf(filter) !== -1;
           });
         };
 

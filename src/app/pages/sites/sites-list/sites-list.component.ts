@@ -16,7 +16,7 @@ import {Users} from '../../users/users.model';
 })
 export class SitesListComponent implements OnInit, OnDestroy {
   userFromStorage: any;
-  UserProfile:any;
+  UserProfile: any;
   sites: MatTableDataSource<SiteModel>;
   currentUser: Users;
   displayedColumns: string[] = ['Label', 'Email',
@@ -89,6 +89,7 @@ export class SitesListComponent implements OnInit, OnDestroy {
     this.dialog.open(CreateSiteComponent, dialogConfig);
 
   }
+
   onSearchClear() {
     this.searchKey = '';
     this.applyFilter();

@@ -51,7 +51,7 @@ export class BoxListComponent implements OnInit, OnDestroy {
         });
         this.boxs.filterPredicate = (data, filter) => {
           return this.displayedColumns.some(ele => {
-            return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
+            return ele === 'box_label' && data[ele].toLowerCase().indexOf(filter) !== -1;
           });
         };
 

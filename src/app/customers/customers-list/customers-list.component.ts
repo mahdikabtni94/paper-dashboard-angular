@@ -50,7 +50,7 @@ export class CustomersListComponent implements OnInit, OnDestroy {
         });
         this.customers.filterPredicate = (data, filter) => {
           return this.displayedCustomerColumns.some(ele => {
-            return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
+            return ele == 'client_name' && data[ele].toLowerCase().indexOf(filter) !== -1;
           });
         };
 

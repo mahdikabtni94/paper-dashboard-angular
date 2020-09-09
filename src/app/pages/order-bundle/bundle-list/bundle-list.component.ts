@@ -1,8 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Subscription} from 'rxjs';
-import {NotificationService} from '../../../notification.service';
-import {DialogService} from '../../../dialog.service';
 import {BundleModel} from '../bundle.model';
 import {BundleService} from '../bundle.service';
 
@@ -13,7 +11,7 @@ import {BundleService} from '../bundle.service';
 })
 export class BundleListComponent implements OnInit, OnDestroy {
   bundles: MatTableDataSource<BundleModel>;
-  displayedColumns: string[] = ['code', 'num_bundle', 'size', 'quantity', 'order.order_label'];
+  displayedColumns: string[] = ['code', 'num_bundle', 'size', 'quantity', 'order.order_label', 'Start_date', 'finish_date'];
   private bundleSub: Subscription;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
@@ -36,7 +34,7 @@ export class BundleListComponent implements OnInit, OnDestroy {
         });
         this.bundles.filterPredicate = (data, filter) => {
           return this.displayedColumns.some(ele => {
-            return ele !== 'actions' && data[ele].toLowerCase().indexOf(filter) !== -1;
+            return ele === 'code'   && data[ele].toLowerCase().indexOf(filter) !== -1;
           });
         };
 

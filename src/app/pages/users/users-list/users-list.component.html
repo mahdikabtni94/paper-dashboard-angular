@@ -39,7 +39,7 @@
     </ng-container>
     <ng-container matColumnDef="Profile">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Profile</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.profile.profile_label}}</mat-cell>
+      <mat-cell *matCellDef="let element">{{element.profile?.profile_label}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="Activate">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Activate</mat-header-cell>

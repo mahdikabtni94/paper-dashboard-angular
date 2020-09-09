@@ -11,7 +11,7 @@ import {StaffService} from '../staff.service';
 export class CreateOperatorComponent implements OnInit {
 
   imagePreview: string;
-  statusList = ['enabled', 'disabled'];
+  statusList = ['single', 'married', 'divorced'];
   genders = ['male', 'female'];
 
   constructor(public dialogref: MatDialogRef<CreateOperatorComponent>,
@@ -45,7 +45,7 @@ export class CreateOperatorComponent implements OnInit {
           this.staffService.form.value.emp_name,
           this.staffService.form.value.emp_lastname,
           this.staffService.form.value.start_working_date,
-          this.staffService.form.value.last_login_date ,
+          this.staffService.form.value.last_login_date,
           this.staffService.form.value.emp_address,
           this.staffService.form.value.emp_rfid,
           this.staffService.form.value.emp_gender,

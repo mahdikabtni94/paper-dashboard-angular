@@ -1,6 +1,6 @@
 import {environment} from '../../../../environments/environment';
 import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
 import {OperationModel} from './operation.model';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
@@ -18,7 +18,7 @@ export class OperationService {
   form: FormGroup = new FormGroup({
     operation_template_id: new FormControl(null),
     label: new FormControl('', Validators.required),
-    op_code: new FormControl(''),
+    op_code: new FormControl('', Validators.required),
     description: new FormControl(''),
     MachineTypeId: new FormControl('', Validators.required),
     time: new FormControl(''),
@@ -27,6 +27,7 @@ export class OperationService {
   });
 
   constructor(private http: HttpClient, private  router: Router) {
+
   }
 
   getOperations() {
@@ -55,6 +56,11 @@ export class OperationService {
 
   getOperationsUpdateListner() {
     return this.operationsUpdated.asObservable();
+  }
+
+  getOperation(id: string) {
+    return this.http.get<{ message: string, data: OperationModel }>(BACKEND_URL + '/api/operation_template/find/' + id)
+
   }
 
   AddOperation(label: string,

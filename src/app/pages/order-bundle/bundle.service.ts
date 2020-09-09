@@ -49,6 +49,8 @@ export class BundleService {
             quantity: bundle.quantity,
             OrderId: bundle.OrderId,
             order: bundle.order,
+            Start_date: bundle.Start_date,
+            finish_date: bundle.finish_date,
           };
         });
       }))

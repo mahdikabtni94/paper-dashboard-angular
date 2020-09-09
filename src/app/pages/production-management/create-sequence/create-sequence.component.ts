@@ -26,6 +26,7 @@ export class CreateSequenceComponent implements OnInit {
   ngOnInit() {
     console.log(this.opkey.opkey);
     this.sequenceService.form.value.operation_template_id = this.opkey.opkey;
+    console.log('operationnnntemmmm', this.opkey.opkey);
     this.imagePreview = this.sequenceService.form.controls['picture'].value;
     this.sequenceService.form.patchValue({with_subsequence: false});
 
@@ -100,6 +101,7 @@ export class CreateSequenceComponent implements OnInit {
       this.imagePreview = <string>reader.result
     };
     reader.readAsDataURL(file);
+    console.log('formmmm', this.sequenceService.form.value);
   }
 
   OnChange() {

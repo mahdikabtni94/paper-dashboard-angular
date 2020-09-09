@@ -28,7 +28,7 @@ export class SequenceService {
     coupe_fil: new FormControl('', {validators: [Validators.required]}),
     back_stitch: new FormControl('', {validators: [Validators.required]}),
     parent_sequence: new FormControl('', {validators: [Validators.required]}),
-    operation_template_id: new FormControl('', {validators: [Validators.required]}),
+    operation_template_id: new FormControl(''),
     back_stitch_positive_tolerence: new FormControl('', {validators: [Validators.required]}),
     back_stitch_negative_tolerence: new FormControl('', {validators: [Validators.required]}),
     stitch_count_positive_tolerence: new FormControl('', {validators: [Validators.required]}),

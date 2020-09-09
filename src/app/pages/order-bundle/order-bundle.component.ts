@@ -12,11 +12,15 @@ import {LineService} from '../lines/line.service';
 import {OperationModel} from '../production-management/operation-list/operation.model';
 import {BundleModel} from './bundle.model';
 import {GroupOp} from './operationGroup.model';
+import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-order-bundle',
   templateUrl: './order-bundle.component.html',
-  styleUrls: ['./order-bundle.component.scss']
+  styleUrls: ['./order-bundle.component.scss'],
+  providers: [{
+    provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
+  }]
 })
 export class OrderBundleComponent implements OnInit, OnDestroy {
   bundle = new BundleModel();
@@ -128,9 +132,10 @@ export class OrderBundleComponent implements OnInit, OnDestroy {
         for (const groupIndex in this.range[i].Operations_group) {
           if (this.range[i].Operations_group[groupIndex]) {
             const operationQuantity = this.range[i].quantity;
+            console.log('templatesssssssss', this.operation_templates);
             const selectedOperations = this.operation_templates.filter(
               // tslint:disable-next-line:triple-equals
-              operation => operation.operation_template_id !== this.range[i].Operations_group);
+              operation => operation.operation_template_id !== this.range[i].Operations_group[groupIndex].operations);
             const operationCopyList = selectedOperations.map(function (operation) {
               return {
                 // operation_id: operation.operation_template_id,
@@ -141,7 +146,7 @@ export class OrderBundleComponent implements OnInit, OnDestroy {
                 machine_type: operation.machine_type,
                 time: operation.time,
                 accMinPrice: operation.accMinPrice,
-                quantity : operationQuantity,
+                quantity: operationQuantity,
 
 
               }
@@ -165,8 +170,6 @@ export class OrderBundleComponent implements OnInit, OnDestroy {
     );
     this.orderService.form.reset();
     this.orderService.initializeFormGroup();
-    this.notificationService.success(':: Order Added successfully');
-    console.log('orderform*****', this.orderService.form.value);
 
   }
 

@@ -8,6 +8,8 @@ import {NotificationService} from '../../../notification.service';
 import {DialogService} from '../../../dialog.service';
 import {CreateSequenceComponent} from '../create-sequence/create-sequence.component';
 import {AuthService} from '../../../auth/auth.service';
+import {OperationService} from '../operation-list/operation.service';
+import {OperationModel} from '../operation-list/operation.model';
 
 @Component({
   selector: 'app-sequence-list',
@@ -21,13 +23,16 @@ export class SequenceListComponent implements OnInit {
   isloading = false;
   sequences: SequenceModel[] = [];
   sequenceSub: Subscription;
+  private operationSearched: Subscription;
+  private operation: OperationModel;
 
   constructor(public sequenceService: SequenceService,
               public  route: ActivatedRoute,
               private  dialog: MatDialog,
               private notificationService: NotificationService,
               private  dialogService: DialogService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private operationService: OperationService) {
     this.userFromStorage = this.authService.getToken();
     const tokenInfo = this.authService.getDecodedAccessToken(this.userFromStorage);
     this.UserProfile = tokenInfo.profile;
@@ -45,6 +50,12 @@ export class SequenceListComponent implements OnInit {
             this.sequences = sequences;
 
           });
+        this.operationSearched = this.operationService.getOperation(this.operationId).subscribe((operation) => {
+          this.operation = operation.data;
+          console.log('operationnn', this.operation);
+
+        });
+
 
       } else {
         this.operationId = null;

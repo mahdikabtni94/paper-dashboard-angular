@@ -155,6 +155,7 @@ export class ArticleService {
           return {
             operation_template_id: operations.operation_template_id,
             label: operations.label,
+            op_code: operations.op_code,
             description: operations.description,
             MachineTypeId: operations.MachineTypeId,
             time: operations.time,
@@ -170,6 +171,7 @@ export class ArticleService {
 
       });
   }
+
   getOperationsUpdateListner() {
     return this.operationsUpdated.asObservable();
   }

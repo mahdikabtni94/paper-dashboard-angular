@@ -67,9 +67,16 @@ import {BoxListComponent} from '../../pages/boxes/box-list/box-list.component';
 import {BoxesComponent} from '../../pages/boxes/boxes.component';
 import {BundleListComponent} from '../../pages/order-bundle/bundle-list/bundle-list.component';
 import {AlertComponent} from '../../shared/alert/alert.component';
+import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 
 
 @NgModule({
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { showError: true }
+    }
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
