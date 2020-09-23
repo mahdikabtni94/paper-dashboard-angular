@@ -68,6 +68,7 @@ import {BoxesComponent} from '../../pages/boxes/boxes.component';
 import {BundleListComponent} from '../../pages/order-bundle/bundle-list/bundle-list.component';
 import {AlertComponent} from '../../shared/alert/alert.component';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
+import {PipesModule} from '../../shared/pipes.module';
 
 
 @NgModule({
@@ -99,6 +100,7 @@ import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
     MatSelectModule,
     NgSelectModule,
     AutocompleteLibModule,
+    PipesModule
 
 
   ],

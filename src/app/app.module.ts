@@ -63,6 +63,10 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {CreateBoxComponent} from './pages/boxes/create-box/create-box.component';
 import { AlertComponent } from './shared/alert/alert.component';
+import { ProductivityComponent } from './pages/productivity/productivity.component';
+import { AttendanceComponent } from './pages/productivity/attendance/attendance.component';
+import { EmployeeInfoComponent } from './pages/productivity/employee-info/employee-info.component';
+import { GlobalProductivityComponent } from './pages/productivity/global-productivity/global-productivity.component';
 
 
 @NgModule({
@@ -87,6 +91,10 @@ import { AlertComponent } from './shared/alert/alert.component';
     CreateSequenceComponent,
     CreateArticleComponent,
     CreateBoxComponent,
+    ProductivityComponent,
+    AttendanceComponent,
+    EmployeeInfoComponent,
+    GlobalProductivityComponent,
 
 
 
