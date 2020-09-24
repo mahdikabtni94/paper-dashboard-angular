@@ -95,8 +95,8 @@ export const ROUTES: RouteInfo[] = [
     active: true,
     children: [
       {
-        path: '/admin',
-        title: 'Attendance',
+        path: '/admin/stats',
+        title: 'Stats',
         icon: 'work',
         class: '',
         children: [],

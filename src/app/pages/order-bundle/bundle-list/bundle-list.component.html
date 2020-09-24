@@ -31,11 +31,11 @@
     </ng-container>
     <ng-container matColumnDef="Start_date">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Start_date</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.Start_date}}</mat-cell>
+      <mat-cell *matCellDef="let element">{{element.Start_date|date:'short'}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="finish_date">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Finish_Date</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.finish_date}}</mat-cell>
+      <mat-cell *matCellDef="let element">{{element.finish_date|date:'short'}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="noData">
       <mat-footer-cell *matFooterCellDef colspan="6">

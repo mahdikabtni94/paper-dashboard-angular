@@ -62,11 +62,12 @@ import {CreateelectronicComponent} from './pages/staff/create-electronic/create-
 import {NgSelectModule} from '@ng-select/ng-select';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {CreateBoxComponent} from './pages/boxes/create-box/create-box.component';
-import { AlertComponent } from './shared/alert/alert.component';
-import { ProductivityComponent } from './pages/productivity/productivity.component';
-import { AttendanceComponent } from './pages/productivity/attendance/attendance.component';
-import { EmployeeInfoComponent } from './pages/productivity/employee-info/employee-info.component';
-import { GlobalProductivityComponent } from './pages/productivity/global-productivity/global-productivity.component';
+import {EmployeeInfoComponent} from './pages/productivity/employee-info/employee-info.component';
+import {PipesModule} from './shared/pipes.module';
+import {TableModule} from 'primeng/table';
+import {ChartsModule} from 'ng2-charts';
+
+
 
 
 @NgModule({
@@ -91,11 +92,7 @@ import { GlobalProductivityComponent } from './pages/productivity/global-product
     CreateSequenceComponent,
     CreateArticleComponent,
     CreateBoxComponent,
-    ProductivityComponent,
-    AttendanceComponent,
     EmployeeInfoComponent,
-    GlobalProductivityComponent,
-
 
 
   ],
@@ -134,7 +131,9 @@ import { GlobalProductivityComponent } from './pages/productivity/global-product
     MatTabsModule,
     NgSelectModule,
     MatStepperModule,
-
+    PipesModule,
+    TableModule,
+    ChartsModule
 
   ],
   providers: [
@@ -159,7 +158,8 @@ import { GlobalProductivityComponent } from './pages/productivity/global-product
     CreateSequenceComponent,
     CreateOperationComponent,
     CreateArticleComponent,
-    CreateBoxComponent
+    CreateBoxComponent,
+    EmployeeInfoComponent
   ]
 })
 

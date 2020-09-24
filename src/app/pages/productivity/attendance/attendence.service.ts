@@ -21,7 +21,7 @@ export class AttendenceService {
   }
 
   getEmployeeStats() {
-    this.http.get<{ message: string, data: any[] }>(BACKEND_URL + '/api/employeeStat/employeeStats')
+    this.http.get<{ message: string, data: any[] }>(BACKEND_URL + '/api/box/employeeStats')
       .pipe(map((EmployeeStatsData) => {
         return EmployeeStatsData.data.map(employeeStat => {
           return {
@@ -33,8 +33,7 @@ export class AttendenceService {
             profile_image: employeeStat.profile_image,
             total_time_passed: employeeStat.total_time_passed,
             emp_matricule: employeeStat.emp_matricule,
-            time_first_login: employeeStat.time_first_login,
-            time_last_logout: employeeStat.time_last_logout
+            day_session: employeeStat.day_session,
           };
         });
       }))
@@ -44,5 +43,9 @@ export class AttendenceService {
         this.employeeStatsUpdated.next([...this.employeeStats]);
 
       });
+  }
+
+  getEmployeStatsUpdateListner() {
+    return this.employeeStatsUpdated.asObservable();
   }
 }

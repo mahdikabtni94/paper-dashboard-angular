@@ -1,1 +1,34 @@
-<p>employee-info works!</p>
+<mat-toolbar>
+  <span>EmployeeInfo</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+<p-table [value]="cpsStats">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Operation</th>
+      <th>Time Target</th>
+      <th>Time Passed</th>
+      <th>Efficiency</th>
+      <th>Quantity</th>
+      <th>Quantity percentage</th>
+      <th>Reparation</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-cps>
+    <tr>
+      <td>{{cps.operation_label}}</td>
+      <td>{{cps.total_time_needed|time_counter}}</td>
+      <td>{{cps.time_passed | time_counter}} <br>
+        Started : {{cps.start_time|date:'short'}}<br>
+        Finished: {{cps.end_time|date:'short'}}
+      </td>
+      <td>{{cps.efficiency|number : '1.2-2'}}</td>
+      <td>{{cps.quantity}}/{{cps.total_quantity_needed}}</td>
+      <td>{{cps.quantity_percentage}}%</td>
+      <td>{{cps.reparation}}</td>
+    </tr>
+  </ng-template>
+</p-table>

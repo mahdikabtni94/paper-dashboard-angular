@@ -4,9 +4,8 @@ export interface EmployeeStatsModel {
   productivity?: string,
   emp_name?: string,
   emp_lastname?: string,
+  emp_matricule?: string,
   profile_image?: string,
   total_time_passed?: string,
-  time_first_login?: Date,
-  time_last_logout?: Date,
-  emp_matricule?: string,
+  day_session?: string
 }

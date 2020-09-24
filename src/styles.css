@@ -1,7 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 /* notification */
 @import "~@ng-select/ng-select/themes/default.theme.css";
-
+@import "~bootstrap/dist/css/bootstrap.css";
+@import '../node_modules/primeng/resources/themes/nova-light/theme.css';
+@import '../node_modules/primeng/resources/primeng.min.css';
+@import '~bootstrap/dist/css/bootstrap.min.css';
 snack-bar-container.success {
   background-color: #5cb85c;
   color: #fff;

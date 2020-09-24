@@ -1,6 +1,4 @@
 import {Routes} from '@angular/router';
-
-import {DashboardComponent} from '../../pages/dashboard/dashboard.component';
 import {UserComponent} from '../../pages/user/user.component';
 import {TypographyComponent} from '../../pages/typography/typography.component';
 import {IconsComponent} from '../../pages/icons/icons.component';
@@ -32,10 +30,13 @@ import {UpdateOrderComponent} from '../../pages/order-bundle/update-order/update
 import {BoxesComponent} from '../../pages/boxes/boxes.component';
 import {BoxListComponent} from '../../pages/boxes/box-list/box-list.component';
 import {BundleListComponent} from '../../pages/order-bundle/bundle-list/bundle-list.component';
+import {ProductivityComponent} from '../../pages/productivity/productivity.component';
+import {AttendanceComponent} from '../../pages/productivity/attendance/attendance.component';
+import {GlobalProductivityComponent} from '../../pages/productivity/global-productivity/global-productivity.component';
 
 
 export const AdminLayoutRoutes: Routes = [
-  {path: 'dashboard', component: DashboardComponent},
+  // {path: 'dashboard', component: DashboardComponent},
   {path: 'user', component: UserComponent},
   {path: 'typography', component: TypographyComponent},
   {path: 'icons', component: IconsComponent},
@@ -85,5 +86,12 @@ export const AdminLayoutRoutes: Routes = [
     ]
   },
   {path: 'BundleList', component: BundleListComponent},
+  {
+    path: 'stats', component: ProductivityComponent, children: [
 
+      {path: 'Attendance', component: AttendanceComponent},
+      {path: 'Productivity', component: GlobalProductivityComponent},
+
+    ]
+  },
 ];

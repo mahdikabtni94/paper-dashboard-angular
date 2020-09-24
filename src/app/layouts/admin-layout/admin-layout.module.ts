@@ -5,7 +5,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {AdminLayoutRoutes} from './admin-layout.routing';
 // tslint:disable-next-line:import-spacing
-import {DashboardComponent} from '../../pages/dashboard/dashboard.component';
 // tslint:disable-next-line:import-spacing
 import {UserComponent} from '../../pages/user/user.component';
 // tslint:disable-next-line:import-spacing
@@ -35,7 +34,7 @@ import {
   MatStepperModule,
   MatTableModule,
   MatTabsModule,
-  MatToolbarModule
+  MatToolbarModule,
 } from '@angular/material';
 
 import {UsersComponent} from '../../pages/users/users.component';
@@ -69,13 +68,17 @@ import {BundleListComponent} from '../../pages/order-bundle/bundle-list/bundle-l
 import {AlertComponent} from '../../shared/alert/alert.component';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {PipesModule} from '../../shared/pipes.module';
+import {ProductivityComponent} from '../../pages/productivity/productivity.component';
+import {AttendanceComponent} from '../../pages/productivity/attendance/attendance.component';
+import {GlobalProductivityComponent} from '../../pages/productivity/global-productivity/global-productivity.component';
+import {ChartsModule} from 'ng2-charts';
 
 
 @NgModule({
   providers: [
     {
       provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: { showError: true }
+      useValue: {showError: true}
     }
   ],
   imports: [
@@ -100,12 +103,12 @@ import {PipesModule} from '../../shared/pipes.module';
     MatSelectModule,
     NgSelectModule,
     AutocompleteLibModule,
-    PipesModule
+    PipesModule,
+    ChartsModule
 
 
   ],
   declarations: [
-    DashboardComponent,
     UserComponent,
     UpgradeComponent,
     TypographyComponent,
@@ -139,6 +142,9 @@ import {PipesModule} from '../../shared/pipes.module';
     BoxesComponent,
     BundleListComponent,
     AlertComponent,
+    ProductivityComponent,
+    AttendanceComponent,
+    GlobalProductivityComponent,
 
   ]
 

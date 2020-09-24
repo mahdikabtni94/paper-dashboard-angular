@@ -1,1 +1,86 @@
-<p>attendance works!</p>
+
+<mat-spinner *ngIf="isloading"></mat-spinner>
+<div class="search-div">
+  <mat-form-field class="search-form-field" floatLabel="never">
+    <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+<div class="mat-elevation-z8">
+  <mat-table [dataSource]="employeestats" *ngIf=" employeestats!=null && !isloading" matSort>
+    <ng-container matColumnDef="day_session">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Day</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.day_session }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="profile_image">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Picture</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div class="post-image">
+          <img [src]="element.profile_image" [alt]="element.emp_name">
+        </div>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="emp_matricule">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Matricule</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.emp_matricule}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="emp_name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>FirstName</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.emp_name}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="emp_lastname">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>LastName</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.emp_lastname}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="total_time_passed">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Total time passed</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.total_time_passed|time_counter}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="session_status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+      <span>
+      <mat-cell  *matCellDef="let element" [ngClass]="{
+      'badge badge-danger':element.session_status == 'offline',
+      'badge badge-success':element.session_status == 'online'}" >
+        {{element.session_status}}</mat-cell>
+        </span>
+    </ng-container>
+    <ng-container matColumnDef="productivity">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Productivity</mat-header-cell>
+      <mat-cell *matCellDef="let element" class="label"  [ngClass]="{
+      'badge badge-success':element.productivity > 100.00,
+      'badge badge-warning':100.00 > element.productivity && 50.00 < element.productivity,
+       'badge badge-danger':element.productivity < 50.00}">
+        {{element.productivity| number : '1.2-2'}}%</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-icon-button color="primary" (click)="EmployeeInfo(row)">
+          <mat-icon>info</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="noData">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        No employeestats Added
+      </mat-footer-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns" class="row-color"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-footer-row *matFooterRowDef="['noData']"
+                    [ngClass]="{'hide':!(employeestats!=null &&employeestats.data.length===0)}"></mat-footer-row>
+
+  </mat-table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+
+
+</div>
+
+
+
+
+
+

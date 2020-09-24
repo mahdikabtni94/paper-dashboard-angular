@@ -40,7 +40,7 @@
     </ng-container>
     <ng-container matColumnDef="last_login_date">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Last_login_date</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.last_login_date}}</mat-cell>
+      <mat-cell *matCellDef="let element">{{element.last_login_date|date:'medium'}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="email">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
