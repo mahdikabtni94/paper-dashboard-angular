@@ -1,6 +1,23 @@
+<ng-select [(ngModel)]="SelectedLine" [ngModelOptions]="{standalone: true}"
+           (change)="onSelectLine()"
+           [multiple]="false"
+           bindLabel="line_label"
+           [addTag]="addLineTemplate"
+           [items]="lines"
+           bindValue="line_id"
+           placeholder="Lines">
+  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+    <input type="checkbox" [ngModel]="item$.selected"
+           [ngModelOptions]="{standalone: true}"/>{{item.line_label}}
+  </ng-template>
+</ng-select>
+<div *ngIf="lineSelected== true">
 <div style="display: block">
-  <canvas baseChart
-          [data]="doughnutChartData"
-          [labels]="doughnutChartLabels"
-          [chartType]="doughnutChartType"></canvas>
-</div>
+    <h3>Productivity:{{productivities[0].global_productivity|number:'1.2-2'}}%</h3>
+    <canvas baseChart
+            [data]="doughnutChartData"
+            [labels]="doughnutChartLabels"
+            [chartType]="doughnutChartType"></canvas>
+  </div>
+  </div>
+
