@@ -75,7 +75,7 @@ export class CreateOperatorComponent implements OnInit {
           this.staffService.form.value.emp_matricule,
           this.staffService.form.value.profile_image,
           this.staffService.form.value.status,
-          this.staffService.form.value.email
+          this.staffService.form.value.email,
         );
         this.staffService.form.reset();
         this.staffService.initializeFormGroup();

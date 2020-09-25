@@ -457,9 +457,10 @@ export class StaffService {
   UpdateOperator(emp_id: string, emp_name: string, emp_lastname: string,
                  start_working_date: Date, last_login_date: Date,
                  emp_address: string, emp_rfid: string,
-                 city: string, emp_age: string,
-                 emp_matricule: string, profile_image: File | string,
-                 emp_gender: string, status: string, email: string
+                 emp_gender: string, city: string,
+                 emp_age: string, emp_matricule: string,
+                 profile_image: File, status: string,
+                 email: string
   ) {
     let Data: any | FormData;
     if (typeof (profile_image) === 'object') {
@@ -476,7 +477,7 @@ export class StaffService {
       Data.append('emp_matricule', emp_matricule);
       Data.append('status', status);
       Data.append('email', email);
-      Data.append(' profile_image', profile_image, emp_name);
+      Data.append('profile_image', profile_image, emp_name);
 
 
     } else {
