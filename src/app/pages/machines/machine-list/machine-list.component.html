@@ -24,7 +24,7 @@
     </ng-container>
     <ng-container matColumnDef="line">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Line</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.line.line_label}}</mat-cell>
+      <mat-cell *matCellDef="let element">{{element.line?.line_label}}</mat-cell>
     </ng-container>
 
 

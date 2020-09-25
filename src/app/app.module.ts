@@ -66,6 +66,7 @@ import {EmployeeInfoComponent} from './pages/productivity/employee-info/employee
 import {PipesModule} from './shared/pipes.module';
 import {TableModule} from 'primeng/table';
 import {ChartsModule} from 'ng2-charts';
+import {NgDatepickerModule} from 'ng2-datepicker';
 
 
 
@@ -133,7 +134,8 @@ import {ChartsModule} from 'ng2-charts';
     MatStepperModule,
     PipesModule,
     TableModule,
-    ChartsModule
+    ChartsModule,
+    NgDatepickerModule
 
   ],
   providers: [

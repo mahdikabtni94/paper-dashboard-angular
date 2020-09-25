@@ -2,14 +2,18 @@ import {Component, OnInit} from '@angular/core';
 import {GlobalProductivityService} from './global_productivity.service';
 import {Subscription} from 'rxjs';
 import {LineService} from '../../lines/line.service';
+import {DatePipe} from '@angular/common'
+
 
 @Component({
   selector: 'app-global-productivity',
   templateUrl: './global-productivity.component.html',
-  styleUrls: ['./global-productivity.component.scss']
+  styleUrls: ['./global-productivity.component.scss'],
 })
+
 export class GlobalProductivityComponent implements OnInit {
   productivities: any[] = [];
+  producititiesUpdated = [];
   private productivitySub: Subscription;
   lines: any[] = [];
   lineSub: Subscription;
@@ -19,8 +23,11 @@ export class GlobalProductivityComponent implements OnInit {
   public lineSelected = false;
   public dateSelected = false;
   private SelectedLine: string;
+  date: string;
 
-  constructor(public globalProductivityService: GlobalProductivityService, public lineService: LineService) {
+  constructor(public globalProductivityService: GlobalProductivityService,
+              public lineService: LineService,
+              public datepipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -39,7 +46,13 @@ export class GlobalProductivityComponent implements OnInit {
 
   onSelectLine() {
     this.lineSelected = true;
-     this.productivities.filter(productivityStats => productivityStats.line_id = this.SelectedLine);
-    console.log('productivityyyyyyyyyy', this.productivities);
+   this.producititiesUpdated = this.productivities.filter(productivityStats => productivityStats.line_id == this.SelectedLine);
+
+  }
+
+  SelectedDate() {
+    this.dateSelected = true;
+    const latest_date = this.datepipe.transform(this.date, 'yyyy/MM/dd');
+    this.producititiesUpdated = this.productivities.filter(productivityStats => productivityStats.day_session == latest_date.toString());
   }
 }

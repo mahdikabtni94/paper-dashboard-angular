@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {CommonModule} from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {AdminLayoutRoutes} from './admin-layout.routing';
@@ -19,9 +19,9 @@ import {NotificationsComponent} from '../../pages/notifications/notifications.co
 import {UpgradeComponent} from '../../pages/upgrade/upgrade.component';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
 import {
   MatButtonModule,
+  MatDatepickerModule,
   MatExpansionModule,
   MatFormFieldModule,
   MatIconModule,
@@ -72,6 +72,7 @@ import {ProductivityComponent} from '../../pages/productivity/productivity.compo
 import {AttendanceComponent} from '../../pages/productivity/attendance/attendance.component';
 import {GlobalProductivityComponent} from '../../pages/productivity/global-productivity/global-productivity.component';
 import {ChartsModule} from 'ng2-charts';
+import {NgDatepickerModule} from 'ng2-datepicker';
 
 
 @NgModule({
@@ -79,7 +80,8 @@ import {ChartsModule} from 'ng2-charts';
     {
       provide: STEPPER_GLOBAL_OPTIONS,
       useValue: {showError: true}
-    }
+    },
+    DatePipe
   ],
   imports: [
     CommonModule,
@@ -104,7 +106,9 @@ import {ChartsModule} from 'ng2-charts';
     NgSelectModule,
     AutocompleteLibModule,
     PipesModule,
-    ChartsModule
+    ChartsModule,
+    NgDatepickerModule,
+    MatDatepickerModule
 
 
   ],
